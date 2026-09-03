@@ -1,31 +1,27 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CARDÉ — Sell Your Card</title>
+  <title>CARDÉ — List Your Card</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
     * {
-      margin: 0;
-      padding: 0;
       box-sizing: border-box;
     }
 
     body {
-      font-family: Arial, "Noto Sans KR", sans-serif;
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
       color: #111;
       background: #fff;
     }
 
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
     header {
       height: 82px;
-      border-bottom: 1px solid #e8e8e8;
+      border-bottom: 1px solid #e5e5e5;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -33,123 +29,105 @@
     }
 
     .logo {
-      font-size: 23px;
+      font-size: 25px;
+      letter-spacing: 7px;
       font-weight: 600;
-      letter-spacing: 6px;
+      text-decoration: none;
+      color: #111;
     }
 
     nav {
       display: flex;
-      gap: 38px;
-      font-size: 12px;
-      letter-spacing: 1.5px;
+      gap: 34px;
+    }
+
+    nav a {
+      color: #111;
+      text-decoration: none;
+      font-size: 11px;
+      letter-spacing: 2px;
     }
 
     nav a:hover {
-      opacity: 0.45;
+      opacity: .5;
     }
 
-    .header-right {
-      display: flex;
-      gap: 22px;
-      font-size: 12px;
+    main {
+      max-width: 850px;
+      margin: 100px auto;
+      padding: 0 25px;
     }
 
-    .page {
-      max-width: 900px;
-      margin: auto;
-      padding: 90px 25px 120px;
-    }
-
-    .title {
-      text-align: center;
-      margin-bottom: 70px;
-    }
-
-    .title small {
-      display: block;
+    .eyebrow {
       font-size: 10px;
-      letter-spacing: 4px;
-      color: #888;
-      margin-bottom: 20px;
-    }
-
-    .title h1 {
-      font-size: 42px;
-      font-weight: 400;
-      letter-spacing: 5px;
+      letter-spacing: 3px;
+      color: #777;
       margin-bottom: 18px;
     }
 
-    .title p {
-      color: #777;
-      font-size: 13px;
+    h1 {
+      font-size: 48px;
+      font-weight: 400;
+      letter-spacing: -2px;
+      margin: 0 0 65px;
     }
 
-    .form {
-      border-top: 1px solid #111;
-    }
-
-    .row {
+    .form-row {
       display: grid;
-      grid-template-columns: 180px 1fr;
-      min-height: 85px;
-      border-bottom: 1px solid #e5e5e5;
-      align-items: center;
+      grid-template-columns: 1fr 1fr;
+      gap: 35px;
     }
 
-    .label {
-      font-size: 12px;
-      letter-spacing: 1px;
+    .field {
+      margin-bottom: 32px;
+    }
+
+    label {
+      display: block;
+      font-size: 10px;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
     }
 
     input,
     select,
     textarea {
       width: 100%;
-      border: 1px solid #ddd;
-      padding: 15px;
-      font-size: 13px;
-      background: white;
+      border: none;
+      border-bottom: 1px solid #aaa;
+      padding: 13px 0;
+      font-size: 15px;
       outline: none;
+      background: transparent;
+      font-family: inherit;
     }
 
     input:focus,
     select:focus,
     textarea:focus {
-      border-color: #111;
+      border-bottom: 1px solid #111;
     }
 
     textarea {
-      min-height: 140px;
+      height: 110px;
       resize: vertical;
     }
 
-    .image-box {
-      border: 1px dashed #ccc;
-      padding: 35px;
-      text-align: center;
-      color: #888;
+    input[type="file"] {
+      border: 1px solid #ddd;
+      padding: 15px;
       font-size: 12px;
     }
 
-    .image-box input {
-      border: none;
-      padding: 20px 0 0;
-    }
-
-    .submit-area {
-      text-align: center;
-      margin-top: 60px;
-    }
-
     button {
-      border: none;
+      width: 100%;
+      margin-top: 25px;
+      height: 58px;
+      border: 1px solid #111;
       background: #111;
-      color: white;
-      padding: 18px 60px;
+      color: #fff;
       font-size: 11px;
-      letter-spacing: 2px;
+      letter-spacing: 3px;
       cursor: pointer;
     }
 
@@ -157,50 +135,50 @@
       background: #333;
     }
 
+    button:disabled {
+      opacity: .5;
+      cursor: wait;
+    }
+
+    #message {
+      text-align: center;
+      margin-top: 25px;
+      font-size: 13px;
+    }
+
     footer {
-      background: #111;
-      color: #888;
-      padding: 55px 6%;
+      border-top: 1px solid #e5e5e5;
+      padding: 40px 6%;
+      margin-top: 100px;
       font-size: 10px;
-      line-height: 2;
+      letter-spacing: 2px;
+      color: #777;
     }
 
-    .footer-logo {
-      color: white;
-      font-size: 18px;
-      letter-spacing: 5px;
-      margin-bottom: 15px;
-    }
-
-    @media (max-width: 800px) {
-
+    @media (max-width: 700px) {
       header {
         padding: 0 20px;
       }
 
       nav {
-        display: none;
+        gap: 12px;
       }
 
-      .header-right {
-        display: none;
+      nav a {
+        font-size: 9px;
       }
 
-      .page {
-        padding: 60px 20px 90px;
+      main {
+        margin: 60px auto;
       }
 
-      .title h1 {
-        font-size: 34px;
+      h1 {
+        font-size: 38px;
       }
 
-      .row {
-        display: block;
-        padding: 22px 0;
-      }
-
-      .label {
-        margin-bottom: 12px;
+      .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
       }
     }
   </style>
@@ -209,191 +187,228 @@
 <body>
 
 <header>
-
-  <a href="index.html" class="logo">
-    CARDÉ
-  </a>
+  <a href="index.html" class="logo">CARDÉ</a>
 
   <nav>
     <a href="index.html">MARKET</a>
     <a href="index.html#operator">OPERATOR SHOP</a>
     <a href="sell.html">SELL</a>
-    <a href="#">ABOUT</a>
   </nav>
-
-  <div class="header-right">
-    <span>SEARCH</span>
-    <span>♡</span>
-    <span>LOGIN</span>
-  </div>
-
 </header>
 
+<main>
 
-<div class="page">
+  <div class="eyebrow">CARDÉ MARKETPLACE</div>
+  <h1>LIST YOUR CARD</h1>
 
-  <div class="title">
+  <form id="sellForm">
 
-    <small>SELL YOUR CARD</small>
+    <div class="form-row">
 
-    <h1>LIST YOUR CARD</h1>
-
-    <p>
-      Share your card with collectors around the world.
-    </p>
-
-  </div>
-
-
-  <div class="form">
-
-    <div class="row">
-
-      <div class="label">
-        CATEGORY
-      </div>
-
-      <div>
-        <select>
-          <option>Pokémon</option>
-          <option>ONE PIECE</option>
-          <option>Weiss Schwarz</option>
-          <option>Other</option>
+      <div class="field">
+        <label>CATEGORY</label>
+        <select id="category" required>
+          <option value="">SELECT CATEGORY</option>
+          <option value="Pokémon">Pokémon</option>
+          <option value="One Piece">One Piece</option>
+          <option value="Weiss Schwarz">Weiss Schwarz</option>
+          <option value="Build Divide">Build Divide</option>
+          <option value="Other">Other</option>
         </select>
       </div>
 
-    </div>
-
-
-    <div class="row">
-
-      <div class="label">
-        CARD NAME
-      </div>
-
-      <div>
+      <div class="field">
+        <label>CARD NAME</label>
         <input
           type="text"
+          id="cardName"
           placeholder="Enter card name"
+          required
         >
       </div>
 
     </div>
 
+    <div class="form-row">
 
-    <div class="row">
-
-      <div class="label">
-        PRICE
-      </div>
-
-      <div>
+      <div class="field">
+        <label>PRICE (KRW)</label>
         <input
           type="number"
-          placeholder="₩ Enter price"
+          id="price"
+          placeholder="Enter price"
+          min="0"
+          required
         >
       </div>
 
-    </div>
-
-
-    <div class="row">
-
-      <div class="label">
-        CONDITION
-      </div>
-
-      <div>
-        <select>
-          <option>Mint</option>
-          <option>Near Mint</option>
-          <option>Excellent</option>
-          <option>Good</option>
-          <option>Played</option>
+      <div class="field">
+        <label>CONDITION</label>
+        <select id="condition">
+          <option value="Mint">Mint</option>
+          <option value="Near Mint">Near Mint</option>
+          <option value="Excellent">Excellent</option>
+          <option value="Good">Good</option>
+          <option value="Played">Played</option>
         </select>
       </div>
 
     </div>
 
-
-    <div class="row">
-
-      <div class="label">
-        CARD IMAGE
-      </div>
-
-      <div class="image-box">
-
-        Upload your card images
-
-        <input
-          type="file"
-          accept="image/*"
-          multiple
-        >
-
-      </div>
-
+    <div class="field">
+      <label>CARD IMAGE</label>
+      <input
+        type="file"
+        id="cardImage"
+        accept="image/*"
+      >
     </div>
 
-
-    <div class="row">
-
-      <div class="label">
-        DESCRIPTION
-      </div>
-
-      <div>
-
-        <textarea
-          placeholder="Describe your card..."
-        ></textarea>
-
-      </div>
-
+    <div class="field">
+      <label>DESCRIPTION</label>
+      <textarea
+        id="description"
+        placeholder="Describe your card..."
+      ></textarea>
     </div>
 
-  </div>
-
-
-  <div class="submit-area">
-
-    <button onclick="submitCard()">
+    <button type="submit" id="submitButton">
       LIST CARD
     </button>
 
-  </div>
+    <div id="message"></div>
 
-</div>
+  </form>
 
+</main>
 
 <footer>
-
-  <div class="footer-logo">
-    CARDÉ
-  </div>
-
-  <p>
-    A Curated Card Market for Your Collection
-  </p>
-
-  <p>
-    © 2026 CARDÉ. All Rights Reserved.
-  </p>
-
+  CARDÉ — A CURATED CARD MARKET
 </footer>
 
 
 <script>
 
-function submitCard() {
+  // ================================
+  // SUPABASE CONNECTION
+  // ================================
 
-  alert(
-    "Your card listing has been prepared.\n\n" +
-    "The actual listing system will be connected later."
+  const SUPABASE_URL = "여기에_네_Project_URL_붙여넣기";
+
+  const SUPABASE_PUBLISHABLE_KEY = "여기에_네_Publishable_Key_붙여넣기";
+
+  const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
   );
 
-}
+
+  // ================================
+  // SELL FORM
+  // ================================
+
+  const form = document.getElementById("sellForm");
+  const button = document.getElementById("submitButton");
+  const message = document.getElementById("message");
+
+  form.addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    button.disabled = true;
+    button.textContent = "LISTING...";
+
+    message.textContent = "";
+
+    try {
+
+      const category =
+        document.getElementById("category").value;
+
+      const cardName =
+        document.getElementById("cardName").value.trim();
+
+      const price =
+        Number(document.getElementById("price").value);
+
+      const condition =
+        document.getElementById("condition").value;
+
+      const description =
+        document.getElementById("description").value.trim();
+
+      const imageFile =
+        document.getElementById("cardImage").files[0];
+
+
+      let imageUrl = "";
+
+
+      // 이미지가 있으면 임시로 데이터 URL로 변환
+      if (imageFile) {
+
+        imageUrl = await new Promise((resolve, reject) => {
+
+          const reader = new FileReader();
+
+          reader.onload = () => resolve(reader.result);
+
+          reader.onerror = reject;
+
+          reader.readAsDataURL(imageFile);
+
+        });
+
+      }
+
+
+      // Supabase products 테이블에 저장
+      const { data, error } =
+        await supabaseClient
+          .from("products")
+          .insert([
+            {
+              category: category,
+              card_name: cardName,
+              price: price,
+              condition: condition,
+              image_url: imageUrl,
+              description: description
+            }
+          ])
+          .select();
+
+
+      if (error) {
+        throw error;
+      }
+
+
+      message.textContent =
+        "Your card has been successfully listed.";
+
+      message.style.color = "green";
+
+      form.reset();
+
+      button.textContent = "LISTED ✓";
+
+
+    } catch (error) {
+
+      console.error(error);
+
+      message.textContent =
+        "Something went wrong. Please try again.";
+
+      message.style.color = "red";
+
+      button.disabled = false;
+      button.textContent = "LIST CARD";
+
+    }
+
+  });
 
 </script>
 
