@@ -1,115 +1,104 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>CARDÉ — Premium Card Market</title>
+  <title>CARDÉ — A Curated Card Market</title>
 
   <style>
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
     }
 
     body {
       font-family: Arial, "Noto Sans KR", sans-serif;
-      background: #fff;
       color: #111;
+      background: #fff;
     }
 
     a {
-      color: inherit;
       text-decoration: none;
-    }
-
-    button {
-      font-family: inherit;
+      color: inherit;
     }
 
     /* HEADER */
 
     header {
-      height: 80px;
+      height: 82px;
       border-bottom: 1px solid #e8e8e8;
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 0 6%;
-      background: #fff;
+      background: white;
     }
 
     .logo {
-      font-size: 22px;
-      font-weight: 700;
-      letter-spacing: 5px;
+      font-size: 23px;
+      font-weight: 600;
+      letter-spacing: 6px;
     }
 
     nav {
       display: flex;
-      gap: 35px;
-      font-size: 13px;
-      letter-spacing: 1px;
-    }
-
-    nav a {
-      transition: 0.2s;
+      gap: 38px;
+      font-size: 12px;
+      letter-spacing: 1.5px;
     }
 
     nav a:hover {
-      opacity: 0.5;
+      opacity: 0.45;
     }
 
     .header-right {
       display: flex;
-      gap: 20px;
-      font-size: 13px;
+      gap: 22px;
+      font-size: 12px;
+      letter-spacing: 1px;
     }
 
     /* HERO */
 
     .hero {
-      min-height: 650px;
+      min-height: 680px;
+      background: #f7f7f7;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      background: #f7f7f7;
       padding: 80px 20px;
     }
 
-    .hero-content {
-      max-width: 800px;
-    }
-
     .hero-small {
-      font-size: 12px;
+      font-size: 11px;
       letter-spacing: 4px;
-      margin-bottom: 25px;
       color: #777;
+      margin-bottom: 28px;
     }
 
     .hero h1 {
-      font-size: 64px;
-      letter-spacing: 8px;
-      margin-bottom: 25px;
-      font-weight: 500;
+      font-size: 68px;
+      font-weight: 400;
+      letter-spacing: 10px;
+      margin-bottom: 28px;
     }
 
     .hero p {
       font-size: 15px;
+      line-height: 1.9;
       color: #666;
-      line-height: 1.8;
-      margin-bottom: 40px;
+      margin-bottom: 42px;
     }
 
     .hero-button {
       display: inline-block;
+      padding: 17px 42px;
       background: #111;
       color: white;
-      padding: 17px 38px;
-      font-size: 12px;
+      font-size: 11px;
       letter-spacing: 2px;
       transition: 0.3s;
     }
@@ -118,71 +107,71 @@
       background: #333;
     }
 
-    /* SECTION */
+    /* SECTIONS */
 
     section {
       padding: 110px 6%;
     }
 
-    .section-title {
+    .section-header {
       display: flex;
       justify-content: space-between;
       align-items: end;
-      margin-bottom: 50px;
+      margin-bottom: 48px;
     }
 
-    .section-title h2 {
-      font-size: 30px;
-      font-weight: 500;
+    .section-header h2 {
+      font-size: 28px;
+      font-weight: 400;
       letter-spacing: 3px;
     }
 
-    .section-title span {
-      font-size: 12px;
+    .section-header span {
+      font-size: 11px;
       color: #888;
       letter-spacing: 1px;
     }
 
-    /* CATEGORY */
+    /* COLLECTION */
 
-    .categories {
+    .collection {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 15px;
+      gap: 16px;
     }
 
-    .category {
-      height: 300px;
+    .collection-card {
+      height: 310px;
       background: #f3f3f3;
       display: flex;
       align-items: end;
       padding: 30px;
-      transition: 0.3s;
       cursor: pointer;
+      transition: 0.3s;
     }
 
-    .category:hover {
+    .collection-card:hover {
       transform: translateY(-5px);
     }
 
-    .category h3 {
-      font-size: 18px;
-      font-weight: 500;
+    .collection-card h3 {
+      font-size: 17px;
+      font-weight: 400;
       letter-spacing: 2px;
+      margin-bottom: 8px;
     }
 
-    .category p {
+    .collection-card p {
       font-size: 12px;
       color: #777;
-      margin-top: 8px;
     }
 
-    /* PRODUCTS */
+    /* MARKET */
 
     .products {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 25px;
+      gap: 24px;
     }
 
     .product {
@@ -196,78 +185,112 @@
       align-items: center;
       justify-content: center;
       margin-bottom: 20px;
-      overflow: hidden;
     }
 
     .product-image span {
+      font-size: 10px;
       color: #aaa;
-      font-size: 12px;
       letter-spacing: 2px;
     }
 
-    .product-info h3 {
+    .product h3 {
       font-size: 14px;
-      font-weight: 500;
+      font-weight: 400;
       margin-bottom: 8px;
     }
 
-    .product-info p {
+    .product-type {
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 10px;
+    }
+
+    .price {
       font-size: 13px;
-      color: #555;
-    }
-
-    .product-info .price {
-      margin-top: 10px;
       font-weight: 600;
-      color: #111;
     }
 
-    /* SELL */
+    /* OPERATOR SHOP */
 
-    .sell-section {
+    .operator {
       background: #111;
       color: white;
       text-align: center;
       padding: 120px 20px;
     }
 
-    .sell-section h2 {
+    .operator-label {
+      font-size: 10px;
+      letter-spacing: 4px;
+      color: #999;
+      margin-bottom: 25px;
+    }
+
+    .operator h2 {
       font-size: 42px;
       font-weight: 400;
       letter-spacing: 5px;
-      margin-bottom: 20px;
+      margin-bottom: 22px;
     }
 
-    .sell-section p {
+    .operator p {
       color: #aaa;
-      font-size: 14px;
-      margin-bottom: 35px;
+      font-size: 13px;
+      margin-bottom: 38px;
+    }
+
+    .operator-button {
+      display: inline-block;
+      background: white;
+      color: #111;
+      padding: 17px 40px;
+      font-size: 11px;
+      letter-spacing: 2px;
+    }
+
+    /* SELL */
+
+    .sell {
+      text-align: center;
+      padding: 110px 20px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .sell h2 {
+      font-size: 32px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      margin-bottom: 18px;
+    }
+
+    .sell p {
+      color: #777;
+      font-size: 13px;
+      margin-bottom: 32px;
     }
 
     .sell-button {
       display: inline-block;
-      padding: 16px 40px;
-      background: white;
-      color: #111;
-      font-size: 12px;
+      border: 1px solid #111;
+      padding: 16px 38px;
+      font-size: 11px;
       letter-spacing: 2px;
     }
 
     /* FOOTER */
 
     footer {
-      border-top: 1px solid #222;
       background: #111;
-      color: #aaa;
-      padding: 50px 6%;
-      font-size: 11px;
+      color: #888;
+      padding: 55px 6%;
+      font-size: 10px;
       line-height: 2;
     }
 
     .footer-logo {
       color: white;
       font-size: 18px;
-      letter-spacing: 4px;
+      letter-spacing: 5px;
       margin-bottom: 15px;
     }
 
@@ -284,10 +307,11 @@
       }
 
       .hero h1 {
-        font-size: 42px;
+        font-size: 43px;
+        letter-spacing: 6px;
       }
 
-      .categories {
+      .collection {
         grid-template-columns: 1fr;
       }
 
@@ -301,10 +325,10 @@
       }
 
       section {
-        padding: 70px 20px;
+        padding: 75px 20px;
       }
 
-      .sell-section h2 {
+      .operator h2 {
         font-size: 30px;
       }
     }
@@ -322,8 +346,8 @@
     </div>
 
     <nav>
-      <a href="#">SHOP</a>
-      <a href="#">COLLECTION</a>
+      <a href="#">MARKET</a>
+      <a href="#">OPERATOR SHOP</a>
       <a href="#">SELL</a>
       <a href="#">ABOUT</a>
     </nav>
@@ -341,21 +365,20 @@
 
   <div class="hero">
 
-    <div class="hero-content">
+    <div>
 
       <div class="hero-small">
-        PREMIUM CARD MARKET
+        PREMIUM TRADING CARD MARKET
       </div>
 
       <h1>CARDÉ</h1>
 
       <p>
-        희귀 카드부터 인기 카드까지.<br>
-        더 특별한 카드 거래를 위한 공간
+        A Curated Card Market for Your Collection
       </p>
 
-      <a href="#shop" class="hero-button">
-        SHOP NOW
+      <a href="#market" class="hero-button">
+        EXPLORE MARKET
       </a>
 
     </div>
@@ -367,35 +390,34 @@
 
   <section>
 
-    <div class="section-title">
+    <div class="section-header">
 
       <h2>COLLECTION</h2>
 
-      <span>EXPLORE COLLECTION</span>
+      <span>EXPLORE</span>
 
     </div>
 
+    <div class="collection">
 
-    <div class="categories">
-
-      <div class="category">
+      <div class="collection-card">
         <div>
           <h3>POKÉMON</h3>
-          <p>포켓몬 카드</p>
+          <p>Discover Pokémon Cards</p>
         </div>
       </div>
 
-      <div class="category">
+      <div class="collection-card">
         <div>
           <h3>ONE PIECE</h3>
-          <p>원피스 카드</p>
+          <p>Discover One Piece Cards</p>
         </div>
       </div>
 
-      <div class="category">
+      <div class="collection-card">
         <div>
           <h3>WEISS SCHWARZ</h3>
-          <p>바이스 슈발츠</p>
+          <p>Discover Weiss Schwarz Cards</p>
         </div>
       </div>
 
@@ -404,39 +426,29 @@
   </section>
 
 
-  <!-- SHOP -->
+  <!-- MARKET -->
 
-  <section id="shop">
+  <section id="market">
 
-    <div class="section-title">
+    <div class="section-header">
 
-      <h2>FEATURED CARDS</h2>
+      <h2>MARKET</h2>
 
-      <span>VIEW ALL</span>
+      <span>MEMBER LISTINGS</span>
 
     </div>
-
 
     <div class="products">
 
-
       <div class="product">
 
         <div class="product-image">
           <span>CARD IMAGE</span>
         </div>
 
-        <div class="product-info">
-
-          <h3>Pokémon Card</h3>
-
-          <p>Special Collection</p>
-
-          <div class="price">
-            ₩120,000
-          </div>
-
-        </div>
+        <h3>Pokémon Special Card</h3>
+        <div class="product-type">Member Listing</div>
+        <div class="price">₩120,000</div>
 
       </div>
 
@@ -447,17 +459,9 @@
           <span>CARD IMAGE</span>
         </div>
 
-        <div class="product-info">
-
-          <h3>One Piece Card</h3>
-
-          <p>Rare Collection</p>
-
-          <div class="price">
-            ₩250,000
-          </div>
-
-        </div>
+        <h3>One Piece Rare Card</h3>
+        <div class="product-type">Member Listing</div>
+        <div class="price">₩250,000</div>
 
       </div>
 
@@ -468,17 +472,9 @@
           <span>CARD IMAGE</span>
         </div>
 
-        <div class="product-info">
-
-          <h3>Weiss Schwarz</h3>
-
-          <p>SP Collection</p>
-
-          <div class="price">
-            ₩180,000
-          </div>
-
-        </div>
+        <h3>Weiss Schwarz SP</h3>
+        <div class="product-type">Member Listing</div>
+        <div class="price">₩180,000</div>
 
       </div>
 
@@ -489,38 +485,50 @@
           <span>CARD IMAGE</span>
         </div>
 
-        <div class="product-info">
-
-          <h3>Pokémon SAR</h3>
-
-          <p>Special Art Rare</p>
-
-          <div class="price">
-            ₩350,000
-          </div>
-
-        </div>
+        <h3>Pokémon SAR</h3>
+        <div class="product-type">Member Listing</div>
+        <div class="price">₩350,000</div>
 
       </div>
-
 
     </div>
 
   </section>
+
+
+  <!-- OPERATOR SHOP -->
+
+  <div class="operator">
+
+    <div class="operator-label">
+      OFFICIAL CARDÉ STORE
+    </div>
+
+    <h2>OPERATOR SHOP</h2>
+
+    <p>
+      Exclusive cards selected and sold directly by CARDÉ.
+    </p>
+
+    <a href="#" class="operator-button">
+      ENTER SHOP
+    </a>
+
+  </div>
 
 
   <!-- SELL -->
 
-  <div class="sell-section">
+  <div class="sell">
 
     <h2>SELL YOUR CARDS</h2>
 
     <p>
-      가지고 있는 카드를 CARDÉ에서 판매해보세요.
+      List your cards and connect with collectors.
     </p>
 
     <a href="#" class="sell-button">
-      SELL A CARD
+      START SELLING
     </a>
 
   </div>
@@ -535,7 +543,7 @@
     </div>
 
     <p>
-      Premium Trading Card Marketplace
+      A Curated Card Market for Your Collection
     </p>
 
     <p>
@@ -543,7 +551,6 @@
     </p>
 
   </footer>
-
 
 </body>
 </html>
