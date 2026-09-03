@@ -9,10 +9,19 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
+
+    /* =========================
+       BASIC
+    ========================= */
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
@@ -26,6 +35,7 @@
       text-decoration: none;
     }
 
+
     /* =========================
        HEADER
     ========================= */
@@ -33,16 +43,19 @@
     header {
       height: 80px;
       padding: 0 50px;
-      border-bottom: 1px solid #eee;
 
       display: flex;
       align-items: center;
       justify-content: space-between;
 
+      border-bottom: 1px solid #eee;
+
       position: sticky;
       top: 0;
-      background: rgba(255,255,255,0.96);
       z-index: 100;
+
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(10px);
     }
 
     .logo {
@@ -54,20 +67,35 @@
     nav {
       display: flex;
       gap: 38px;
-      font-size: 11px;
+
+      font-size: 10px;
       letter-spacing: 2px;
     }
 
+    nav a {
+      transition: opacity 0.3s ease;
+    }
+
     nav a:hover {
-      opacity: 0.5;
+      opacity: 0.45;
     }
 
     .header-right {
       display: flex;
       gap: 24px;
-      font-size: 11px;
+
+      font-size: 10px;
       letter-spacing: 2px;
     }
+
+    .header-right a {
+      transition: opacity 0.3s ease;
+    }
+
+    .header-right a:hover {
+      opacity: 0.45;
+    }
+
 
     /* =========================
        HERO
@@ -79,42 +107,54 @@
       display: flex;
       align-items: center;
       justify-content: center;
+
       text-align: center;
 
       padding: 40px;
     }
 
     .hero-inner {
-      max-width: 700px;
+      max-width: 800px;
     }
 
     .eyebrow {
       font-size: 10px;
       letter-spacing: 5px;
+
       color: #888;
+
       margin-bottom: 28px;
     }
 
     .hero h1 {
       font-size: 52px;
       font-weight: 400;
-      line-height: 1.1;
+
       letter-spacing: -2px;
+      line-height: 1.1;
+
       margin-bottom: 24px;
     }
 
     .hero p {
       font-size: 13px;
       color: #777;
+
       margin-bottom: 38px;
     }
 
+
+    /* =========================
+       BUTTON
+    ========================= */
+
     .button {
       display: inline-flex;
+
       align-items: center;
       justify-content: center;
 
-      min-width: 130px;
+      min-width: 135px;
       height: 46px;
 
       background: #111;
@@ -123,15 +163,19 @@
       font-size: 10px;
       letter-spacing: 2px;
 
-      transition: 0.3s;
+      transition:
+        transform 0.3s ease,
+        background 0.3s ease;
     }
 
     .button:hover {
       background: #333;
+      transform: translateY(-3px);
     }
 
+
     /* =========================
-       SECTION TITLE
+       SECTION HEADER
     ========================= */
 
     .section-header {
@@ -150,9 +194,10 @@
 
     .section-subtitle {
       font-size: 9px;
-      color: #999;
       letter-spacing: 2px;
+      color: #999;
     }
+
 
     /* =========================
        COLLECTION
@@ -164,55 +209,123 @@
 
     .collection-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+
+      grid-template-columns:
+        repeat(4, 1fr);
+
       gap: 4px;
+
       padding: 0 4px;
     }
 
+
+    /* COLLECTION CARD */
+
     .collection-card {
       position: relative;
+
       height: 360px;
-      background: #f6f6f6;
+
+      background: #f5f5f5;
+
       overflow: hidden;
+
+      transition:
+        transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1),
+        box-shadow 0.45s ease;
     }
+
+
+    /* 카드 자체가 살짝 커지면서 위로 */
+
+    .collection-card:hover {
+      transform:
+        translateY(-8px)
+        scale(1.015);
+
+      z-index: 2;
+
+      box-shadow:
+        0 15px 35px rgba(0,0,0,0.08);
+    }
+
+
+    /* COLLECTION IMAGE */
 
     .collection-card img {
       width: 100%;
       height: 100%;
+
       object-fit: cover;
+
       display: block;
 
-      transition: transform 0.5s ease;
+      transition:
+        transform 0.8s
+        cubic-bezier(0.2, 0.7, 0.2, 1);
     }
 
+
+    /* 사진 확대 */
+
     .collection-card:hover img {
-      transform: scale(1.04);
+      transform: scale(1.08);
     }
+
+
+    /* 이미지 없을 때 */
 
     .collection-placeholder {
       width: 100%;
       height: 100%;
 
       display: flex;
+
       align-items: center;
       justify-content: center;
 
+      background: #f5f5f5;
+
       color: #aaa;
+
       font-size: 9px;
       letter-spacing: 2px;
     }
 
+
+    /* COLLECTION TEXT */
+
     .collection-info {
       position: absolute;
+
       left: 20px;
       bottom: 20px;
 
-      color: #111;
+      z-index: 3;
+
+      transform:
+        translateY(14px);
+
+      opacity: 0.75;
+
+      transition:
+        transform 0.5s ease,
+        opacity 0.5s ease;
     }
+
+
+    .collection-card:hover .collection-info {
+      transform:
+        translateY(0);
+
+      opacity: 1;
+    }
+
 
     .collection-name {
       font-size: 12px;
       letter-spacing: 1px;
+
       margin-bottom: 6px;
     }
 
@@ -220,6 +333,7 @@
       font-size: 9px;
       color: #777;
     }
+
 
     /* =========================
        LARGE FEATURE IMAGE
@@ -229,181 +343,271 @@
       width: 100%;
       max-width: 1400px;
 
-      margin: 0 auto 150px;
+      margin: 0 auto 160px;
+
       padding: 0 40px;
+
+      overflow: hidden;
     }
 
-    .large-feature img {
+    .large-feature-image {
       width: 100%;
       height: 600px;
 
       object-fit: cover;
+
       display: block;
 
       background: #f5f5f5;
+
+      transition:
+        transform 1s
+        cubic-bezier(0.2, 0.7, 0.2, 1);
     }
+
+
+    /* 큰 사진도 살짝 확대 */
+
+    .large-feature:hover .large-feature-image {
+      transform: scale(1.04);
+    }
+
 
     .large-feature-placeholder {
       width: 100%;
       height: 600px;
 
-      background: #f5f5f5;
-
       display: flex;
+
       align-items: center;
       justify-content: center;
 
+      background: #f5f5f5;
+
       color: #aaa;
+
       font-size: 10px;
       letter-spacing: 3px;
     }
+
 
     /* =========================
        OPERATOR SHOP
     ========================= */
 
     .operator-shop {
-      padding-bottom: 140px;
+      padding-bottom: 150px;
     }
 
     .operator-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+
+      grid-template-columns:
+        repeat(4, 1fr);
+
       gap: 4px;
 
       padding: 0 4px;
     }
 
+
     .operator-card {
       background: #f7f7f7;
+
       min-height: 390px;
 
       display: flex;
+
       flex-direction: column;
 
-      transition: 0.3s;
+      overflow: hidden;
+
+      transition:
+        transform 0.45s ease,
+        box-shadow 0.45s ease;
     }
 
+
     .operator-card:hover {
-      background: #f1f1f1;
+      transform:
+        translateY(-8px)
+        scale(1.015);
+
+      box-shadow:
+        0 15px 35px rgba(0,0,0,0.08);
     }
+
 
     .operator-image {
       height: 290px;
+
       background: #eee;
 
       display: flex;
+
       align-items: center;
       justify-content: center;
 
       overflow: hidden;
     }
 
+
     .operator-image img {
       width: 100%;
       height: 100%;
+
       object-fit: cover;
+
+      transition:
+        transform 0.7s
+        cubic-bezier(0.2, 0.7, 0.2, 1);
     }
 
-    .operator-image span {
+
+    .operator-card:hover .operator-image img {
+      transform: scale(1.07);
+    }
+
+
+    .operator-placeholder {
       font-size: 9px;
+
       letter-spacing: 2px;
+
       color: #aaa;
     }
+
 
     .operator-info {
       padding: 20px;
     }
 
+
     .operator-category {
       font-size: 8px;
+
       letter-spacing: 2px;
+
       color: #999;
+
       margin-bottom: 8px;
     }
 
+
     .operator-name {
       font-size: 13px;
+
       margin-bottom: 12px;
     }
+
 
     .operator-price {
       font-size: 12px;
     }
 
+
     /* =========================
-       SERVICE
+       ABOUT / SERVICE
     ========================= */
 
     .service {
       border-top: 1px solid #eee;
       border-bottom: 1px solid #eee;
 
-      padding: 80px 50px;
+      padding: 90px 50px;
     }
+
 
     .service-grid {
       max-width: 1200px;
+
       margin: 0 auto;
 
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+
+      grid-template-columns:
+        repeat(3, 1fr);
     }
+
 
     .service-item {
       text-align: center;
+
       padding: 20px 40px;
 
       border-right: 1px solid #eee;
     }
 
+
     .service-item:last-child {
       border-right: none;
     }
 
+
     .service-number {
       font-size: 9px;
-      color: #aaa;
+
       letter-spacing: 2px;
+
+      color: #aaa;
+
       margin-bottom: 20px;
     }
 
+
     .service-item h3 {
       font-size: 15px;
+
       font-weight: 400;
+
       margin-bottom: 12px;
     }
 
+
     .service-item p {
       font-size: 10px;
-      color: #888;
+
       line-height: 1.8;
+
+      color: #888;
     }
 
+
     /* =========================
-       SELL CTA
+       SELL
     ========================= */
 
     .sell-section {
       padding: 150px 40px;
+
       text-align: center;
     }
+
 
     .sell-section .eyebrow {
       margin-bottom: 20px;
     }
 
+
     .sell-section h2 {
       font-size: 38px;
+
       font-weight: 400;
+
+      line-height: 1.2;
+
       margin-bottom: 18px;
     }
 
+
     .sell-section p {
       font-size: 12px;
+
       color: #888;
+
       margin-bottom: 35px;
     }
+
 
     /* =========================
        FOOTER
@@ -411,24 +615,34 @@
 
     footer {
       border-top: 1px solid #eee;
+
       padding: 50px;
 
       display: flex;
+
       justify-content: space-between;
+
       align-items: flex-start;
     }
 
+
     .footer-logo {
       font-size: 18px;
+
       letter-spacing: 5px;
     }
 
+
     .footer-text {
       font-size: 9px;
-      color: #999;
+
       line-height: 1.8;
+
+      color: #999;
+
       text-align: right;
     }
+
 
     /* =========================
        MOBILE
@@ -461,25 +675,32 @@
       }
 
       .collection-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns:
+          repeat(2, 1fr);
       }
 
       .collection-card {
-        height: 260px;
+        height: 270px;
       }
 
       .large-feature {
         padding: 0 20px;
+
         margin-bottom: 100px;
       }
 
-      .large-feature img,
+      .large-feature-image,
       .large-feature-placeholder {
         height: 350px;
       }
 
       .operator-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns:
+          repeat(2, 1fr);
+      }
+
+      .operator-image {
+        height: 230px;
       }
 
       .service {
@@ -492,7 +713,9 @@
 
       .service-item {
         border-right: none;
+
         border-bottom: 1px solid #eee;
+
         padding: 30px;
       }
 
@@ -510,18 +733,24 @@
 
       footer {
         padding: 35px 20px;
+
         flex-direction: column;
+
         gap: 25px;
       }
 
       .footer-text {
         text-align: left;
       }
+
     }
+
   </style>
 </head>
 
+
 <body>
+
 
 <!-- =========================
      HEADER
@@ -529,22 +758,50 @@
 
 <header>
 
-  <a href="index.html" class="logo">CARDÉ</a>
+  <a href="index.html" class="logo">
+    CARDÉ
+  </a>
+
 
   <nav>
-    <a href="#collection">COLLECTION</a>
-    <a href="#operator-shop">OPERATOR SHOP</a>
-    <a href="sell.html">SELL</a>
-    <a href="#about">ABOUT</a>
+
+    <a href="#collection">
+      COLLECTION
+    </a>
+
+    <a href="#operator-shop">
+      OPERATOR SHOP
+    </a>
+
+    <a href="sell.html">
+      SELL
+    </a>
+
+    <a href="#about">
+      ABOUT
+    </a>
+
   </nav>
 
+
   <div class="header-right">
-    <a href="#">SEARCH</a>
-    <a href="#">♡</a>
-    <a href="#">LOGIN</a>
+
+    <a href="#">
+      SEARCH
+    </a>
+
+    <a href="#">
+      ♡
+    </a>
+
+    <a href="#">
+      LOGIN
+    </a>
+
   </div>
 
 </header>
+
 
 
 <!-- =========================
@@ -559,15 +816,21 @@
       CARDÉ COLLECTION
     </div>
 
+
     <h1>
       A Curated Card Market
     </h1>
+
 
     <p>
       Discover cards worth collecting.
     </p>
 
-    <a href="#collection" class="button">
+
+    <a
+      href="#collection"
+      class="button"
+    >
       EXPLORE
     </a>
 
@@ -576,11 +839,15 @@
 </section>
 
 
+
 <!-- =========================
      COLLECTION
 ========================= -->
 
-<section class="collection" id="collection">
+<section
+  class="collection"
+  id="collection"
+>
 
   <div class="section-header">
 
@@ -594,11 +861,15 @@
 
   </div>
 
-  <div class="collection-grid" id="collectionGrid">
-    <!-- Supabase에서 자동으로 들어감 -->
+
+  <div
+    class="collection-grid"
+    id="collectionGrid"
+  >
   </div>
 
 </section>
+
 
 
 <!-- =========================
@@ -607,32 +878,36 @@
 
 <section class="large-feature">
 
-  <!--
-    여기에 원하는 큰 사진을 넣으면 됨.
-
-    GitHub에
-    images/featured.jpg
-    파일을 올리면 자동으로 표시됨.
-  -->
-
   <img
+    class="large-feature-image"
     src="images/featured.jpg"
     alt="CARDÉ Featured"
-    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+    onerror="
+      this.style.display='none';
+      this.nextElementSibling.style.display='flex';
+    "
   >
 
-  <div class="large-feature-placeholder" style="display:none;">
+
+  <div
+    class="large-feature-placeholder"
+    style="display:none;"
+  >
     FEATURED IMAGE
   </div>
 
 </section>
 
 
+
 <!-- =========================
      OPERATOR SHOP
 ========================= -->
 
-<section class="operator-shop" id="operator-shop">
+<section
+  class="operator-shop"
+  id="operator-shop"
+>
 
   <div class="section-header">
 
@@ -646,13 +921,25 @@
 
   </div>
 
+
   <div class="operator-grid">
 
-    <a href="#" class="operator-card">
+
+    <!-- CARD 1 -->
+
+    <a
+      href="#"
+      class="operator-card"
+    >
 
       <div class="operator-image">
-        <span>PRODUCT IMAGE</span>
+
+        <div class="operator-placeholder">
+          PRODUCT IMAGE
+        </div>
+
       </div>
+
 
       <div class="operator-info">
 
@@ -673,11 +960,22 @@
     </a>
 
 
-    <a href="#" class="operator-card">
+
+    <!-- CARD 2 -->
+
+    <a
+      href="#"
+      class="operator-card"
+    >
 
       <div class="operator-image">
-        <span>PRODUCT IMAGE</span>
+
+        <div class="operator-placeholder">
+          PRODUCT IMAGE
+        </div>
+
       </div>
+
 
       <div class="operator-info">
 
@@ -698,11 +996,22 @@
     </a>
 
 
-    <a href="#" class="operator-card">
+
+    <!-- CARD 3 -->
+
+    <a
+      href="#"
+      class="operator-card"
+    >
 
       <div class="operator-image">
-        <span>PRODUCT IMAGE</span>
+
+        <div class="operator-placeholder">
+          PRODUCT IMAGE
+        </div>
+
       </div>
+
 
       <div class="operator-info">
 
@@ -723,11 +1032,22 @@
     </a>
 
 
-    <a href="#" class="operator-card">
+
+    <!-- CARD 4 -->
+
+    <a
+      href="#"
+      class="operator-card"
+    >
 
       <div class="operator-image">
-        <span>PRODUCT IMAGE</span>
+
+        <div class="operator-placeholder">
+          PRODUCT IMAGE
+        </div>
+
       </div>
+
 
       <div class="operator-info">
 
@@ -747,18 +1067,24 @@
 
     </a>
 
+
   </div>
 
 </section>
 
 
+
 <!-- =========================
-     SERVICE
+     CARDÉ SERVICE
 ========================= -->
 
-<section class="service" id="about">
+<section
+  class="service"
+  id="about"
+>
 
   <div class="service-grid">
+
 
     <div class="service-item">
 
@@ -776,6 +1102,7 @@
       </p>
 
     </div>
+
 
 
     <div class="service-item">
@@ -796,6 +1123,7 @@
     </div>
 
 
+
     <div class="service-item">
 
       <div class="service-number">
@@ -813,13 +1141,15 @@
 
     </div>
 
+
   </div>
 
 </section>
 
 
+
 <!-- =========================
-     SELL CTA
+     SELL
 ========================= -->
 
 <section class="sell-section">
@@ -828,20 +1158,27 @@
     SELL YOUR CARDS
   </div>
 
+
   <h2>
     Give Your Collection<br>
     a New Home.
   </h2>
 
+
   <p>
     List your cards on CARDÉ.
   </p>
 
-  <a href="sell.html" class="button">
+
+  <a
+    href="sell.html"
+    class="button"
+  >
     START SELLING
   </a>
 
 </section>
+
 
 
 <!-- =========================
@@ -854,12 +1191,17 @@
     CARDÉ
   </div>
 
+
   <div class="footer-text">
+
     CARDÉ — A CURATED CARD MARKET<br>
+
     © 2026 CARDÉ. ALL RIGHTS RESERVED.
+
   </div>
 
 </footer>
+
 
 
 <!-- =========================
@@ -871,8 +1213,10 @@
   const SUPABASE_URL =
     "https://byjnjciwsdwxuneusgau.supabase.co";
 
+
   const SUPABASE_PUBLISHABLE_KEY =
     "sb_publishable_9-MEV3xReYbJBBSQFAW_xA_sxniWNBl";
+
 
   const supabaseClient =
     window.supabase.createClient(
@@ -881,40 +1225,74 @@
     );
 
 
+
+  /* =========================
+     GAME PAGE LINKS
+  ========================= */
+
   const gameLinks = {
-    "POKÉMON": "pokemon.html",
-    "ONE PIECE": "onepiece.html",
-    "WEISS SCHWARZ": "weiss.html",
-    "BUILD DIVIDE": "builddivide.html"
+
+    "POKÉMON":
+      "pokemon.html",
+
+    "ONE PIECE":
+      "onepiece.html",
+
+    "WEISS SCHWARZ":
+      "weiss.html",
+
+    "BUILD DIVIDE":
+      "builddivide.html"
+
   };
 
+
+
+  /* =========================
+     LOAD COLLECTION
+  ========================= */
 
   async function loadCollection() {
 
     const grid =
-      document.getElementById("collectionGrid");
+      document.getElementById(
+        "collectionGrid"
+      );
 
-    const { data, error } =
+
+    const {
+      data,
+      error
+    } =
       await supabaseClient
         .from("collection_settings")
         .select(
           "id, game_name, description, image_url"
         )
-        .order("id", {
-          ascending: true
-        });
+        .order(
+          "id",
+          {
+            ascending: true
+          }
+        );
 
 
-    if (error || !data || data.length === 0) {
+    if (
+      error ||
+      !data ||
+      data.length === 0
+    ) {
 
       console.log(
         "Collection settings unavailable:",
         error
       );
 
+
       createFallbackCollection();
 
       return;
+
     }
 
 
@@ -924,59 +1302,92 @@
     data.forEach(item => {
 
       const name =
-        item.game_name || "CARD GAME";
+        item.game_name ||
+        "CARD GAME";
+
 
       const link =
-        gameLinks[name] || "#";
+        gameLinks[name] ||
+        "#";
+
 
       const card =
-        document.createElement("a");
+        document.createElement(
+          "a"
+        );
+
 
       card.className =
         "collection-card";
+
 
       card.href =
         link;
 
 
+
+      /* IMAGE */
+
       if (item.image_url) {
 
         const img =
-          document.createElement("img");
+          document.createElement(
+            "img"
+          );
+
 
         img.src =
           item.image_url;
 
+
         img.alt =
           name;
 
-        card.appendChild(img);
 
-      } else {
+        card.appendChild(
+          img
+        );
+
+      }
+
+      else {
 
         const placeholder =
-          document.createElement("div");
+          document.createElement(
+            "div"
+          );
+
 
         placeholder.className =
           "collection-placeholder";
 
+
         placeholder.textContent =
           "COLLECTION IMAGE";
+
 
         card.appendChild(
           placeholder
         );
+
       }
 
 
+
+      /* TEXT */
+
       const info =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
+
 
       info.className =
         "collection-info";
 
 
       info.innerHTML = `
+
         <div class="collection-name">
           ${name}
         </div>
@@ -984,22 +1395,36 @@
         <div class="collection-desc">
           ${item.description || ""}
         </div>
+
       `;
 
 
-      card.appendChild(info);
+      card.appendChild(
+        info
+      );
 
-      grid.appendChild(card);
+
+      grid.appendChild(
+        card
+      );
 
     });
 
   }
 
 
+
+  /* =========================
+     FALLBACK
+  ========================= */
+
   function createFallbackCollection() {
 
     const grid =
-      document.getElementById("collectionGrid");
+      document.getElementById(
+        "collectionGrid"
+      );
+
 
     const games = [
 
@@ -1030,49 +1455,64 @@
     ];
 
 
-    games.forEach(game => {
 
-      const card =
-        document.createElement("a");
+    games.forEach(
+      game => {
 
-      card.className =
-        "collection-card";
-
-      card.href =
-        game.link;
+        const card =
+          document.createElement(
+            "a"
+          );
 
 
-      card.innerHTML = `
+        card.className =
+          "collection-card";
 
-        <div class="collection-placeholder">
-          COLLECTION IMAGE
-        </div>
 
-        <div class="collection-info">
+        card.href =
+          game.link;
 
-          <div class="collection-name">
-            ${game.name}
+
+        card.innerHTML = `
+
+          <div class="collection-placeholder">
+            COLLECTION IMAGE
           </div>
 
-          <div class="collection-desc">
-            ${game.desc}
+          <div class="collection-info">
+
+            <div class="collection-name">
+              ${game.name}
+            </div>
+
+            <div class="collection-desc">
+              ${game.desc}
+            </div>
+
           </div>
 
-        </div>
-
-      `;
+        `;
 
 
-      grid.appendChild(card);
+        grid.appendChild(
+          card
+        );
 
-    });
+      }
+    );
 
   }
 
 
+
+  /* =========================
+     START
+  ========================= */
+
   loadCollection();
 
 </script>
+
 
 </body>
 </html>
