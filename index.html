@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>CARDÉ — A Curated Card Market</title>
+  <title>CARDÉ — Premium Card Market</title>
 
   <style>
     * {
@@ -33,7 +33,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 0 6%;
-      background: white;
+      background: #fff;
     }
 
     .logo {
@@ -49,6 +49,10 @@
       letter-spacing: 1.5px;
     }
 
+    nav a {
+      transition: 0.2s;
+    }
+
     nav a:hover {
       opacity: 0.45;
     }
@@ -58,6 +62,10 @@
       gap: 22px;
       font-size: 12px;
       letter-spacing: 1px;
+    }
+
+    .header-right a:hover {
+      opacity: 0.45;
     }
 
     /* HERO */
@@ -107,7 +115,7 @@
       background: #333;
     }
 
-    /* SECTIONS */
+    /* SECTION */
 
     section {
       padding: 110px 6%;
@@ -248,6 +256,10 @@
       letter-spacing: 2px;
     }
 
+    .operator-button:hover {
+      background: #ddd;
+    }
+
     /* SELL */
 
     .sell {
@@ -275,6 +287,12 @@
       padding: 16px 38px;
       font-size: 11px;
       letter-spacing: 2px;
+      transition: 0.3s;
+    }
+
+    .sell-button:hover {
+      background: #111;
+      color: white;
     }
 
     /* FOOTER */
@@ -304,6 +322,10 @@
 
       nav {
         display: none;
+      }
+
+      .header-right {
+        gap: 12px;
       }
 
       .hero h1 {
@@ -341,21 +363,41 @@
 
   <header>
 
-    <div class="logo">
+    <a href="index.html" class="logo">
       CARDÉ
-    </div>
+    </a>
 
     <nav>
-      <a href="#">MARKET</a>
-      <a href="#">OPERATOR SHOP</a>
-      <a href="#">SELL</a>
-      <a href="#">ABOUT</a>
+      <a href="#market">MARKET</a>
+
+      <a href="#operator">
+        OPERATOR SHOP
+      </a>
+
+      <!-- SELL 연결 -->
+      <a href="sell.html">
+        SELL
+      </a>
+
+      <a href="#">
+        ABOUT
+      </a>
     </nav>
 
     <div class="header-right">
-      <span>SEARCH</span>
-      <span>♡</span>
-      <span>LOGIN</span>
+
+      <a href="#">
+        SEARCH
+      </a>
+
+      <a href="#">
+        ♡
+      </a>
+
+      <a href="#">
+        LOGIN
+      </a>
+
     </div>
 
   </header>
@@ -371,7 +413,9 @@
         PREMIUM TRADING CARD MARKET
       </div>
 
-      <h1>CARDÉ</h1>
+      <h1>
+        CARDÉ
+      </h1>
 
       <p>
         A Curated Card Market for Your Collection
@@ -392,33 +436,67 @@
 
     <div class="section-header">
 
-      <h2>COLLECTION</h2>
+      <h2>
+        COLLECTION
+      </h2>
 
-      <span>EXPLORE</span>
+      <span>
+        EXPLORE
+      </span>
 
     </div>
+
 
     <div class="collection">
 
       <div class="collection-card">
+
         <div>
-          <h3>POKÉMON</h3>
-          <p>Discover Pokémon Cards</p>
+
+          <h3>
+            POKÉMON
+          </h3>
+
+          <p>
+            Discover Pokémon Cards
+          </p>
+
         </div>
+
       </div>
 
-      <div class="collection-card">
-        <div>
-          <h3>ONE PIECE</h3>
-          <p>Discover One Piece Cards</p>
-        </div>
-      </div>
 
       <div class="collection-card">
+
         <div>
-          <h3>WEISS SCHWARZ</h3>
-          <p>Discover Weiss Schwarz Cards</p>
+
+          <h3>
+            ONE PIECE
+          </h3>
+
+          <p>
+            Discover One Piece Cards
+          </p>
+
         </div>
+
+      </div>
+
+
+      <div class="collection-card">
+
+        <div>
+
+          <h3>
+            WEISS SCHWARZ
+          </h3>
+
+          <p>
+            Discover Weiss Schwarz Cards
+          </p>
+
+        </div>
+
       </div>
 
     </div>
@@ -432,23 +510,39 @@
 
     <div class="section-header">
 
-      <h2>MARKET</h2>
+      <h2>
+        MARKET
+      </h2>
 
-      <span>MEMBER LISTINGS</span>
+      <span>
+        MEMBER LISTINGS
+      </span>
 
     </div>
 
+
     <div class="products">
 
+
       <div class="product">
 
         <div class="product-image">
-          <span>CARD IMAGE</span>
+          <span>
+            CARD IMAGE
+          </span>
         </div>
 
-        <h3>Pokémon Special Card</h3>
-        <div class="product-type">Member Listing</div>
-        <div class="price">₩120,000</div>
+        <h3>
+          Pokémon Special Card
+        </h3>
+
+        <div class="product-type">
+          Member Listing
+        </div>
+
+        <div class="price">
+          ₩120,000
+        </div>
 
       </div>
 
@@ -456,12 +550,22 @@
       <div class="product">
 
         <div class="product-image">
-          <span>CARD IMAGE</span>
+          <span>
+            CARD IMAGE
+          </span>
         </div>
 
-        <h3>One Piece Rare Card</h3>
-        <div class="product-type">Member Listing</div>
-        <div class="price">₩250,000</div>
+        <h3>
+          One Piece Rare Card
+        </h3>
+
+        <div class="product-type">
+          Member Listing
+        </div>
+
+        <div class="price">
+          ₩250,000
+        </div>
 
       </div>
 
@@ -469,12 +573,22 @@
       <div class="product">
 
         <div class="product-image">
-          <span>CARD IMAGE</span>
+          <span>
+            CARD IMAGE
+          </span>
         </div>
 
-        <h3>Weiss Schwarz SP</h3>
-        <div class="product-type">Member Listing</div>
-        <div class="price">₩180,000</div>
+        <h3>
+          Weiss Schwarz SP
+        </h3>
+
+        <div class="product-type">
+          Member Listing
+        </div>
+
+        <div class="price">
+          ₩180,000
+        </div>
 
       </div>
 
@@ -482,14 +596,25 @@
       <div class="product">
 
         <div class="product-image">
-          <span>CARD IMAGE</span>
+          <span>
+            CARD IMAGE
+          </span>
         </div>
 
-        <h3>Pokémon SAR</h3>
-        <div class="product-type">Member Listing</div>
-        <div class="price">₩350,000</div>
+        <h3>
+          Pokémon SAR
+        </h3>
+
+        <div class="product-type">
+          Member Listing
+        </div>
+
+        <div class="price">
+          ₩350,000
+        </div>
 
       </div>
+
 
     </div>
 
@@ -498,13 +623,15 @@
 
   <!-- OPERATOR SHOP -->
 
-  <div class="operator">
+  <div class="operator" id="operator">
 
     <div class="operator-label">
       OFFICIAL CARDÉ STORE
     </div>
 
-    <h2>OPERATOR SHOP</h2>
+    <h2>
+      OPERATOR SHOP
+    </h2>
 
     <p>
       Exclusive cards selected and sold directly by CARDÉ.
@@ -521,13 +648,16 @@
 
   <div class="sell">
 
-    <h2>SELL YOUR CARDS</h2>
+    <h2>
+      SELL YOUR CARDS
+    </h2>
 
     <p>
       List your cards and connect with collectors.
     </p>
 
-    <a href="#" class="sell-button">
+    <!-- SELL 페이지 연결 -->
+    <a href="sell.html" class="sell-button">
       START SELLING
     </a>
 
