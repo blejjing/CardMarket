@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>CARDÉ — Sell</title>
+  <title>CARDÉ — Sell Your Card</title>
 
   <style>
     * {
@@ -58,7 +57,7 @@
 
     .page {
       max-width: 900px;
-      margin: 0 auto;
+      margin: auto;
       padding: 90px 25px 120px;
     }
 
@@ -211,13 +210,13 @@
 
 <header>
 
-  <div class="logo">
+  <a href="index.html" class="logo">
     CARDÉ
-  </div>
+  </a>
 
   <nav>
     <a href="index.html">MARKET</a>
-    <a href="#">OPERATOR SHOP</a>
+    <a href="index.html#operator">OPERATOR SHOP</a>
     <a href="sell.html">SELL</a>
     <a href="#">ABOUT</a>
   </nav>
