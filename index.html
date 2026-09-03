@@ -4,16 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>CARDÉ — Premium Card Market</title>
+  <title>CARDÉ</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
-
-    /* =========================
-       BASIC
-    ========================= */
-
     * {
       box-sizing: border-box;
       margin: 0;
@@ -31,8 +26,8 @@
     }
 
     a {
-      color: inherit;
       text-decoration: none;
+      color: inherit;
     }
 
 
@@ -41,7 +36,7 @@
     ========================= */
 
     header {
-      height: 80px;
+      height: 82px;
       padding: 0 50px;
 
       display: flex;
@@ -54,13 +49,13 @@
       top: 0;
       z-index: 100;
 
-      background: rgba(255,255,255,0.96);
+      background: rgba(255, 255, 255, 0.96);
       backdrop-filter: blur(10px);
     }
 
     .logo {
       font-size: 24px;
-      font-weight: 600;
+      font-weight: 500;
       letter-spacing: 7px;
     }
 
@@ -72,28 +67,22 @@
       letter-spacing: 2px;
     }
 
-    nav a {
+    nav a,
+    .header-right a {
       transition: opacity 0.3s ease;
     }
 
-    nav a:hover {
+    nav a:hover,
+    .header-right a:hover {
       opacity: 0.45;
     }
 
     .header-right {
       display: flex;
-      gap: 24px;
+      gap: 22px;
 
       font-size: 10px;
       letter-spacing: 2px;
-    }
-
-    .header-right a {
-      transition: opacity 0.3s ease;
-    }
-
-    .header-right a:hover {
-      opacity: 0.45;
     }
 
 
@@ -102,51 +91,44 @@
     ========================= */
 
     .hero {
-      height: 620px;
+      height: 600px;
 
       display: flex;
       align-items: center;
       justify-content: center;
 
       text-align: center;
-
-      padding: 40px;
     }
 
     .hero-inner {
       max-width: 800px;
+      padding: 30px;
     }
 
     .eyebrow {
       font-size: 10px;
       letter-spacing: 5px;
-
-      color: #888;
+      color: #999;
 
       margin-bottom: 28px;
     }
 
     .hero h1 {
-      font-size: 52px;
+      font-size: 54px;
       font-weight: 400;
 
-      letter-spacing: -2px;
       line-height: 1.1;
+      letter-spacing: -2px;
 
-      margin-bottom: 24px;
+      margin-bottom: 25px;
     }
 
     .hero p {
       font-size: 13px;
       color: #777;
 
-      margin-bottom: 38px;
+      margin-bottom: 35px;
     }
-
-
-    /* =========================
-       BUTTON
-    ========================= */
 
     .button {
       display: inline-flex;
@@ -154,8 +136,8 @@
       align-items: center;
       justify-content: center;
 
-      min-width: 135px;
       height: 46px;
+      min-width: 135px;
 
       background: #111;
       color: #fff;
@@ -170,7 +152,7 @@
 
     .button:hover {
       background: #333;
-      transform: translateY(-3px);
+      transform: translateY(-2px);
     }
 
 
@@ -183,8 +165,8 @@
       margin-bottom: 25px;
 
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
     }
 
     .section-title {
@@ -204,53 +186,43 @@
     ========================= */
 
     .collection {
-      padding-bottom: 120px;
+      padding-bottom: 130px;
     }
 
     .collection-grid {
       display: grid;
 
-      grid-template-columns:
-        repeat(4, 1fr);
+      grid-template-columns: repeat(4, 1fr);
 
-      gap: 4px;
+      gap: 5px;
 
-      padding: 0 4px;
+      padding: 0 5px;
     }
-
-
-    /* COLLECTION CARD */
 
     .collection-card {
       position: relative;
 
-      height: 360px;
-
-      background: #f5f5f5;
+      height: 370px;
 
       overflow: hidden;
 
+      background: #f5f5f5;
+
       transition:
-        transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1),
-        box-shadow 0.45s ease;
+        transform 0.4s ease,
+        box-shadow 0.4s ease;
     }
 
-
-    /* 카드 자체가 살짝 커지면서 위로 */
+    /* 커서를 가져가면 살짝 커짐 */
 
     .collection-card:hover {
-      transform:
-        translateY(-8px)
-        scale(1.015);
+      transform: scale(1.025);
 
-      z-index: 2;
+      z-index: 5;
 
       box-shadow:
-        0 15px 35px rgba(0,0,0,0.08);
+        0 15px 35px rgba(0, 0, 0, 0.10);
     }
-
-
-    /* COLLECTION IMAGE */
 
     .collection-card img {
       width: 100%;
@@ -261,26 +233,18 @@
       display: block;
 
       transition:
-        transform 0.8s
-        cubic-bezier(0.2, 0.7, 0.2, 1);
+        transform 0.6s ease;
     }
-
-
-    /* 사진 확대 */
 
     .collection-card:hover img {
-      transform: scale(1.08);
+      transform: scale(1.04);
     }
-
-
-    /* 이미지 없을 때 */
 
     .collection-placeholder {
       width: 100%;
       height: 100%;
 
       display: flex;
-
       align-items: center;
       justify-content: center;
 
@@ -292,38 +256,17 @@
       letter-spacing: 2px;
     }
 
-
-    /* COLLECTION TEXT */
-
     .collection-info {
       position: absolute;
 
-      left: 20px;
-      bottom: 20px;
+      left: 22px;
+      bottom: 22px;
 
       z-index: 3;
-
-      transform:
-        translateY(14px);
-
-      opacity: 0.75;
-
-      transition:
-        transform 0.5s ease,
-        opacity 0.5s ease;
     }
-
-
-    .collection-card:hover .collection-info {
-      transform:
-        translateY(0);
-
-      opacity: 1;
-    }
-
 
     .collection-name {
-      font-size: 12px;
+      font-size: 13px;
       letter-spacing: 1px;
 
       margin-bottom: 6px;
@@ -332,62 +275,6 @@
     .collection-desc {
       font-size: 9px;
       color: #777;
-    }
-
-
-    /* =========================
-       LARGE FEATURE IMAGE
-    ========================= */
-
-    .large-feature {
-      width: 100%;
-      max-width: 1400px;
-
-      margin: 0 auto 160px;
-
-      padding: 0 40px;
-
-      overflow: hidden;
-    }
-
-    .large-feature-image {
-      width: 100%;
-      height: 600px;
-
-      object-fit: cover;
-
-      display: block;
-
-      background: #f5f5f5;
-
-      transition:
-        transform 1s
-        cubic-bezier(0.2, 0.7, 0.2, 1);
-    }
-
-
-    /* 큰 사진도 살짝 확대 */
-
-    .large-feature:hover .large-feature-image {
-      transform: scale(1.04);
-    }
-
-
-    .large-feature-placeholder {
-      width: 100%;
-      height: 600px;
-
-      display: flex;
-
-      align-items: center;
-      justify-content: center;
-
-      background: #f5f5f5;
-
-      color: #aaa;
-
-      font-size: 10px;
-      letter-spacing: 3px;
     }
 
 
@@ -402,55 +289,45 @@
     .operator-grid {
       display: grid;
 
-      grid-template-columns:
-        repeat(4, 1fr);
+      grid-template-columns: repeat(4, 1fr);
 
-      gap: 4px;
+      gap: 5px;
 
-      padding: 0 4px;
+      padding: 0 5px;
     }
 
-
     .operator-card {
-      background: #f7f7f7;
-
-      min-height: 390px;
-
-      display: flex;
-
-      flex-direction: column;
+      background: #f6f6f6;
 
       overflow: hidden;
 
       transition:
-        transform 0.45s ease,
-        box-shadow 0.45s ease;
+        transform 0.4s ease,
+        box-shadow 0.4s ease;
     }
 
+    /* 운영자 상품도 살짝 커짐 */
 
     .operator-card:hover {
-      transform:
-        translateY(-8px)
-        scale(1.015);
+      transform: scale(1.025);
+
+      z-index: 5;
 
       box-shadow:
-        0 15px 35px rgba(0,0,0,0.08);
+        0 15px 35px rgba(0, 0, 0, 0.10);
     }
 
-
     .operator-image {
-      height: 290px;
+      height: 300px;
 
       background: #eee;
 
       display: flex;
-
       align-items: center;
       justify-content: center;
 
       overflow: hidden;
     }
-
 
     .operator-image img {
       width: 100%;
@@ -459,40 +336,30 @@
       object-fit: cover;
 
       transition:
-        transform 0.7s
-        cubic-bezier(0.2, 0.7, 0.2, 1);
+        transform 0.6s ease;
     }
-
 
     .operator-card:hover .operator-image img {
-      transform: scale(1.07);
+      transform: scale(1.05);
     }
-
 
     .operator-placeholder {
       font-size: 9px;
-
       letter-spacing: 2px;
-
       color: #aaa;
     }
-
 
     .operator-info {
       padding: 20px;
     }
 
-
     .operator-category {
       font-size: 8px;
-
       letter-spacing: 2px;
-
       color: #999;
 
-      margin-bottom: 8px;
+      margin-bottom: 9px;
     }
-
 
     .operator-name {
       font-size: 13px;
@@ -500,112 +367,8 @@
       margin-bottom: 12px;
     }
 
-
     .operator-price {
       font-size: 12px;
-    }
-
-
-    /* =========================
-       ABOUT / SERVICE
-    ========================= */
-
-    .service {
-      border-top: 1px solid #eee;
-      border-bottom: 1px solid #eee;
-
-      padding: 90px 50px;
-    }
-
-
-    .service-grid {
-      max-width: 1200px;
-
-      margin: 0 auto;
-
-      display: grid;
-
-      grid-template-columns:
-        repeat(3, 1fr);
-    }
-
-
-    .service-item {
-      text-align: center;
-
-      padding: 20px 40px;
-
-      border-right: 1px solid #eee;
-    }
-
-
-    .service-item:last-child {
-      border-right: none;
-    }
-
-
-    .service-number {
-      font-size: 9px;
-
-      letter-spacing: 2px;
-
-      color: #aaa;
-
-      margin-bottom: 20px;
-    }
-
-
-    .service-item h3 {
-      font-size: 15px;
-
-      font-weight: 400;
-
-      margin-bottom: 12px;
-    }
-
-
-    .service-item p {
-      font-size: 10px;
-
-      line-height: 1.8;
-
-      color: #888;
-    }
-
-
-    /* =========================
-       SELL
-    ========================= */
-
-    .sell-section {
-      padding: 150px 40px;
-
-      text-align: center;
-    }
-
-
-    .sell-section .eyebrow {
-      margin-bottom: 20px;
-    }
-
-
-    .sell-section h2 {
-      font-size: 38px;
-
-      font-weight: 400;
-
-      line-height: 1.2;
-
-      margin-bottom: 18px;
-    }
-
-
-    .sell-section p {
-      font-size: 12px;
-
-      color: #888;
-
-      margin-bottom: 35px;
     }
 
 
@@ -619,25 +382,18 @@
       padding: 50px;
 
       display: flex;
-
       justify-content: space-between;
-
       align-items: flex-start;
     }
 
-
     .footer-logo {
       font-size: 18px;
-
       letter-spacing: 5px;
     }
 
-
     .footer-text {
       font-size: 9px;
-
       line-height: 1.8;
-
       color: #999;
 
       text-align: right;
@@ -675,60 +431,19 @@
       }
 
       .collection-grid {
-        grid-template-columns:
-          repeat(2, 1fr);
+        grid-template-columns: repeat(2, 1fr);
       }
 
       .collection-card {
-        height: 270px;
-      }
-
-      .large-feature {
-        padding: 0 20px;
-
-        margin-bottom: 100px;
-      }
-
-      .large-feature-image,
-      .large-feature-placeholder {
-        height: 350px;
+        height: 280px;
       }
 
       .operator-grid {
-        grid-template-columns:
-          repeat(2, 1fr);
+        grid-template-columns: repeat(2, 1fr);
       }
 
       .operator-image {
         height: 230px;
-      }
-
-      .service {
-        padding: 60px 20px;
-      }
-
-      .service-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .service-item {
-        border-right: none;
-
-        border-bottom: 1px solid #eee;
-
-        padding: 30px;
-      }
-
-      .service-item:last-child {
-        border-bottom: none;
-      }
-
-      .sell-section {
-        padding: 100px 20px;
-      }
-
-      .sell-section h2 {
-        font-size: 30px;
       }
 
       footer {
@@ -742,7 +457,6 @@
       .footer-text {
         text-align: left;
       }
-
     }
 
   </style>
@@ -752,712 +466,556 @@
 <body>
 
 
-<!-- =========================
-     HEADER
-========================= -->
+  <!-- =========================
+       HEADER
+  ========================= -->
 
-<header>
+  <header>
 
-  <a href="index.html" class="logo">
-    CARDÉ
-  </a>
-
-
-  <nav>
-
-    <a href="#collection">
-      COLLECTION
+    <a href="index.html" class="logo">
+      CARDÉ
     </a>
 
-    <a href="#operator-shop">
-      OPERATOR SHOP
-    </a>
 
-    <a href="sell.html">
-      SELL
-    </a>
+    <nav>
 
-    <a href="#about">
-      ABOUT
-    </a>
+      <a href="#collection">
+        COLLECTION
+      </a>
 
-  </nav>
+      <a href="#operator-shop">
+        OPERATOR SHOP
+      </a>
 
+      <a href="sell.html">
+        SELL
+      </a>
 
-  <div class="header-right">
+      <a href="#about">
+        ABOUT
+      </a>
 
-    <a href="#">
-      SEARCH
-    </a>
-
-    <a href="#">
-      ♡
-    </a>
-
-    <a href="#">
-      LOGIN
-    </a>
-
-  </div>
-
-</header>
+    </nav>
 
 
+    <div class="header-right">
 
-<!-- =========================
-     HERO
-========================= -->
+      <a href="#">
+        SEARCH
+      </a>
 
-<section class="hero">
+      <a href="#">
+        ♡
+      </a>
 
-  <div class="hero-inner">
+      <a href="#">
+        LOGIN
+      </a>
 
-    <div class="eyebrow">
-      CARDÉ COLLECTION
     </div>
 
-
-    <h1>
-      A Curated Card Market
-    </h1>
-
-
-    <p>
-      Discover cards worth collecting.
-    </p>
-
-
-    <a
-      href="#collection"
-      class="button"
-    >
-      EXPLORE
-    </a>
-
-  </div>
-
-</section>
+  </header>
 
 
 
-<!-- =========================
-     COLLECTION
-========================= -->
+  <!-- =========================
+       HERO
+  ========================= -->
 
-<section
-  class="collection"
-  id="collection"
->
+  <section class="hero">
 
-  <div class="section-header">
+    <div class="hero-inner">
 
-    <div class="section-title">
-      COLLECTION
-    </div>
-
-    <div class="section-subtitle">
-      CARD GAMES
-    </div>
-
-  </div>
-
-
-  <div
-    class="collection-grid"
-    id="collectionGrid"
-  >
-  </div>
-
-</section>
-
-
-
-<!-- =========================
-     LARGE FEATURE
-========================= -->
-
-<section class="large-feature">
-
-  <img
-    class="large-feature-image"
-    src="images/featured.jpg"
-    alt="CARDÉ Featured"
-    onerror="
-      this.style.display='none';
-      this.nextElementSibling.style.display='flex';
-    "
-  >
-
-
-  <div
-    class="large-feature-placeholder"
-    style="display:none;"
-  >
-    FEATURED IMAGE
-  </div>
-
-</section>
-
-
-
-<!-- =========================
-     OPERATOR SHOP
-========================= -->
-
-<section
-  class="operator-shop"
-  id="operator-shop"
->
-
-  <div class="section-header">
-
-    <div class="section-title">
-      OPERATOR SHOP
-    </div>
-
-    <div class="section-subtitle">
-      CURATED BY CARDÉ
-    </div>
-
-  </div>
-
-
-  <div class="operator-grid">
-
-
-    <!-- CARD 1 -->
-
-    <a
-      href="#"
-      class="operator-card"
-    >
-
-      <div class="operator-image">
-
-        <div class="operator-placeholder">
-          PRODUCT IMAGE
-        </div>
-
+      <div class="eyebrow">
+        CARDÉ COLLECTION
       </div>
 
-
-      <div class="operator-info">
-
-        <div class="operator-category">
-          POKÉMON
-        </div>
-
-        <div class="operator-name">
-          Featured Card
-        </div>
-
-        <div class="operator-price">
-          ₩ ——
-        </div>
-
-      </div>
-
-    </a>
-
-
-
-    <!-- CARD 2 -->
-
-    <a
-      href="#"
-      class="operator-card"
-    >
-
-      <div class="operator-image">
-
-        <div class="operator-placeholder">
-          PRODUCT IMAGE
-        </div>
-
-      </div>
-
-
-      <div class="operator-info">
-
-        <div class="operator-category">
-          ONE PIECE
-        </div>
-
-        <div class="operator-name">
-          Featured Card
-        </div>
-
-        <div class="operator-price">
-          ₩ ——
-        </div>
-
-      </div>
-
-    </a>
-
-
-
-    <!-- CARD 3 -->
-
-    <a
-      href="#"
-      class="operator-card"
-    >
-
-      <div class="operator-image">
-
-        <div class="operator-placeholder">
-          PRODUCT IMAGE
-        </div>
-
-      </div>
-
-
-      <div class="operator-info">
-
-        <div class="operator-category">
-          WEISS SCHWARZ
-        </div>
-
-        <div class="operator-name">
-          Featured Card
-        </div>
-
-        <div class="operator-price">
-          ₩ ——
-        </div>
-
-      </div>
-
-    </a>
-
-
-
-    <!-- CARD 4 -->
-
-    <a
-      href="#"
-      class="operator-card"
-    >
-
-      <div class="operator-image">
-
-        <div class="operator-placeholder">
-          PRODUCT IMAGE
-        </div>
-
-      </div>
-
-
-      <div class="operator-info">
-
-        <div class="operator-category">
-          BUILD DIVIDE
-        </div>
-
-        <div class="operator-name">
-          Featured Card
-        </div>
-
-        <div class="operator-price">
-          ₩ ——
-        </div>
-
-      </div>
-
-    </a>
-
-
-  </div>
-
-</section>
-
-
-
-<!-- =========================
-     CARDÉ SERVICE
-========================= -->
-
-<section
-  class="service"
-  id="about"
->
-
-  <div class="service-grid">
-
-
-    <div class="service-item">
-
-      <div class="service-number">
-        01
-      </div>
-
-      <h3>
-        Curated Collection
-      </h3>
+      <h1>
+        A Curated Card Market
+      </h1>
 
       <p>
-        Discover collectible cards<br>
-        across multiple card games.
+        Discover cards worth collecting.
       </p>
+
+      <a
+        href="#collection"
+        class="button"
+      >
+        EXPLORE
+      </a>
 
     </div>
 
-
-
-    <div class="service-item">
-
-      <div class="service-number">
-        02
-      </div>
-
-      <h3>
-        Simple Marketplace
-      </h3>
-
-      <p>
-        Buy and sell cards<br>
-        through a simple marketplace.
-      </p>
-
-    </div>
+  </section>
 
 
 
-    <div class="service-item">
+  <!-- =========================
+       COLLECTION
+  ========================= -->
 
-      <div class="service-number">
-        03
-      </div>
-
-      <h3>
-        Collector Focused
-      </h3>
-
-      <p>
-        Built for collectors<br>
-        who value every card.
-      </p>
-
-    </div>
-
-
-  </div>
-
-</section>
-
-
-
-<!-- =========================
-     SELL
-========================= -->
-
-<section class="sell-section">
-
-  <div class="eyebrow">
-    SELL YOUR CARDS
-  </div>
-
-
-  <h2>
-    Give Your Collection<br>
-    a New Home.
-  </h2>
-
-
-  <p>
-    List your cards on CARDÉ.
-  </p>
-
-
-  <a
-    href="sell.html"
-    class="button"
+  <section
+    class="collection"
+    id="collection"
   >
-    START SELLING
-  </a>
 
-</section>
+    <div class="section-header">
 
+      <div class="section-title">
+        COLLECTION
+      </div>
 
+      <div class="section-subtitle">
+        CARD GAMES
+      </div>
 
-<!-- =========================
-     FOOTER
-========================= -->
-
-<footer>
-
-  <div class="footer-logo">
-    CARDÉ
-  </div>
+    </div>
 
 
-  <div class="footer-text">
+    <div
+      class="collection-grid"
+      id="collectionGrid"
+    >
 
-    CARDÉ — A CURATED CARD MARKET<br>
+      <!-- Supabase에서 자동으로 생성 -->
 
-    © 2026 CARDÉ. ALL RIGHTS RESERVED.
+    </div>
 
-  </div>
-
-</footer>
+  </section>
 
 
 
-<!-- =========================
-     SUPABASE
-========================= -->
+  <!-- =========================
+       OPERATOR SHOP
+  ========================= -->
 
-<script>
+  <section
+    class="operator-shop"
+    id="operator-shop"
+  >
 
-  const SUPABASE_URL =
-    "https://byjnjciwsdwxuneusgau.supabase.co";
+    <div class="section-header">
 
+      <div class="section-title">
+        OPERATOR SHOP
+      </div>
 
-  const SUPABASE_PUBLISHABLE_KEY =
-    "sb_publishable_9-MEV3xReYbJBBSQFAW_xA_sxniWNBl";
+      <div class="section-subtitle">
+        OFFICIAL CARDÉ STORE
+      </div>
 
-
-  const supabaseClient =
-    window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_PUBLISHABLE_KEY
-    );
-
-
-
-  /* =========================
-     GAME PAGE LINKS
-  ========================= */
-
-  const gameLinks = {
-
-    "POKÉMON":
-      "pokemon.html",
-
-    "ONE PIECE":
-      "onepiece.html",
-
-    "WEISS SCHWARZ":
-      "weiss.html",
-
-    "BUILD DIVIDE":
-      "builddivide.html"
-
-  };
+    </div>
 
 
+    <div class="operator-grid">
 
-  /* =========================
-     LOAD COLLECTION
-  ========================= */
 
-  async function loadCollection() {
+      <!-- 상품 1 -->
 
-    const grid =
-      document.getElementById(
-        "collectionGrid"
+      <a
+        href="#"
+        class="operator-card"
+      >
+
+        <div class="operator-image">
+
+          <div class="operator-placeholder">
+            PRODUCT IMAGE
+          </div>
+
+        </div>
+
+
+        <div class="operator-info">
+
+          <div class="operator-category">
+            POKÉMON
+          </div>
+
+          <div class="operator-name">
+            Featured Card
+          </div>
+
+          <div class="operator-price">
+            ₩ ——
+          </div>
+
+        </div>
+
+      </a>
+
+
+
+      <!-- 상품 2 -->
+
+      <a
+        href="#"
+        class="operator-card"
+      >
+
+        <div class="operator-image">
+
+          <div class="operator-placeholder">
+            PRODUCT IMAGE
+          </div>
+
+        </div>
+
+
+        <div class="operator-info">
+
+          <div class="operator-category">
+            ONE PIECE
+          </div>
+
+          <div class="operator-name">
+            Featured Card
+          </div>
+
+          <div class="operator-price">
+            ₩ ——
+          </div>
+
+        </div>
+
+      </a>
+
+
+
+      <!-- 상품 3 -->
+
+      <a
+        href="#"
+        class="operator-card"
+      >
+
+        <div class="operator-image">
+
+          <div class="operator-placeholder">
+            PRODUCT IMAGE
+          </div>
+
+        </div>
+
+
+        <div class="operator-info">
+
+          <div class="operator-category">
+            WEISS SCHWARZ
+          </div>
+
+          <div class="operator-name">
+            Featured Card
+          </div>
+
+          <div class="operator-price">
+            ₩ ——
+          </div>
+
+        </div>
+
+      </a>
+
+
+
+      <!-- 상품 4 -->
+
+      <a
+        href="#"
+        class="operator-card"
+      >
+
+        <div class="operator-image">
+
+          <div class="operator-placeholder">
+            PRODUCT IMAGE
+          </div>
+
+        </div>
+
+
+        <div class="operator-info">
+
+          <div class="operator-category">
+            BUILD DIVIDE
+          </div>
+
+          <div class="operator-name">
+            Featured Card
+          </div>
+
+          <div class="operator-price">
+            ₩ ——
+          </div>
+
+        </div>
+
+      </a>
+
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =========================
+       FOOTER
+  ========================= -->
+
+  <footer id="about">
+
+    <div class="footer-logo">
+      CARDÉ
+    </div>
+
+
+    <div class="footer-text">
+
+      CARDÉ — A CURATED CARD MARKET<br>
+
+      © 2026 CARDÉ. ALL RIGHTS RESERVED.
+
+    </div>
+
+  </footer>
+
+
+
+  <!-- =========================
+       SUPABASE
+  ========================= -->
+
+  <script>
+
+    const SUPABASE_URL =
+      "https://byjnjciwsdwxuneusgau.supabase.co";
+
+
+    const SUPABASE_PUBLISHABLE_KEY =
+      "sb_publishable_9-MEV3xReYbJBBSQFAW_xA_sxniWNBl";
+
+
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
       );
 
 
-    const {
-      data,
-      error
-    } =
-      await supabaseClient
-        .from("collection_settings")
-        .select(
-          "id, game_name, description, image_url"
-        )
-        .order(
-          "id",
-          {
-            ascending: true
-          }
+    /* =========================
+       GAME LINKS
+    ========================= */
+
+    const gameLinks = {
+
+      "POKÉMON":
+        "pokemon.html",
+
+      "ONE PIECE":
+        "onepiece.html",
+
+      "WEISS SCHWARZ":
+        "weiss.html",
+
+      "BUILD DIVIDE":
+        "builddivide.html"
+
+    };
+
+
+    /* =========================
+       LOAD COLLECTION
+    ========================= */
+
+    async function loadCollection() {
+
+      const grid =
+        document.getElementById(
+          "collectionGrid"
         );
 
 
-    if (
-      error ||
-      !data ||
-      data.length === 0
-    ) {
-
-      console.log(
-        "Collection settings unavailable:",
+      const {
+        data,
         error
-      );
-
-
-      createFallbackCollection();
-
-      return;
-
-    }
-
-
-    grid.innerHTML = "";
-
-
-    data.forEach(item => {
-
-      const name =
-        item.game_name ||
-        "CARD GAME";
-
-
-      const link =
-        gameLinks[name] ||
-        "#";
-
-
-      const card =
-        document.createElement(
-          "a"
-        );
-
-
-      card.className =
-        "collection-card";
-
-
-      card.href =
-        link;
-
-
-
-      /* IMAGE */
-
-      if (item.image_url) {
-
-        const img =
-          document.createElement(
-            "img"
+      } =
+        await supabaseClient
+          .from("collection_settings")
+          .select(
+            "id, game_name, description, image_url"
+          )
+          .order(
+            "id",
+            {
+              ascending: true
+            }
           );
 
 
-        img.src =
-          item.image_url;
+      if (
+        error ||
+        !data ||
+        data.length === 0
+      ) {
 
+        createFallbackCollection();
 
-        img.alt =
-          name;
-
-
-        card.appendChild(
-          img
-        );
-
+        return;
       }
 
-      else {
 
-        const placeholder =
+      grid.innerHTML = "";
+
+
+      data.forEach(item => {
+
+        const name =
+          item.game_name ||
+          "CARD GAME";
+
+
+        const link =
+          gameLinks[name] ||
+          "#";
+
+
+        const card =
+          document.createElement(
+            "a"
+          );
+
+
+        card.className =
+          "collection-card";
+
+
+        card.href =
+          link;
+
+
+        /* 사진 */
+
+        if (item.image_url) {
+
+          const img =
+            document.createElement(
+              "img"
+            );
+
+          img.src =
+            item.image_url;
+
+          img.alt =
+            name;
+
+          card.appendChild(
+            img
+          );
+
+        }
+
+        else {
+
+          const placeholder =
+            document.createElement(
+              "div"
+            );
+
+          placeholder.className =
+            "collection-placeholder";
+
+          placeholder.textContent =
+            "COLLECTION IMAGE";
+
+          card.appendChild(
+            placeholder
+          );
+
+        }
+
+
+        /* 이름 */
+
+        const info =
           document.createElement(
             "div"
           );
 
+        info.className =
+          "collection-info";
 
-        placeholder.className =
-          "collection-placeholder";
 
+        info.innerHTML = `
 
-        placeholder.textContent =
-          "COLLECTION IMAGE";
+          <div class="collection-name">
+            ${name}
+          </div>
+
+          <div class="collection-desc">
+            ${item.description || ""}
+          </div>
+
+        `;
 
 
         card.appendChild(
-          placeholder
-        );
-
-      }
-
-
-
-      /* TEXT */
-
-      const info =
-        document.createElement(
-          "div"
+          info
         );
 
 
-      info.className =
-        "collection-info";
+        grid.appendChild(
+          card
+        );
+
+      });
+
+    }
 
 
-      info.innerHTML = `
+    /* =========================
+       FALLBACK COLLECTION
+    ========================= */
 
-        <div class="collection-name">
-          ${name}
-        </div>
+    function createFallbackCollection() {
 
-        <div class="collection-desc">
-          ${item.description || ""}
-        </div>
-
-      `;
-
-
-      card.appendChild(
-        info
-      );
+      const grid =
+        document.getElementById(
+          "collectionGrid"
+        );
 
 
-      grid.appendChild(
-        card
-      );
+      const games = [
 
-    });
+        {
+          name: "POKÉMON",
+          desc: "Discover Pokémon Cards",
+          link: "pokemon.html"
+        },
 
-  }
+        {
+          name: "ONE PIECE",
+          desc: "Discover One Piece Cards",
+          link: "onepiece.html"
+        },
 
+        {
+          name: "WEISS SCHWARZ",
+          desc: "Discover Weiss Schwarz Cards",
+          link: "weiss.html"
+        },
 
+        {
+          name: "BUILD DIVIDE",
+          desc: "Discover Build Divide Cards",
+          link: "builddivide.html"
+        }
 
-  /* =========================
-     FALLBACK
-  ========================= */
-
-  function createFallbackCollection() {
-
-    const grid =
-      document.getElementById(
-        "collectionGrid"
-      );
-
-
-    const games = [
-
-      {
-        name: "POKÉMON",
-        desc: "Discover Pokémon Cards",
-        link: "pokemon.html"
-      },
-
-      {
-        name: "ONE PIECE",
-        desc: "Discover One Piece Cards",
-        link: "onepiece.html"
-      },
-
-      {
-        name: "WEISS SCHWARZ",
-        desc: "Discover Weiss Schwarz Cards",
-        link: "weiss.html"
-      },
-
-      {
-        name: "BUILD DIVIDE",
-        desc: "Discover Build Divide Cards",
-        link: "builddivide.html"
-      }
-
-    ];
+      ];
 
 
-
-    games.forEach(
-      game => {
+      games.forEach(game => {
 
         const card =
           document.createElement(
@@ -1498,21 +1056,16 @@
           card
         );
 
-      }
-    );
+      });
 
-  }
-
+    }
 
 
-  /* =========================
-     START
-  ========================= */
+    /* 실행 */
 
-  loadCollection();
+    loadCollection();
 
-</script>
-
+  </script>
 
 </body>
 </html>
