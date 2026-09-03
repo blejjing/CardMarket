@@ -1,686 +1,869 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>CARDÉ — Premium Card Market</title>
 
+
   <style>
+
     * {
-      margin: 0;
-      padding: 0;
       box-sizing: border-box;
     }
 
+
     body {
-      font-family: Arial, "Noto Sans KR", sans-serif;
-      color: #111;
+      margin: 0;
       background: #fff;
+      color: #111;
+      font-family: Arial, Helvetica, sans-serif;
     }
 
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
 
-    /* HEADER */
+    /* =========================
+       HEADER
+    ========================= */
 
     header {
+
       height: 82px;
+
       border-bottom: 1px solid #e8e8e8;
+
       display: flex;
+
       align-items: center;
+
       justify-content: space-between;
+
       padding: 0 6%;
-      background: #fff;
+
     }
+
 
     .logo {
-      font-size: 23px;
+
+      color: #111;
+
+      text-decoration: none;
+
+      font-size: 25px;
+
       font-weight: 600;
-      letter-spacing: 6px;
+
+      letter-spacing: 7px;
+
     }
+
 
     nav {
+
       display: flex;
-      gap: 38px;
-      font-size: 12px;
-      letter-spacing: 1.5px;
+
+      gap: 32px;
+
     }
+
 
     nav a {
-      transition: 0.2s;
+
+      color: #111;
+
+      text-decoration: none;
+
+      font-size: 10px;
+
+      letter-spacing: 2px;
+
     }
+
 
     nav a:hover {
-      opacity: 0.45;
+
+      opacity: .5;
+
     }
 
-    .header-right {
-      display: flex;
-      gap: 22px;
-      font-size: 12px;
-      letter-spacing: 1px;
-    }
 
-    .header-right a:hover {
-      opacity: 0.45;
-    }
-
-    /* HERO */
+    /* =========================
+       HERO
+    ========================= */
 
     .hero {
-      min-height: 680px;
-      background: #f7f7f7;
+
+      min-height: 470px;
+
       display: flex;
-      align-items: center;
+
+      flex-direction: column;
+
       justify-content: center;
+
+      align-items: center;
+
       text-align: center;
+
       padding: 80px 20px;
+
     }
 
-    .hero-small {
-      font-size: 11px;
+
+    .eyebrow {
+
+      font-size: 10px;
+
       letter-spacing: 4px;
+
       color: #777;
-      margin-bottom: 28px;
+
+      margin-bottom: 25px;
+
     }
+
 
     .hero h1 {
-      font-size: 68px;
+
+      margin: 0;
+
+      font-size: 58px;
+
       font-weight: 400;
-      letter-spacing: 10px;
-      margin-bottom: 28px;
+
+      letter-spacing: -3px;
+
+      line-height: 1.05;
+
     }
+
 
     .hero p {
-      font-size: 15px;
-      line-height: 1.9;
-      color: #666;
-      margin-bottom: 42px;
+
+      margin-top: 25px;
+
+      color: #777;
+
+      font-size: 13px;
+
+      letter-spacing: 1px;
+
     }
+
 
     .hero-button {
-      display: inline-block;
-      padding: 17px 42px;
+
+      margin-top: 35px;
+
+      display: inline-flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      width: 145px;
+
+      height: 48px;
+
       background: #111;
-      color: white;
-      font-size: 11px;
+
+      color: #fff;
+
+      text-decoration: none;
+
+      font-size: 10px;
+
       letter-spacing: 2px;
-      transition: 0.3s;
+
     }
+
 
     .hero-button:hover {
+
       background: #333;
+
     }
 
-    /* SECTION */
 
-    section {
-      padding: 110px 6%;
-    }
-
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: end;
-      margin-bottom: 48px;
-    }
-
-    .section-header h2 {
-      font-size: 28px;
-      font-weight: 400;
-      letter-spacing: 3px;
-    }
-
-    .section-header span {
-      font-size: 11px;
-      color: #888;
-      letter-spacing: 1px;
-    }
-
-    /* COLLECTION */
+    /* =========================
+       COLLECTION
+    ========================= */
 
     .collection {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
+
+      padding: 75px 6% 120px;
+
     }
+
+
+    .section-top {
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      margin-bottom: 28px;
+
+    }
+
+
+    .section-title {
+
+      font-size: 16px;
+
+      letter-spacing: 2px;
+
+    }
+
+
+    .section-subtitle {
+
+      font-size: 9px;
+
+      letter-spacing: 2px;
+
+      color: #777;
+
+    }
+
+
+    .collection-grid {
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(4, 1fr);
+
+      gap: 12px;
+
+    }
+
 
     .collection-card {
-      height: 310px;
-      background: #f3f3f3;
-      display: flex;
-      align-items: end;
-      padding: 30px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
 
-    .collection-card:hover {
-      transform: translateY(-5px);
-    }
+      position: relative;
 
-    .collection-card h3 {
-      font-size: 17px;
-      font-weight: 400;
-      letter-spacing: 2px;
-      margin-bottom: 8px;
-    }
+      height: 330px;
 
-    .collection-card p {
-      font-size: 12px;
-      color: #777;
-    }
+      overflow: hidden;
 
-    /* MARKET */
-
-    .products {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 24px;
-    }
-
-    .product {
-      cursor: pointer;
-    }
-
-    .product-image {
-      height: 350px;
       background: #f5f5f5;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 20px;
-    }
 
-    .product-image span {
-      font-size: 10px;
-      color: #aaa;
-      letter-spacing: 2px;
-    }
+      text-decoration: none;
 
-    .product h3 {
-      font-size: 14px;
-      font-weight: 400;
-      margin-bottom: 8px;
-    }
-
-    .product-type {
-      font-size: 12px;
-      color: #888;
-      margin-bottom: 10px;
-    }
-
-    .price {
-      font-size: 13px;
-      font-weight: 600;
-    }
-
-    /* OPERATOR SHOP */
-
-    .operator {
-      background: #111;
-      color: white;
-      text-align: center;
-      padding: 120px 20px;
-    }
-
-    .operator-label {
-      font-size: 10px;
-      letter-spacing: 4px;
-      color: #999;
-      margin-bottom: 25px;
-    }
-
-    .operator h2 {
-      font-size: 42px;
-      font-weight: 400;
-      letter-spacing: 5px;
-      margin-bottom: 22px;
-    }
-
-    .operator p {
-      color: #aaa;
-      font-size: 13px;
-      margin-bottom: 38px;
-    }
-
-    .operator-button {
-      display: inline-block;
-      background: white;
       color: #111;
-      padding: 17px 40px;
-      font-size: 11px;
+
+      display: block;
+
+    }
+
+
+    .collection-card img {
+
+      width: 100%;
+
+      height: 100%;
+
+      object-fit: cover;
+
+      display: block;
+
+      transition: transform .5s ease;
+
+    }
+
+
+    .collection-card:hover img {
+
+      transform: scale(1.03);
+
+    }
+
+
+    .image-placeholder {
+
+      position: absolute;
+
+      inset: 0;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      color: #aaa;
+
+      font-size: 9px;
+
       letter-spacing: 2px;
+
     }
 
-    .operator-button:hover {
-      background: #ddd;
+
+    .collection-info {
+
+      position: absolute;
+
+      left: 20px;
+
+      bottom: 20px;
+
+      z-index: 2;
+
     }
 
-    /* SELL */
 
-    .sell {
-      text-align: center;
-      padding: 110px 20px;
-      border-bottom: 1px solid #eee;
-    }
+    .collection-name {
 
-    .sell h2 {
-      font-size: 32px;
-      font-weight: 400;
-      letter-spacing: 3px;
-      margin-bottom: 18px;
-    }
-
-    .sell p {
-      color: #777;
       font-size: 13px;
-      margin-bottom: 32px;
-    }
 
-    .sell-button {
-      display: inline-block;
-      border: 1px solid #111;
-      padding: 16px 38px;
-      font-size: 11px;
       letter-spacing: 2px;
-      transition: 0.3s;
+
+      margin-bottom: 5px;
+
     }
 
-    .sell-button:hover {
-      background: #111;
-      color: white;
+
+    .collection-description {
+
+      font-size: 9px;
+
+      color: #777;
+
     }
 
-    /* FOOTER */
+
+    /* =========================
+       FOOTER
+    ========================= */
 
     footer {
-      background: #111;
-      color: #888;
-      padding: 55px 6%;
-      font-size: 10px;
-      line-height: 2;
+
+      border-top: 1px solid #e8e8e8;
+
+      padding: 35px 6%;
+
+      color: #777;
+
+      font-size: 9px;
+
+      letter-spacing: 2px;
+
     }
 
-    .footer-logo {
-      color: white;
-      font-size: 18px;
-      letter-spacing: 5px;
-      margin-bottom: 15px;
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 900px) {
+
+      .collection-grid {
+
+        grid-template-columns:
+          repeat(2, 1fr);
+
+      }
+
     }
 
-    /* MOBILE */
 
-    @media (max-width: 800px) {
+    @media (max-width: 600px) {
 
       header {
+
         padding: 0 20px;
+
       }
+
 
       nav {
-        display: none;
+
+        gap: 12px;
+
       }
 
-      .header-right {
-        gap: 12px;
+
+      nav a {
+
+        font-size: 8px;
+
       }
+
+
+      .hero {
+
+        min-height: 420px;
+
+      }
+
 
       .hero h1 {
-        font-size: 43px;
-        letter-spacing: 6px;
+
+        font-size: 42px;
+
       }
+
 
       .collection {
+
+        padding-left: 20px;
+
+        padding-right: 20px;
+
+      }
+
+
+      .collection-grid {
+
         grid-template-columns: 1fr;
+
       }
 
-      .products {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
+
+      .collection-card {
+
+        height: 300px;
+
       }
 
-      .product-image {
-        height: 230px;
-      }
-
-      section {
-        padding: 75px 20px;
-      }
-
-      .operator h2 {
-        font-size: 30px;
-      }
     }
+
   </style>
+
 </head>
+
 
 <body>
 
-  <!-- HEADER -->
+
+  <!-- =========================
+       HEADER
+  ========================= -->
 
   <header>
 
-    <a href="index.html" class="logo">
+    <a
+      href="index.html"
+      class="logo"
+    >
       CARDÉ
     </a>
 
-    <nav>
-      <a href="#market">MARKET</a>
 
-      <a href="#operator">
-        OPERATOR SHOP
+    <nav>
+
+      <a href="index.html">
+        HOME
       </a>
 
-      <!-- SELL 연결 -->
       <a href="sell.html">
         SELL
       </a>
 
-      <a href="#">
-        ABOUT
-      </a>
-    </nav>
-
-    <div class="header-right">
-
-      <a href="#">
-        SEARCH
-      </a>
-
-      <a href="#">
-        ♡
-      </a>
-
-      <a href="#">
+      <a href="login.html">
         LOGIN
       </a>
 
-    </div>
+    </nav>
 
   </header>
 
 
-  <!-- HERO -->
 
-  <div class="hero">
+  <!-- =========================
+       HERO
+  ========================= -->
 
-    <div>
+  <section class="hero">
 
-      <div class="hero-small">
-        PREMIUM TRADING CARD MARKET
-      </div>
-
-      <h1>
-        CARDÉ
-      </h1>
-
-      <p>
-        A Curated Card Market for Your Collection
-      </p>
-
-      <a href="#market" class="hero-button">
-        EXPLORE MARKET
-      </a>
-
+    <div class="eyebrow">
+      CARDÉ COLLECTION
     </div>
 
-  </div>
+
+    <h1>
+      A Curated Card Market
+    </h1>
 
 
-  <!-- COLLECTION -->
+    <p>
+      Discover cards worth collecting.
+    </p>
 
-  <section>
 
-    <div class="section-header">
+    <a
+      href="#collection"
+      class="hero-button"
+    >
+      EXPLORE
+    </a>
 
-      <h2>
+  </section>
+
+
+
+  <!-- =========================
+       COLLECTION
+  ========================= -->
+
+  <section
+    class="collection"
+    id="collection"
+  >
+
+    <div class="section-top">
+
+      <div class="section-title">
         COLLECTION
-      </h2>
+      </div>
 
-      <span>
-        EXPLORE
-      </span>
+      <div class="section-subtitle">
+        CARD GAMES
+      </div>
 
     </div>
 
 
-    <div class="collection">
+    <div
+      class="collection-grid"
+      id="collectionGrid"
+    >
 
-      <div class="collection-card">
-
-        <div>
-
-          <h3>
-            POKÉMON
-          </h3>
-
-          <p>
-            Discover Pokémon Cards
-          </p>
-
-        </div>
-
-      </div>
-
-
-      <div class="collection-card">
-
-        <div>
-
-          <h3>
-            ONE PIECE
-          </h3>
-
-          <p>
-            Discover One Piece Cards
-          </p>
-
-        </div>
-
-      </div>
-
-
-      <div class="collection-card">
-
-        <div>
-
-          <h3>
-            WEISS SCHWARZ
-          </h3>
-
-          <p>
-            Discover Weiss Schwarz Cards
-          </p>
-
-        </div>
-
-      </div>
+      <!-- JavaScript로 자동 생성 -->
 
     </div>
 
   </section>
 
 
-  <!-- MARKET -->
 
-  <section id="market">
-
-    <div class="section-header">
-
-      <h2>
-        MARKET
-      </h2>
-
-      <span>
-        MEMBER LISTINGS
-      </span>
-
-    </div>
-
-
-    <div class="products">
-
-
-      <div class="product">
-
-        <div class="product-image">
-          <span>
-            CARD IMAGE
-          </span>
-        </div>
-
-        <h3>
-          Pokémon Special Card
-        </h3>
-
-        <div class="product-type">
-          Member Listing
-        </div>
-
-        <div class="price">
-          ₩120,000
-        </div>
-
-      </div>
-
-
-      <div class="product">
-
-        <div class="product-image">
-          <span>
-            CARD IMAGE
-          </span>
-        </div>
-
-        <h3>
-          One Piece Rare Card
-        </h3>
-
-        <div class="product-type">
-          Member Listing
-        </div>
-
-        <div class="price">
-          ₩250,000
-        </div>
-
-      </div>
-
-
-      <div class="product">
-
-        <div class="product-image">
-          <span>
-            CARD IMAGE
-          </span>
-        </div>
-
-        <h3>
-          Weiss Schwarz SP
-        </h3>
-
-        <div class="product-type">
-          Member Listing
-        </div>
-
-        <div class="price">
-          ₩180,000
-        </div>
-
-      </div>
-
-
-      <div class="product">
-
-        <div class="product-image">
-          <span>
-            CARD IMAGE
-          </span>
-        </div>
-
-        <h3>
-          Pokémon SAR
-        </h3>
-
-        <div class="product-type">
-          Member Listing
-        </div>
-
-        <div class="price">
-          ₩350,000
-        </div>
-
-      </div>
-
-
-    </div>
-
-  </section>
-
-
-  <!-- OPERATOR SHOP -->
-
-  <div class="operator" id="operator">
-
-    <div class="operator-label">
-      OFFICIAL CARDÉ STORE
-    </div>
-
-    <h2>
-      OPERATOR SHOP
-    </h2>
-
-    <p>
-      Exclusive cards selected and sold directly by CARDÉ.
-    </p>
-
-    <a href="#" class="operator-button">
-      ENTER SHOP
-    </a>
-
-  </div>
-
-
-  <!-- SELL -->
-
-  <div class="sell">
-
-    <h2>
-      SELL YOUR CARDS
-    </h2>
-
-    <p>
-      List your cards and connect with collectors.
-    </p>
-
-    <!-- SELL 페이지 연결 -->
-    <a href="sell.html" class="sell-button">
-      START SELLING
-    </a>
-
-  </div>
-
-
-  <!-- FOOTER -->
+  <!-- =========================
+       FOOTER
+  ========================= -->
 
   <footer>
 
-    <div class="footer-logo">
-      CARDÉ
-    </div>
-
-    <p>
-      A Curated Card Market for Your Collection
-    </p>
-
-    <p>
-      © 2026 CARDÉ. All Rights Reserved.
-    </p>
+    CARDÉ — A CURATED CARD MARKET
 
   </footer>
 
+
+
+  <!-- =========================
+       SUPABASE
+  ========================= -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+  <script>
+
+    const SUPABASE_URL =
+      "https://byjnjciwsdwxuneusgau.supabase.co";
+
+
+    const SUPABASE_PUBLISHABLE_KEY =
+      "sb_publishable_9-MEV3xRebYJBBSQFAW_xA_sxniWNBl";
+
+
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+      );
+
+
+    const collectionGrid =
+      document.getElementById(
+        "collectionGrid"
+      );
+
+
+    /* =========================
+       PAGE LINK
+    ========================= */
+
+    function getGameLink(gameName) {
+
+      if (gameName === "POKÉMON") {
+
+        return "pokemon.html";
+
+      }
+
+
+      if (gameName === "ONE PIECE") {
+
+        return "onepiece.html";
+
+      }
+
+
+      if (gameName === "WEISS SCHWARZ") {
+
+        return "weiss.html";
+
+      }
+
+
+      if (gameName === "BUILD DIVIDE") {
+
+        return "builddivide.html";
+
+      }
+
+
+      return "#";
+
+    }
+
+
+
+    /* =========================
+       LOAD COLLECTION
+    ========================= */
+
+    async function loadCollection() {
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient
+
+          .from("collection_settings")
+
+          .select(
+            "id, game_name, description, image_url"
+          )
+
+          .order(
+            "id",
+            {
+              ascending: true
+            }
+          );
+
+
+      if (error) {
+
+        console.error(
+          "Collection error:",
+          error
+        );
+
+        showDefaultCollection();
+
+        return;
+
+      }
+
+
+      collectionGrid.innerHTML = "";
+
+
+      data.forEach(function(item) {
+
+        const link =
+          getGameLink(
+            item.game_name
+          );
+
+
+        const card =
+          document.createElement(
+            "a"
+          );
+
+
+        card.className =
+          "collection-card";
+
+
+        card.href = link;
+
+
+        if (item.image_url) {
+
+          const image =
+            document.createElement(
+              "img"
+            );
+
+
+          image.src =
+            item.image_url;
+
+
+          image.alt =
+            item.game_name;
+
+
+          card.appendChild(
+            image
+          );
+
+        } else {
+
+          const placeholder =
+            document.createElement(
+              "div"
+            );
+
+
+          placeholder.className =
+            "image-placeholder";
+
+
+          placeholder.textContent =
+            "COLLECTION IMAGE";
+
+
+          card.appendChild(
+            placeholder
+          );
+
+        }
+
+
+        const info =
+          document.createElement(
+            "div"
+          );
+
+
+        info.className =
+          "collection-info";
+
+
+        info.innerHTML = `
+
+          <div class="collection-name">
+            ${item.game_name}
+          </div>
+
+          <div class="collection-description">
+            ${item.description || ""}
+          </div>
+
+        `;
+
+
+        card.appendChild(
+          info
+        );
+
+
+        collectionGrid.appendChild(
+          card
+        );
+
+      });
+
+    }
+
+
+
+    /* =========================
+       FALLBACK
+    ========================= */
+
+    function showDefaultCollection() {
+
+      const games = [
+
+        {
+          name: "POKÉMON",
+          description: "Discover Pokémon Cards",
+          link: "pokemon.html"
+        },
+
+        {
+          name: "ONE PIECE",
+          description: "Discover One Piece Cards",
+          link: "onepiece.html"
+        },
+
+        {
+          name: "WEISS SCHWARZ",
+          description: "Discover Weiss Schwarz Cards",
+          link: "weiss.html"
+        },
+
+        {
+          name: "BUILD DIVIDE",
+          description: "Discover Build Divide Cards",
+          link: "builddivide.html"
+        }
+
+      ];
+
+
+      collectionGrid.innerHTML = "";
+
+
+      games.forEach(function(game) {
+
+        const card =
+          document.createElement(
+            "a"
+          );
+
+
+        card.className =
+          "collection-card";
+
+
+        card.href =
+          game.link;
+
+
+        card.innerHTML = `
+
+          <div class="image-placeholder">
+            COLLECTION IMAGE
+          </div>
+
+          <div class="collection-info">
+
+            <div class="collection-name">
+              ${game.name}
+            </div>
+
+            <div class="collection-description">
+              ${game.description}
+            </div>
+
+          </div>
+
+        `;
+
+
+        collectionGrid.appendChild(
+          card
+        );
+
+      });
+
+    }
+
+
+
+    loadCollection();
+
+  </script>
+
+
 </body>
+
 </html>
