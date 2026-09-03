@@ -30,7 +30,6 @@
       color: inherit;
     }
 
-
     /* =========================
        HEADER
     ========================= */
@@ -84,7 +83,6 @@
       font-size: 10px;
       letter-spacing: 2px;
     }
-
 
     /* =========================
        HERO
@@ -155,7 +153,6 @@
       transform: translateY(-2px);
     }
 
-
     /* =========================
        SECTION HEADER
     ========================= */
@@ -180,13 +177,12 @@
       color: #999;
     }
 
-
     /* =========================
        COLLECTION
     ========================= */
 
     .collection {
-      padding-bottom: 130px;
+      padding-bottom: 100px;
     }
 
     .collection-grid {
@@ -212,8 +208,6 @@
         transform 0.4s ease,
         box-shadow 0.4s ease;
     }
-
-    /* 커서를 가져가면 살짝 커짐 */
 
     .collection-card:hover {
       transform: scale(1.025);
@@ -277,6 +271,54 @@
       color: #777;
     }
 
+    /* =========================
+       ⭐ LARGE IMAGE
+       COLLECTION 바로 아래
+    ========================= */
+
+    .large-feature {
+      width: 100%;
+      max-width: 1400px;
+
+      margin: 0 auto 150px;
+
+      padding: 0 40px;
+
+      overflow: hidden;
+    }
+
+    .large-feature-image {
+      width: 100%;
+      height: 560px;
+
+      object-fit: cover;
+
+      display: block;
+
+      background: #f5f5f5;
+
+      transition:
+        transform 0.7s ease;
+    }
+
+    .large-feature:hover .large-feature-image {
+      transform: scale(1.035);
+    }
+
+    .large-feature-placeholder {
+      width: 100%;
+      height: 560px;
+
+      background: #f5f5f5;
+
+      align-items: center;
+      justify-content: center;
+
+      color: #aaa;
+
+      font-size: 10px;
+      letter-spacing: 3px;
+    }
 
     /* =========================
        OPERATOR SHOP
@@ -305,8 +347,6 @@
         transform 0.4s ease,
         box-shadow 0.4s ease;
     }
-
-    /* 운영자 상품도 살짝 커짐 */
 
     .operator-card:hover {
       transform: scale(1.025);
@@ -371,7 +411,6 @@
       font-size: 12px;
     }
 
-
     /* =========================
        FOOTER
     ========================= */
@@ -398,7 +437,6 @@
 
       text-align: right;
     }
-
 
     /* =========================
        MOBILE
@@ -436,6 +474,16 @@
 
       .collection-card {
         height: 280px;
+      }
+
+      .large-feature {
+        padding: 0 20px;
+        margin-bottom: 100px;
+      }
+
+      .large-feature-image,
+      .large-feature-placeholder {
+        height: 350px;
       }
 
       .operator-grid {
@@ -580,6 +628,34 @@
 
       <!-- Supabase에서 자동으로 생성 -->
 
+    </div>
+
+  </section>
+
+
+
+  <!-- =========================
+       ⭐ COLLECTION 바로 아래
+       큰 사진 1장
+  ========================= -->
+
+  <section class="large-feature">
+
+    <img
+      src="images/featured.jpg"
+      alt="CARDÉ Featured"
+      class="large-feature-image"
+      onerror="
+        this.style.display='none';
+        this.nextElementSibling.style.display='flex';
+      "
+    >
+
+    <div
+      class="large-feature-placeholder"
+      style="display:none;"
+    >
+      FEATURED IMAGE
     </div>
 
   </section>
