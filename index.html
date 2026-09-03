@@ -1,16 +1,508 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Card Market</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CARDÉ</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Sans+KR:wght@300;400;500;600&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', 'Noto Sans KR', sans-serif;
+    color: #111;
+    background: #fff;
+}
+
+/* HEADER */
+
+header {
+    height: 82px;
+    border-bottom: 1px solid #e8e8e8;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 55px;
+    background: #fff;
+}
+
+.logo {
+    font-size: 25px;
+    letter-spacing: 7px;
+    font-weight: 500;
+}
+
+nav {
+    display: flex;
+    gap: 38px;
+}
+
+nav a {
+    color: #111;
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 1px;
+}
+
+.header-right {
+    display: flex;
+    gap: 22px;
+    font-size: 13px;
+}
+
+/* HERO */
+
+.hero {
+    height: 620px;
+    background: #f5f5f3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.hero-content h1 {
+    font-size: 48px;
+    font-weight: 300;
+    letter-spacing: 5px;
+    margin-bottom: 20px;
+}
+
+.hero-content p {
+    font-size: 14px;
+    color: #666;
+    letter-spacing: 1px;
+    margin-bottom: 35px;
+}
+
+.hero-button {
+    display: inline-block;
+    background: #111;
+    color: white;
+    padding: 16px 42px;
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+/* CATEGORY */
+
+.categories {
+    padding: 80px 55px 45px;
+}
+
+.section-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.section-title h2 {
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: 2px;
+}
+
+.section-title span {
+    font-size: 11px;
+    color: #777;
+}
+
+/* CATEGORY GRID */
+
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: #ddd;
+}
+
+.category {
+    height: 190px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    letter-spacing: 2px;
+    transition: 0.3s;
+}
+
+.category:hover {
+    background: #f4f4f4;
+}
+
+/* PRODUCTS */
+
+.products {
+    padding: 45px 55px 100px;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+}
+
+.product {
+    cursor: pointer;
+}
+
+.product-image {
+    height: 330px;
+    background: #f4f4f2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 17px;
+}
+
+.card-placeholder {
+    width: 145px;
+    height: 205px;
+    border: 1px solid #ccc;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #aaa;
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+
+.product-name {
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.product-info {
+    display: flex;
+    justify-content: space-between;
+}
+
+.product-price {
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.product-condition {
+    color: #888;
+    font-size: 11px;
+}
+
+/* SELL */
+
+.sell {
+    border-top: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
+    padding: 75px 20px;
+    text-align: center;
+}
+
+.sell h2 {
+    font-size: 25px;
+    font-weight: 300;
+    letter-spacing: 3px;
+    margin-bottom: 15px;
+}
+
+.sell p {
+    color: #777;
+    font-size: 13px;
+    margin-bottom: 28px;
+}
+
+.sell-button {
+    display: inline-block;
+    border: 1px solid #111;
+    padding: 14px 35px;
+    text-decoration: none;
+    color: #111;
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+/* FOOTER */
+
+footer {
+    background: #111;
+    color: white;
+    padding: 55px;
+}
+
+.footer-logo {
+    font-size: 21px;
+    letter-spacing: 6px;
+    margin-bottom: 30px;
+}
+
+.footer-text {
+    color: #999;
+    font-size: 11px;
+    line-height: 2;
+}
+
+.footer-bottom {
+    border-top: 1px solid #333;
+    margin-top: 40px;
+    padding-top: 20px;
+    color: #666;
+    font-size: 10px;
+}
+
+/* MOBILE */
+
+@media (max-width: 800px) {
+
+    header {
+        padding: 0 20px;
+        height: 70px;
+    }
+
+    nav {
+        display: none;
+    }
+
+    .header-right {
+        gap: 10px;
+    }
+
+    .hero {
+        height: 500px;
+    }
+
+    .hero-content h1 {
+        font-size: 32px;
+    }
+
+    .categories,
+    .products {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .product-image {
+        height: 240px;
+    }
+
+    .card-placeholder {
+        width: 105px;
+        height: 150px;
+    }
+
+    footer {
+        padding: 40px 20px;
+    }
+}
+</style>
 </head>
 
 <body>
-    <h1>🃏 Card Market</h1>
-    <p>카드를 사고팔 수 있는 거래 사이트</p>
 
-    <button>카드 판매하기</button>
-    <button>카드 검색하기</button>
+<header>
+
+    <div class="logo">CARDÉ</div>
+
+    <nav>
+        <a href="#">SHOP</a>
+        <a href="#">COLLECTION</a>
+        <a href="#">SELL</a>
+        <a href="#">ABOUT</a>
+    </nav>
+
+    <div class="header-right">
+        <span>SEARCH</span>
+        <span>LOGIN</span>
+        <span>♡</span>
+    </div>
+
+</header>
+
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <h1>THE WORLD OF CARDS</h1>
+
+        <p>
+            당신의 컬렉션을 위한 특별한 카드 마켓
+        </p>
+
+        <a href="#" class="hero-button">
+            EXPLORE COLLECTION
+        </a>
+
+    </div>
+
+</section>
+
+
+<section class="categories">
+
+    <div class="section-title">
+        <h2>COLLECTION</h2>
+        <span>VIEW ALL →</span>
+    </div>
+
+    <div class="category-grid">
+
+        <div class="category">POKÉMON</div>
+
+        <div class="category">ONE PIECE</div>
+
+        <div class="category">YU-GI-OH!</div>
+
+        <div class="category">WEISS SCHWARZ</div>
+
+    </div>
+
+</section>
+
+
+<section class="products">
+
+    <div class="section-title">
+        <h2>FEATURED CARDS</h2>
+        <span>NEW ARRIVALS</span>
+    </div>
+
+
+    <div class="product-grid">
+
+
+        <div class="product">
+
+            <div class="product-image">
+                <div class="card-placeholder">
+                    CARD IMAGE
+                </div>
+            </div>
+
+            <div class="product-name">
+                Premium Card Collection
+            </div>
+
+            <div class="product-info">
+                <span class="product-price">₩ 120,000</span>
+                <span class="product-condition">NM</span>
+            </div>
+
+        </div>
+
+
+        <div class="product">
+
+            <div class="product-image">
+                <div class="card-placeholder">
+                    CARD IMAGE
+                </div>
+            </div>
+
+            <div class="product-name">
+                Special Rare Card
+            </div>
+
+            <div class="product-info">
+                <span class="product-price">₩ 280,000</span>
+                <span class="product-condition">MINT</span>
+            </div>
+
+        </div>
+
+
+        <div class="product">
+
+            <div class="product-image">
+                <div class="card-placeholder">
+                    CARD IMAGE
+                </div>
+            </div>
+
+            <div class="product-name">
+                Collector's Edition
+            </div>
+
+            <div class="product-info">
+                <span class="product-price">₩ 450,000</span>
+                <span class="product-condition">NM</span>
+            </div>
+
+        </div>
+
+
+        <div class="product">
+
+            <div class="product-image">
+                <div class="card-placeholder">
+                    CARD IMAGE
+                </div>
+            </div>
+
+            <div class="product-name">
+                Rare Collection
+            </div>
+
+            <div class="product-info">
+                <span class="product-price">₩ 680,000</span>
+                <span class="product-condition">MINT</span>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="sell">
+
+    <h2>SELL YOUR COLLECTION</h2>
+
+    <p>
+        소중한 카드를 새로운 컬렉터에게 소개하세요.
+    </p>
+
+    <a href="#" class="sell-button">
+        SELL A CARD
+    </a>
+
+</section>
+
+
+<footer>
+
+    <div class="footer-logo">
+        CARDÉ
+    </div>
+
+    <div class="footer-text">
+        Premium Trading Card Marketplace<br>
+        Authentic Cards · Trusted Transactions · Collectors
+    </div>
+
+    <div class="footer-bottom">
+        © 2026 CARDÉ. ALL RIGHTS RESERVED.
+    </div>
+
+</footer>
+
 </body>
 </html>
