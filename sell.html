@@ -1,10 +1,13 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>CARDÉ — List Your Card</title>
 
+  <!-- SUPABASE -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
@@ -187,52 +190,102 @@
 <body>
 
 <header>
-  <a href="index.html" class="logo">CARDÉ</a>
+
+  <a href="index.html" class="logo">
+    CARDÉ
+  </a>
 
   <nav>
     <a href="index.html">MARKET</a>
     <a href="index.html#operator">OPERATOR SHOP</a>
     <a href="sell.html">SELL</a>
   </nav>
+
 </header>
+
 
 <main>
 
-  <div class="eyebrow">CARDÉ MARKETPLACE</div>
-  <h1>LIST YOUR CARD</h1>
+  <div class="eyebrow">
+    CARDÉ MARKETPLACE
+  </div>
+
+  <h1>
+    LIST YOUR CARD
+  </h1>
+
 
   <form id="sellForm">
+
+    <!-- CATEGORY / CARD NAME -->
 
     <div class="form-row">
 
       <div class="field">
-        <label>CATEGORY</label>
+
+        <label>
+          CATEGORY
+        </label>
+
         <select id="category" required>
-          <option value="">SELECT CATEGORY</option>
-          <option value="Pokémon">Pokémon</option>
-          <option value="One Piece">One Piece</option>
-          <option value="Weiss Schwarz">Weiss Schwarz</option>
-          <option value="Build Divide">Build Divide</option>
-          <option value="Other">Other</option>
+
+          <option value="">
+            SELECT CATEGORY
+          </option>
+
+          <option value="Pokémon">
+            Pokémon
+          </option>
+
+          <option value="One Piece">
+            One Piece
+          </option>
+
+          <option value="Weiss Schwarz">
+            Weiss Schwarz
+          </option>
+
+          <option value="Build Divide">
+            Build Divide
+          </option>
+
+          <option value="Other">
+            Other
+          </option>
+
         </select>
+
       </div>
 
+
       <div class="field">
-        <label>CARD NAME</label>
+
+        <label>
+          CARD NAME
+        </label>
+
         <input
           type="text"
           id="cardName"
           placeholder="Enter card name"
           required
         >
+
       </div>
 
     </div>
 
+
+    <!-- PRICE / CONDITION -->
+
     <div class="form-row">
 
       <div class="field">
-        <label>PRICE (KRW)</label>
+
+        <label>
+          PRICE (KRW)
+        </label>
+
         <input
           type="number"
           id="price"
@@ -240,41 +293,87 @@
           min="0"
           required
         >
+
       </div>
 
+
       <div class="field">
-        <label>CONDITION</label>
+
+        <label>
+          CONDITION
+        </label>
+
         <select id="condition">
-          <option value="Mint">Mint</option>
-          <option value="Near Mint">Near Mint</option>
-          <option value="Excellent">Excellent</option>
-          <option value="Good">Good</option>
-          <option value="Played">Played</option>
+
+          <option value="Mint">
+            Mint
+          </option>
+
+          <option value="Near Mint">
+            Near Mint
+          </option>
+
+          <option value="Excellent">
+            Excellent
+          </option>
+
+          <option value="Good">
+            Good
+          </option>
+
+          <option value="Played">
+            Played
+          </option>
+
         </select>
+
       </div>
 
     </div>
 
+
+    <!-- IMAGE -->
+
     <div class="field">
-      <label>CARD IMAGE</label>
+
+      <label>
+        CARD IMAGE
+      </label>
+
       <input
         type="file"
         id="cardImage"
         accept="image/*"
       >
+
     </div>
 
+
+    <!-- DESCRIPTION -->
+
     <div class="field">
-      <label>DESCRIPTION</label>
+
+      <label>
+        DESCRIPTION
+      </label>
+
       <textarea
         id="description"
         placeholder="Describe your card..."
       ></textarea>
+
     </div>
 
-    <button type="submit" id="submitButton">
+
+    <!-- BUTTON -->
+
+    <button
+      type="submit"
+      id="submitButton"
+    >
       LIST CARD
     </button>
+
 
     <div id="message"></div>
 
@@ -282,135 +381,251 @@
 
 </main>
 
+
 <footer>
+
   CARDÉ — A CURATED CARD MARKET
+
 </footer>
 
 
 <script>
 
-  // ================================
+  // ==========================================
   // SUPABASE CONNECTION
-  // ================================
+  // ==========================================
 
-  const SUPABASE_URL = https://byjnjciwsdwxuneusgau.supabase.co
-
-  const SUPABASE_PUBLISHABLE_KEY = sb_publishable_9-MEV3xRebYJBBSQFAW_xA_sxniWNBl
-
-  const supabaseClient = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
-  );
+  const SUPABASE_URL =
+    "https://byjnjciwsdwxuneusgau.supabase.co";
 
 
-  // ================================
+  // 아래 따옴표 안에 네 Publishable Key를 넣어주세요.
+  const SUPABASE_PUBLISHABLE_KEY =
+    "여기에_네_sb_publishable_키_붙여넣기";
+
+
+  const supabaseClient =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
+
+
+  // ==========================================
   // SELL FORM
-  // ================================
+  // ==========================================
 
-  const form = document.getElementById("sellForm");
-  const button = document.getElementById("submitButton");
-  const message = document.getElementById("message");
-
-  form.addEventListener("submit", async function(event) {
-
-    event.preventDefault();
-
-    button.disabled = true;
-    button.textContent = "LISTING...";
-
-    message.textContent = "";
-
-    try {
-
-      const category =
-        document.getElementById("category").value;
-
-      const cardName =
-        document.getElementById("cardName").value.trim();
-
-      const price =
-        Number(document.getElementById("price").value);
-
-      const condition =
-        document.getElementById("condition").value;
-
-      const description =
-        document.getElementById("description").value.trim();
-
-      const imageFile =
-        document.getElementById("cardImage").files[0];
+  const form =
+    document.getElementById("sellForm");
 
 
-      let imageUrl = "";
+  const button =
+    document.getElementById("submitButton");
 
 
-      // 이미지가 있으면 임시로 데이터 URL로 변환
-      if (imageFile) {
-
-        imageUrl = await new Promise((resolve, reject) => {
-
-          const reader = new FileReader();
-
-          reader.onload = () => resolve(reader.result);
-
-          reader.onerror = reject;
-
-          reader.readAsDataURL(imageFile);
-
-        });
-
-      }
+  const message =
+    document.getElementById("message");
 
 
-      // Supabase products 테이블에 저장
-      const { data, error } =
-        await supabaseClient
-          .from("products")
-          .insert([
-            {
-              category: category,
-              card_name: cardName,
-              price: price,
-              condition: condition,
-              image_url: imageUrl,
-              description: description
+  // ==========================================
+  // SUBMIT
+  // ==========================================
+
+  form.addEventListener(
+    "submit",
+    async function(event) {
+
+      event.preventDefault();
+
+
+      button.disabled = true;
+
+      button.textContent = "LISTING...";
+
+      message.textContent = "";
+
+
+      try {
+
+        // --------------------------------------
+        // INPUT VALUES
+        // --------------------------------------
+
+        const category =
+          document.getElementById("category").value;
+
+
+        const cardName =
+          document
+            .getElementById("cardName")
+            .value
+            .trim();
+
+
+        const price =
+          Number(
+            document.getElementById("price").value
+          );
+
+
+        const condition =
+          document.getElementById("condition").value;
+
+
+        const description =
+          document
+            .getElementById("description")
+            .value
+            .trim();
+
+
+        const imageFile =
+          document
+            .getElementById("cardImage")
+            .files[0];
+
+
+        // --------------------------------------
+        // IMAGE
+        // --------------------------------------
+
+        let imageUrl = "";
+
+
+        if (imageFile) {
+
+          imageUrl = await new Promise(
+            (resolve, reject) => {
+
+              const reader =
+                new FileReader();
+
+
+              reader.onload = function() {
+
+                resolve(reader.result);
+
+              };
+
+
+              reader.onerror = function(error) {
+
+                reject(error);
+
+              };
+
+
+              reader.readAsDataURL(imageFile);
+
             }
+          );
+
+        }
+
+
+        // --------------------------------------
+        // SAVE TO SUPABASE
+        // --------------------------------------
+
+        const {
+          data,
+          error
+        } = await supabaseClient
+
+          .from("products")
+
+          .insert([
+
+            {
+
+              category: category,
+
+              card_name: cardName,
+
+              price: price,
+
+              condition: condition,
+
+              image_url: imageUrl,
+
+              description: description
+
+            }
+
           ])
+
           .select();
 
 
-      if (error) {
-        throw error;
+        // --------------------------------------
+        // ERROR CHECK
+        // --------------------------------------
+
+        if (error) {
+
+          throw error;
+
+        }
+
+
+        // --------------------------------------
+        // SUCCESS
+        // --------------------------------------
+
+        message.textContent =
+          "Your card has been successfully listed.";
+
+
+        message.style.color =
+          "green";
+
+
+        form.reset();
+
+
+        button.textContent =
+          "LISTED ✓";
+
+
       }
 
 
-      message.textContent =
-        "Your card has been successfully listed.";
+      catch (error) {
 
-      message.style.color = "green";
+        // --------------------------------------
+        // ERROR
+        // --------------------------------------
 
-      form.reset();
+        console.error(
+          "Supabase error:",
+          error
+        );
 
-      button.textContent = "LISTED ✓";
+
+        message.textContent =
+          "Something went wrong. Please try again.";
 
 
-    } catch (error) {
+        message.style.color =
+          "red";
 
-      console.error(error);
 
-      message.textContent =
-        "Something went wrong. Please try again.";
+        button.disabled =
+          false;
 
-      message.style.color = "red";
 
-      button.disabled = false;
-      button.textContent = "LIST CARD";
+        button.textContent =
+          "LIST CARD";
+
+      }
 
     }
 
-  });
+  );
 
 </script>
 
+
 </body>
 </html>
+```
