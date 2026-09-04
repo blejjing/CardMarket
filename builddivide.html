@@ -3,62 +3,281 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>CARDÉ — Build Divide</title>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,Helvetica,sans-serif;color:#111;background:#fff}
-a{text-decoration:none;color:inherit}
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+}
 
-header{height:82px;padding:0 50px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #eee;position:sticky;top:0;z-index:100;background:rgba(255,255,255,.96);backdrop-filter:blur(10px)}
-.logo{font-size:24px;font-weight:500;letter-spacing:7px}
-nav{display:flex;gap:38px;font-size:10px;letter-spacing:2px}
-nav a:hover,.header-right a:hover{opacity:.45}
-.header-right{display:flex;gap:22px;font-size:10px;letter-spacing:2px}
+body{
+font-family:Arial,Helvetica,sans-serif;
+color:#111;
+background:#fff;
+}
 
-.page{max-width:1400px;margin:auto;padding:80px 40px 130px}
-.back{font-size:9px;letter-spacing:2px;color:#999}
-.back:hover{color:#111}
-.title-area{margin-top:55px;margin-bottom:55px}
-.eyebrow{font-size:9px;letter-spacing:3px;color:#999;margin-bottom:18px}
-h1{font-size:42px;font-weight:400}
-.sub{margin-top:15px;font-size:11px;color:#888}
+a{
+text-decoration:none;
+color:inherit;
+}
 
-.toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px;padding-bottom:18px;border-bottom:1px solid #eee}
-.count{font-size:9px;letter-spacing:2px;color:#999}
-select{border:1px solid #ddd;background:#fff;padding:10px 14px;font-size:9px;letter-spacing:1px;outline:none}
+header{
+height:82px;
+padding:0 50px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+border-bottom:1px solid #eee;
+position:sticky;
+top:0;
+z-index:100;
+background:rgba(255,255,255,.96);
+backdrop-filter:blur(10px);
+}
 
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px 18px}
-.card{cursor:pointer;overflow:hidden}
-.image-box{width:100%;aspect-ratio:3/4;background:#f5f5f5;overflow:hidden;display:flex;align-items:center;justify-content:center}
-.image-box img{width:100%;height:100%;object-fit:contain;display:block;transition:transform .5s ease}
-.card:hover .image-box img{transform:scale(1.05)}
-.placeholder{font-size:9px;letter-spacing:3px;color:#aaa}
+.logo{
+font-size:24px;
+font-weight:500;
+letter-spacing:7px;
+}
 
-.info{padding:15px 2px 0}
-.name{font-size:12px;line-height:1.4;margin-bottom:9px}
-.condition{font-size:9px;color:#999;letter-spacing:1px;margin-bottom:10px}
-.price{font-size:13px;font-weight:500}
+nav{
+display:flex;
+gap:38px;
+font-size:10px;
+letter-spacing:2px;
+}
 
-.loading,.empty,.error{min-height:400px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
-.loading{font-size:10px;letter-spacing:3px;color:#999}
-.empty h2,.error h2{font-size:18px;font-weight:400;margin-bottom:12px}
-.empty p,.error p{font-size:10px;color:#999}
+nav a:hover,
+.header-right a:hover{
+opacity:.45;
+}
 
-footer{border-top:1px solid #eee;padding:50px;display:flex;justify-content:space-between}
-.footer-logo{font-size:18px;letter-spacing:5px}
-.footer-text{font-size:9px;line-height:1.8;color:#999;text-align:right}
+.header-right{
+display:flex;
+gap:22px;
+font-size:10px;
+letter-spacing:2px;
+}
 
-@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
+.page{
+max-width:1400px;
+margin:auto;
+padding:80px 40px 130px;
+}
+
+.back{
+font-size:9px;
+letter-spacing:2px;
+color:#999;
+}
+
+.back:hover{
+color:#111;
+}
+
+.title-area{
+margin-top:55px;
+margin-bottom:55px;
+}
+
+.eyebrow{
+font-size:9px;
+letter-spacing:3px;
+color:#999;
+margin-bottom:18px;
+}
+
+h1{
+font-size:42px;
+font-weight:400;
+}
+
+.sub{
+margin-top:15px;
+font-size:11px;
+color:#888;
+}
+
+.toolbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:25px;
+padding-bottom:18px;
+border-bottom:1px solid #eee;
+}
+
+.count{
+font-size:9px;
+letter-spacing:2px;
+color:#999;
+}
+
+select{
+border:1px solid #ddd;
+background:#fff;
+padding:10px 14px;
+font-size:9px;
+letter-spacing:1px;
+outline:none;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:28px 18px;
+}
+
+.card{
+cursor:pointer;
+overflow:hidden;
+}
+
+.image-box{
+width:100%;
+aspect-ratio:3/4;
+background:#f5f5f5;
+overflow:hidden;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.image-box img{
+width:100%;
+height:100%;
+object-fit:contain;
+display:block;
+transition:transform .5s ease;
+}
+
+.card:hover .image-box img{
+transform:scale(1.05);
+}
+
+.placeholder{
+font-size:9px;
+letter-spacing:3px;
+color:#aaa;
+}
+
+.info{
+padding:15px 2px 0;
+}
+
+.name{
+font-size:12px;
+line-height:1.4;
+margin-bottom:9px;
+}
+
+.condition{
+font-size:9px;
+color:#999;
+letter-spacing:1px;
+margin-bottom:10px;
+}
+
+.price{
+font-size:13px;
+font-weight:500;
+}
+
+.loading,
+.empty,
+.error{
+min-height:400px;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+text-align:center;
+}
+
+.loading{
+font-size:10px;
+letter-spacing:3px;
+color:#999;
+}
+
+.empty h2,
+.error h2{
+font-size:18px;
+font-weight:400;
+margin-bottom:12px;
+}
+
+.empty p,
+.error p{
+font-size:10px;
+color:#999;
+}
+
+footer{
+border-top:1px solid #eee;
+padding:50px;
+display:flex;
+justify-content:space-between;
+}
+
+.footer-logo{
+font-size:18px;
+letter-spacing:5px;
+}
+
+.footer-text{
+font-size:9px;
+line-height:1.8;
+color:#999;
+text-align:right;
+}
+
+@media(max-width:900px){
+
+.grid{
+grid-template-columns:repeat(2,1fr);
+}
+
+}
+
 @media(max-width:600px){
-header{padding:0 20px}
-nav{display:none}
-.header-right{gap:12px}
-.page{padding:50px 20px 100px}
-h1{font-size:32px}
-footer{padding:35px 20px;flex-direction:column;gap:25px}
-.footer-text{text-align:left}
+
+header{
+padding:0 20px;
+}
+
+nav{
+display:none;
+}
+
+.header-right{
+gap:12px;
+}
+
+.page{
+padding:50px 20px 100px;
+}
+
+h1{
+font-size:32px;
+}
+
+footer{
+padding:35px 20px;
+flex-direction:column;
+gap:25px;
+}
+
+.footer-text{
+text-align:left;
+}
+
 }
 </style>
 </head>
@@ -66,59 +285,133 @@ footer{padding:35px 20px;flex-direction:column;gap:25px}
 <body>
 
 <header>
-<a href="index.html" class="logo">CARDÉ</a>
+
+<a href="index.html" class="logo">
+CARDÉ
+</a>
+
 <nav>
-<a href="index.html#collection">COLLECTION</a>
-<a href="index.html#operator-shop">OPERATOR SHOP</a>
-<a href="sell.html">SELL</a>
-<a href="index.html#about">ABOUT</a>
+
+<a href="index.html#collection">
+COLLECTION
+</a>
+
+<a href="index.html#operator-shop">
+OPERATOR SHOP
+</a>
+
+<a href="sell.html">
+SELL
+</a>
+
+<a href="index.html#about">
+ABOUT
+</a>
+
 </nav>
+
 <div class="header-right">
-<a href="#">SEARCH</a>
-<a href="#">♡</a>
-<a href="#">LOGIN</a>
+
+<a href="#">
+SEARCH
+</a>
+
+<a href="#">
+♡
+</a>
+
+<a href="#">
+LOGIN
+</a>
+
 </div>
+
 </header>
+
 
 <main class="page">
 
-<a href="index.html#collection" class="back">← BACK TO COLLECTION</a>
+<a href="index.html#collection" class="back">
+← BACK TO COLLECTION
+</a>
 
 <div class="title-area">
-<div class="eyebrow">CARDÉ COLLECTION</div>
-<h1>Build Divide</h1>
-<div class="sub">Discover Build Divide Cards</div>
+
+<div class="eyebrow">
+CARDÉ COLLECTION
 </div>
+
+<h1>
+Build Divide
+</h1>
+
+<div class="sub">
+Discover Build Divide Cards
+</div>
+
+</div>
+
 
 <div class="toolbar">
-<div class="count" id="count">LOADING</div>
-<select id="sort">
-<option value="newest">NEWEST</option>
-<option value="low">PRICE LOW</option>
-<option value="high">PRICE HIGH</option>
-</select>
+
+<div class="count" id="count">
+LOADING
 </div>
 
+<select id="sort">
+
+<option value="newest">
+NEWEST
+</option>
+
+<option value="low">
+PRICE LOW
+</option>
+
+<option value="high">
+PRICE HIGH
+</option>
+
+</select>
+
+</div>
+
+
 <div id="products">
-<div class="loading">LOADING</div>
+
+<div class="loading">
+LOADING
+</div>
+
 </div>
 
 </main>
 
+
 <footer>
-<div class="footer-logo">CARDÉ</div>
+
+<div class="footer-logo">
+CARDÉ
+</div>
+
 <div class="footer-text">
 CARDÉ — A CURATED CARD MARKET<br>
 © 2026 CARDÉ. ALL RIGHTS RESERVED.
 </div>
+
 </footer>
+
 
 <script>
 
-const SUPABASE_URL="https://byjnjciwsdwxuneusgau.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY="sb_publishable_9-MEV3xReYbJBBSQFAW_xA_sxniWNBl";
+const SUPABASE_URL =
+"https://byjnjciwsdwxuneusgau.supabase.co";
 
-const supabaseClient=window.supabase.createClient(
+const SUPABASE_PUBLISHABLE_KEY =
+"sb_publishable_9-MEV3xReYbJBBSQFAW_xA_sxniWNBl";
+
+const supabaseClient =
+window.supabase.createClient(
 SUPABASE_URL,
 SUPABASE_PUBLISHABLE_KEY
 );
@@ -130,6 +423,8 @@ async function loadProducts(){
 const container=document.getElementById("products");
 const count=document.getElementById("count");
 
+try{
+
 const {data,error}=await supabaseClient
 .from("products")
 .select("id, category, card_name, price, condition, image_url, description, created_at")
@@ -137,63 +432,130 @@ const {data,error}=await supabaseClient
 .order("created_at",{ascending:false});
 
 if(error){
+
 console.error(error);
+
 container.innerHTML=`
 <div class="error">
-<h2>Unable to Load Products</h2>
-<p>Please try again later.</p>
-</div>`;
+<h2>UNABLE TO LOAD PRODUCTS</h2>
+<p>${error.message}</p>
+</div>
+`;
+
+count.textContent="ERROR";
+
 return;
+
 }
 
 products=data||[];
+
 renderProducts();
+
+}catch(error){
+
+console.error(error);
+
+container.innerHTML=`
+<div class="error">
+<h2>UNABLE TO LOAD PRODUCTS</h2>
+<p>${error.message}</p>
+</div>
+`;
+
+count.textContent="ERROR";
+
+}
+
 }
 
 function renderProducts(){
 
 const container=document.getElementById("products");
 const count=document.getElementById("count");
+
 let list=[...products];
 
 const sort=document.getElementById("sort").value;
 
-if(sort==="low")list.sort((a,b)=>Number(a.price||0)-Number(b.price||0));
-if(sort==="high")list.sort((a,b)=>Number(b.price||0)-Number(a.price||0));
+if(sort==="low"){
+list.sort((a,b)=>Number(a.price||0)-Number(b.price||0));
+}
+
+if(sort==="high"){
+list.sort((a,b)=>Number(b.price||0)-Number(a.price||0));
+}
 
 count.textContent=`${list.length} PRODUCTS`;
 
 if(list.length===0){
+
 container.innerHTML=`
 <div class="empty">
 <h2>NO PRODUCTS YET</h2>
 <p>Build Divide cards listed on CARDÉ will appear here.</p>
-</div>`;
+</div>
+`;
+
 return;
+
 }
 
 container.innerHTML=`
+
 <div class="grid">
+
 ${list.map(product=>`
-<a class="card" href="product.html?id=${product.id}">
+
+<a
+class="card"
+href="product.html?id=${encodeURIComponent(product.id)}"
+>
+
 <div class="image-box">
+
 ${
 product.image_url
-?`<img src="${product.image_url}" alt="${product.card_name}">`
-:`<div class="placeholder">CARD IMAGE</div>`
-}
-</div>
-<div class="info">
-<div class="name">${product.card_name||"Untitled Card"}</div>
-<div class="condition">${product.condition||"NOT SPECIFIED"}</div>
-<div class="price">₩${Number(product.price||0).toLocaleString()}</div>
-</div>
-</a>
-`).join("")}
-</div>`;
+?
+`<img
+src="${product.image_url}"
+alt="${product.card_name || "Card"}"
+>`
+:
+`<div class="placeholder">CARD IMAGE</div>`
 }
 
-document.getElementById("sort").addEventListener("change",renderProducts);
+</div>
+
+<div class="info">
+
+<div class="name">
+${product.card_name||"Untitled Card"}
+</div>
+
+<div class="condition">
+${product.condition||"NOT SPECIFIED"}
+</div>
+
+<div class="price">
+₩${Number(product.price||0).toLocaleString()}
+</div>
+
+</div>
+
+</a>
+
+`).join("")}
+
+</div>
+
+`;
+
+}
+
+document
+.getElementById("sort")
+.addEventListener("change",renderProducts);
 
 loadProducts();
 
