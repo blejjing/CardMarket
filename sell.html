@@ -1,561 +1,907 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>CARDÉ — List Your Card</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<title>CARDÉ — Sell</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      color: #111;
-      background: #fff;
-    }
+<style>
 
-    header {
-      height: 82px;
-      border-bottom: 1px solid #e5e5e5;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 6%;
-    }
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+}
 
-    .logo {
-      font-size: 25px;
-      letter-spacing: 7px;
-      font-weight: 600;
-      text-decoration: none;
-      color: #111;
-    }
+body{
+font-family:Arial,Helvetica,sans-serif;
+color:#111;
+background:#fff;
+}
 
-    nav {
-      display: flex;
-      gap: 34px;
-    }
+a{
+text-decoration:none;
+color:inherit;
+}
 
-    nav a {
-      color: #111;
-      text-decoration: none;
-      font-size: 11px;
-      letter-spacing: 2px;
-    }
+header{
+height:82px;
+padding:0 50px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+border-bottom:1px solid #eee;
+position:sticky;
+top:0;
+z-index:100;
+background:rgba(255,255,255,.96);
+backdrop-filter:blur(10px);
+}
 
-    nav a:hover {
-      opacity: .5;
-    }
+.logo{
+font-size:24px;
+font-weight:500;
+letter-spacing:7px;
+}
 
-    main {
-      max-width: 850px;
-      margin: 100px auto;
-      padding: 0 25px;
-    }
+nav{
+display:flex;
+gap:38px;
+font-size:10px;
+letter-spacing:2px;
+}
 
-    .eyebrow {
-      font-size: 10px;
-      letter-spacing: 3px;
-      color: #777;
-      margin-bottom: 18px;
-    }
+nav a:hover,
+.header-right a:hover{
+opacity:.45;
+}
 
-    h1 {
-      font-size: 48px;
-      font-weight: 400;
-      letter-spacing: -2px;
-      margin: 0 0 65px;
-    }
+.header-right{
+display:flex;
+gap:22px;
+font-size:10px;
+letter-spacing:2px;
+}
 
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 35px;
-    }
+.page{
+max-width:1000px;
+margin:auto;
+padding:80px 40px 130px;
+}
 
-    .field {
-      margin-bottom: 32px;
-    }
+.back{
+font-size:9px;
+letter-spacing:2px;
+color:#999;
+}
 
-    label {
-      display: block;
-      font-size: 10px;
-      letter-spacing: 2px;
-      margin-bottom: 10px;
-    }
+.back:hover{
+color:#111;
+}
 
-    input,
-    select,
-    textarea {
-      width: 100%;
-      border: none;
-      border-bottom: 1px solid #aaa;
-      padding: 13px 0;
-      font-size: 15px;
-      outline: none;
-      background: transparent;
-      font-family: inherit;
-    }
+.title-area{
+margin-top:55px;
+margin-bottom:55px;
+}
 
-    input:focus,
-    select:focus,
-    textarea:focus {
-      border-bottom: 1px solid #111;
-    }
+.eyebrow{
+font-size:9px;
+letter-spacing:3px;
+color:#999;
+margin-bottom:18px;
+}
 
-    textarea {
-      height: 110px;
-      resize: vertical;
-    }
+h1{
+font-size:42px;
+font-weight:400;
+}
 
-    input[type="file"] {
-      border: 1px solid #ddd;
-      padding: 15px;
-      font-size: 12px;
-    }
+.sub{
+margin-top:15px;
+font-size:11px;
+color:#888;
+}
 
-    button {
-      width: 100%;
-      margin-top: 25px;
-      height: 58px;
-      border: 1px solid #111;
-      background: #111;
-      color: #fff;
-      font-size: 11px;
-      letter-spacing: 3px;
-      cursor: pointer;
-    }
+.form{
+border-top:1px solid #eee;
+}
 
-    button:hover {
-      background: #333;
-    }
+.field{
+padding:28px 0;
+border-bottom:1px solid #eee;
+}
 
-    button:disabled {
-      opacity: .5;
-      cursor: wait;
-    }
+label{
+display:block;
+font-size:9px;
+letter-spacing:2px;
+color:#888;
+margin-bottom:12px;
+}
 
-    #message {
-      text-align: center;
-      margin-top: 25px;
-      font-size: 13px;
-    }
+input,
+select,
+textarea{
+width:100%;
+border:1px solid #ddd;
+background:#fff;
+padding:15px;
+font-family:Arial,Helvetica,sans-serif;
+font-size:12px;
+outline:none;
+}
 
-    footer {
-      border-top: 1px solid #e5e5e5;
-      padding: 40px 6%;
-      margin-top: 100px;
-      font-size: 10px;
-      letter-spacing: 2px;
-      color: #777;
-    }
+input:focus,
+select:focus,
+textarea:focus{
+border-color:#111;
+}
 
-    @media (max-width: 700px) {
-      header {
-        padding: 0 20px;
-      }
+textarea{
+min-height:150px;
+resize:vertical;
+line-height:1.6;
+}
 
-      nav {
-        gap: 12px;
-      }
+.price-wrap{
+display:flex;
+align-items:center;
+}
 
-      nav a {
-        font-size: 9px;
-      }
+.price-symbol{
+padding:15px;
+border:1px solid #ddd;
+border-right:none;
+font-size:12px;
+background:#fafafa;
+}
 
-      main {
-        margin: 60px auto;
-      }
+.price-wrap input{
+border-left:none;
+}
 
-      h1 {
-        font-size: 38px;
-      }
+.image-area{
+display:flex;
+flex-direction:column;
+gap:15px;
+}
 
-      .form-row {
-        grid-template-columns: 1fr;
-        gap: 0;
-      }
-    }
-  </style>
+.image-preview{
+width:220px;
+aspect-ratio:3/4;
+background:#f5f5f5;
+display:flex;
+align-items:center;
+justify-content:center;
+overflow:hidden;
+}
+
+.image-preview img{
+width:100%;
+height:100%;
+object-fit:contain;
+}
+
+.placeholder{
+font-size:9px;
+letter-spacing:3px;
+color:#aaa;
+text-align:center;
+}
+
+.file-input{
+border:none;
+padding:0;
+font-size:11px;
+}
+
+.button-area{
+padding-top:40px;
+}
+
+button{
+width:100%;
+height:58px;
+border:1px solid #111;
+background:#111;
+color:#fff;
+font-size:10px;
+letter-spacing:3px;
+cursor:pointer;
+transition:.3s;
+}
+
+button:hover{
+background:#fff;
+color:#111;
+}
+
+button:disabled{
+opacity:.5;
+cursor:not-allowed;
+}
+
+.message{
+margin-top:25px;
+text-align:center;
+font-size:10px;
+letter-spacing:2px;
+line-height:1.8;
+}
+
+.success{
+color:#111;
+}
+
+.error{
+color:#999;
+}
+
+footer{
+border-top:1px solid #eee;
+padding:50px;
+display:flex;
+justify-content:space-between;
+}
+
+.footer-logo{
+font-size:18px;
+letter-spacing:5px;
+}
+
+.footer-text{
+font-size:9px;
+line-height:1.8;
+color:#999;
+text-align:right;
+}
+
+@media(max-width:600px){
+
+header{
+padding:0 20px;
+}
+
+nav{
+display:none;
+}
+
+.header-right{
+gap:12px;
+}
+
+.page{
+padding:50px 20px 100px;
+}
+
+h1{
+font-size:32px;
+}
+
+footer{
+padding:35px 20px;
+flex-direction:column;
+gap:25px;
+}
+
+.footer-text{
+text-align:left;
+}
+
+}
+
+</style>
+
 </head>
+
 
 <body>
 
+
 <header>
 
-  <a href="index.html" class="logo">
-    CARDÉ
-  </a>
+<a href="index.html" class="logo">
+CARDÉ
+</a>
 
-  <nav>
-    <a href="index.html">MARKET</a>
-    <a href="index.html#operator">OPERATOR SHOP</a>
-    <a href="sell.html">SELL</a>
-  </nav>
+
+<nav>
+
+<a href="index.html#collection">
+COLLECTION
+</a>
+
+<a href="sell.html">
+SELL
+</a>
+
+<a href="index.html#about">
+ABOUT
+</a>
+
+</nav>
+
+
+<div class="header-right">
+
+<a href="#">
+SEARCH
+</a>
+
+<a href="#">
+♡
+</a>
+
+<a href="#">
+LOGIN
+</a>
+
+</div>
 
 </header>
 
 
-<main>
 
-  <div class="eyebrow">
-    CARDÉ MARKETPLACE
-  </div>
-
-  <h1>
-    LIST YOUR CARD
-  </h1>
+<main class="page">
 
 
-  <form id="sellForm">
-
-    <div class="form-row">
-
-      <div class="field">
-
-        <label>CATEGORY</label>
-
-        <select id="category" required>
-
-          <option value="">
-            SELECT CATEGORY
-          </option>
-
-          <option value="Pokémon">
-            Pokémon
-          </option>
-
-          <option value="One Piece">
-            One Piece
-          </option>
-
-          <option value="Weiss Schwarz">
-            Weiss Schwarz
-          </option>
-
-          <option value="Build Divide">
-            Build Divide
-          </option>
-
-          <option value="Other">
-            Other
-          </option>
-
-        </select>
-
-      </div>
+<a href="index.html#collection" class="back">
+← BACK TO COLLECTION
+</a>
 
 
-      <div class="field">
 
-        <label>CARD NAME</label>
+<div class="title-area">
 
-        <input
-          type="text"
-          id="cardName"
-          placeholder="Enter card name"
-          required
-        >
+<div class="eyebrow">
+CARDÉ MARKET
+</div>
 
-      </div>
+<h1>
+Sell Your Card
+</h1>
 
-    </div>
+<div class="sub">
+List your card on CARDÉ
+</div>
 
-
-    <div class="form-row">
-
-      <div class="field">
-
-        <label>PRICE (KRW)</label>
-
-        <input
-          type="number"
-          id="price"
-          placeholder="Enter price"
-          min="0"
-          required
-        >
-
-      </div>
+</div>
 
 
-      <div class="field">
 
-        <label>CONDITION</label>
-
-        <select id="condition">
-
-          <option value="Mint">
-            Mint
-          </option>
-
-          <option value="Near Mint">
-            Near Mint
-          </option>
-
-          <option value="Excellent">
-            Excellent
-          </option>
-
-          <option value="Good">
-            Good
-          </option>
-
-          <option value="Played">
-            Played
-          </option>
-
-        </select>
-
-      </div>
-
-    </div>
+<form id="sellForm" class="form">
 
 
-    <div class="field">
+<div class="field">
 
-      <label>CARD IMAGE</label>
+<label for="category">
+CATEGORY
+</label>
 
-      <input
-        type="file"
-        id="cardImage"
-        accept="image/*"
-      >
+<select id="category" required>
 
-    </div>
+<option value="">
+SELECT GAME
+</option>
 
+<option value="Pokémon">
+Pokémon
+</option>
 
-    <div class="field">
+<option value="One Piece">
+One Piece
+</option>
 
-      <label>DESCRIPTION</label>
+<option value="Weiss Schwarz">
+Weiss Schwarz
+</option>
 
-      <textarea
-        id="description"
-        placeholder="Describe your card..."
-      ></textarea>
+<option value="Build Divide">
+Build Divide
+</option>
 
-    </div>
+</select>
 
-
-    <button
-      type="submit"
-      id="submitButton"
-    >
-      LIST CARD
-    </button>
+</div>
 
 
-    <div id="message"></div>
 
-  </form>
+<div class="field">
+
+<label for="cardName">
+CARD NAME
+</label>
+
+<input
+type="text"
+id="cardName"
+placeholder="Enter card name"
+required
+>
+
+</div>
+
+
+
+<div class="field">
+
+<label for="price">
+PRICE
+</label>
+
+
+<div class="price-wrap">
+
+<div class="price-symbol">
+₩
+</div>
+
+<input
+type="number"
+id="price"
+placeholder="Enter your price"
+min="0"
+step="1"
+required
+>
+
+</div>
+
+</div>
+
+
+
+<div class="field">
+
+<label for="condition">
+CONDITION
+</label>
+
+<select id="condition" required>
+
+<option value="">
+SELECT CONDITION
+</option>
+
+<option value="Mint">
+Mint
+</option>
+
+<option value="Near Mint">
+Near Mint
+</option>
+
+<option value="Excellent">
+Excellent
+</option>
+
+<option value="Good">
+Good
+</option>
+
+<option value="Played">
+Played
+</option>
+
+</select>
+
+</div>
+
+
+
+<div class="field">
+
+<label for="image">
+CARD IMAGE
+</label>
+
+
+<div class="image-area">
+
+<div
+id="imagePreview"
+class="image-preview"
+>
+
+<div class="placeholder">
+CARD IMAGE
+</div>
+
+</div>
+
+
+<input
+type="file"
+id="image"
+class="file-input"
+accept="image/*"
+>
+
+</div>
+
+</div>
+
+
+
+<div class="field">
+
+<label for="description">
+DESCRIPTION
+</label>
+
+<textarea
+id="description"
+placeholder="Describe your card, condition, accessories, etc."
+></textarea>
+
+</div>
+
+
+
+<div class="button-area">
+
+<button
+type="submit"
+id="submitButton"
+>
+LIST CARD
+</button>
+
+<div
+id="message"
+class="message"
+></div>
+
+</div>
+
+
+</form>
+
 
 </main>
 
 
+
 <footer>
-  CARDÉ — A CURATED CARD MARKET
+
+<div class="footer-logo">
+CARDÉ
+</div>
+
+<div class="footer-text">
+CARDÉ — A CURATED CARD MARKET<br>
+© 2026 CARDÉ. ALL RIGHTS RESERVED.
+</div>
+
 </footer>
+
 
 
 <script>
 
-  // ==========================================
-  // SUPABASE CONNECTION
-  // ==========================================
 
-  const SUPABASE_URL =
-    "https://byjnjciwsdwxuneusgau.supabase.co";
+const SUPABASE_URL =
+"https://byjnjciwsdwxuneusgau.supabase.co";
 
-  const SUPABASE_PUBLISHABLE_KEY =
-    "sb_publishable_9-MEV3xRebYJBBSQFAW_xA_sxniWNBl";
 
+const SUPABASE_PUBLISHABLE_KEY =
+"sb_publishable_9-MEV3xReYbJBBSQFAW_xA_sxniWNBl";
 
-  const supabaseClient =
-    window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_PUBLISHABLE_KEY
-    );
 
+const supabaseClient =
+window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_PUBLISHABLE_KEY
+);
 
-  // ==========================================
-  // FORM
-  // ==========================================
 
-  const form =
-    document.getElementById("sellForm");
 
-  const button =
-    document.getElementById("submitButton");
+const form =
+document.getElementById("sellForm");
 
-  const message =
-    document.getElementById("message");
+const imageInput =
+document.getElementById("image");
 
+const imagePreview =
+document.getElementById("imagePreview");
 
-  // ==========================================
-  // SUBMIT
-  // ==========================================
+const message =
+document.getElementById("message");
 
-  form.addEventListener(
-    "submit",
-    async function(event) {
+const submitButton =
+document.getElementById("submitButton");
 
-      // 페이지 새로고침 방지
-      event.preventDefault();
 
-      button.disabled = true;
-      button.textContent = "LISTING...";
 
-      message.textContent = "";
+let imageData = "";
 
 
-      try {
 
-        // ======================================
-        // 입력값 가져오기
-        // ======================================
+imageInput.addEventListener(
+"change",
+function(){
 
-        const category =
-          document.getElementById("category").value;
+const file =
+this.files[0];
 
-        const cardName =
-          document
-            .getElementById("cardName")
-            .value
-            .trim();
+if(!file){
 
-        const price =
-          Number(
-            document.getElementById("price").value
-          );
+imageData = "";
 
-        const condition =
-          document.getElementById("condition").value;
+imagePreview.innerHTML = `
+<div class="placeholder">
+CARD IMAGE
+</div>
+`;
 
-        const description =
-          document
-            .getElementById("description")
-            .value
-            .trim();
+return;
 
-        const imageFile =
-          document
-            .getElementById("cardImage")
-            .files[0];
+}
 
 
-        // ======================================
-        // 이미지
-        // ======================================
+const reader =
+new FileReader();
 
-        let imageUrl = "";
 
-        if (imageFile) {
+reader.onload =
+function(event){
 
-          imageUrl = await new Promise(
-            function(resolve, reject) {
+imageData =
+event.target.result;
 
-              const reader =
-                new FileReader();
+imagePreview.innerHTML = `
+<img
+src="${imageData}"
+alt="Card Preview"
+>
+`;
 
-              reader.onload =
-                function() {
-                  resolve(reader.result);
-                };
+};
 
-              reader.onerror =
-                function() {
-                  reject(reader.error);
-                };
 
-              reader.readAsDataURL(imageFile);
+reader.readAsDataURL(file);
 
-            }
-          );
+});
 
-        }
 
 
-        // ======================================
-        // SUPABASE DATABASE에 상품 등록
-        // ======================================
+form.addEventListener(
+"submit",
+async function(event){
 
-        const { error } =
-          await supabaseClient
-            .from("products")
-            .insert({
+event.preventDefault();
 
-              category: category,
 
-              card_name: cardName,
+message.textContent = "";
 
-              price: price,
+message.className =
+"message";
 
-              condition: condition,
 
-              image_url: imageUrl,
+const category =
+document
+.getElementById("category")
+.value;
 
-              description: description
 
-            });
+const cardName =
+document
+.getElementById("cardName")
+.value
+.trim();
 
 
-        // ======================================
-        // 오류 확인
-        // ======================================
+const price =
+Number(
+document
+.getElementById("price")
+.value
+);
 
-        if (error) {
-          throw error;
-        }
 
+const condition =
+document
+.getElementById("condition")
+.value;
 
-        // ======================================
-        // 성공
-        // ======================================
 
-        message.textContent =
-          "Your card has been successfully listed.";
+const description =
+document
+.getElementById("description")
+.value
+.trim();
 
-        message.style.color = "green";
 
-        form.reset();
 
-        button.textContent =
-          "LISTED ✓";
+if(!category){
 
+message.textContent =
+"PLEASE SELECT A GAME.";
 
-      } catch (error) {
+message.className =
+"message error";
 
-        // ======================================
-        // 오류 표시
-        // ======================================
+return;
 
-        console.error(
-          "CARDÉ ERROR:",
-          error
-        );
+}
 
-        message.textContent =
-          "ERROR: " + error.message;
 
-        message.style.color = "red";
+if(!cardName){
 
-        button.disabled = false;
+message.textContent =
+"PLEASE ENTER A CARD NAME.";
 
-        button.textContent =
-          "LIST CARD";
+message.className =
+"message error";
 
-      }
+return;
 
-    }
-  );
+}
+
+
+if(!Number.isFinite(price) || price < 0){
+
+message.textContent =
+"PLEASE ENTER A VALID PRICE.";
+
+message.className =
+"message error";
+
+return;
+
+}
+
+
+if(!condition){
+
+message.textContent =
+"PLEASE SELECT A CONDITION.";
+
+message.className =
+"message error";
+
+return;
+
+}
+
+
+
+submitButton.disabled =
+true;
+
+submitButton.textContent =
+"LISTING...";
+
+
+
+try{
+
+
+const { error } =
+await supabaseClient
+.from("products")
+.insert({
+
+category:
+
+category,
+
+card_name:
+
+cardName,
+
+price:
+
+price,
+
+condition:
+
+condition,
+
+image_url:
+
+imageData,
+
+description:
+
+description
+
+});
+
+
+if(error){
+
+console.error(error);
+
+throw error;
+
+}
+
+
+
+message.textContent =
+"LISTED ✓";
+
+
+message.className =
+"message success";
+
+
+const successText =
+document.createElement("div");
+
+successText.textContent =
+"Your card has been successfully listed.";
+
+
+message.appendChild(
+successText
+);
+
+
+
+form.reset();
+
+
+imageData = "";
+
+
+imagePreview.innerHTML = `
+<div class="placeholder">
+CARD IMAGE
+</div>
+`;
+
+
+
+}catch(error){
+
+
+console.error(error);
+
+
+message.textContent =
+"LISTING FAILED";
+
+
+message.className =
+"message error";
+
+
+const errorText =
+document.createElement("div");
+
+errorText.textContent =
+error.message ||
+"Please try again later.";
+
+
+message.appendChild(
+errorText
+);
+
+
+}finally{
+
+
+submitButton.disabled =
+false;
+
+submitButton.textContent =
+"LIST CARD";
+
+
+}
+
+});
+
 
 </script>
+
 
 </body>
 </html>
