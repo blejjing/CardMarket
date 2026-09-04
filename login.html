@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CARDÉ — Login</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+}
+
+body{
+font-family:Arial,Helvetica,sans-serif;
+color:#111;
+background:#fff;
+}
+
+a{
+text-decoration:none;
+color:inherit;
+}
+
+header{
+height:82px;
+padding:0 50px;
+
+display:flex;
+align-items:center;
+justify-content:space-between;
+
+border-bottom:1px solid #eee;
+
+position:sticky;
+top:0;
+z-index:100;
+
+background:rgba(255,255,255,.96);
+backdrop-filter:blur(10px);
+}
+
+.logo{
+font-size:24px;
+font-weight:500;
+letter-spacing:7px;
+}
+
+nav{
+display:flex;
+gap:38px;
+
+font-size:10px;
+letter-spacing:2px;
+}
+
+nav a:hover,
+.header-right a:hover{
+opacity:.45;
+}
+
+.header-right{
+display:flex;
+gap:22px;
+
+font-size:10px;
+letter-spacing:2px;
+}
+
+.page{
+max-width:520px;
+
+margin:auto;
+
+padding:100px 30px 140px;
+}
+
+.title-area{
+margin-bottom:45px;
+}
+
+.eyebrow{
+font-size:9px;
+letter-spacing:3px;
+
+color:#999;
+
+margin-bottom:18px;
+}
+
+h1{
+font-size:42px;
+font-weight:400;
+}
+
+.sub{
+margin-top:15px;
+
+font-size:11px;
+
+color:#888;
+}
+
+.form{
+border-top:1px solid #eee;
+}
+
+.field{
+padding:25px 0;
+
+border-bottom:1px solid #eee;
+}
+
+label{
+display:block;
+
+font-size:9px;
+
+letter-spacing:2px;
+
+color:#888;
+
+margin-bottom:12px;
+}
+
+input{
+width:100%;
+
+border:1px solid #ddd;
+
+background:#fff;
+
+padding:16px;
+
+font-family:Arial,Helvetica,sans-serif;
+
+font-size:12px;
+
+outline:none;
+}
+
+input:focus{
+border-color:#111;
+}
+
+.button-area{
+padding-top:35px;
+}
+
+button{
+width:100%;
+
+height:56px;
+
+border:1px solid #111;
+
+background:#111;
+
+color:#fff;
+
+font-size:10px;
+
+letter-spacing:3px;
+
+cursor:pointer;
+
+transition:.3s;
+}
+
+button:hover{
+background:#fff;
+
+color:#111;
+}
+
+button:disabled{
+opacity:.5;
+
+cursor:not-allowed;
+}
+
+.switch{
+margin-top:25px;
+
+text-align:center;
+
+font-size:10px;
+
+letter-spacing:1px;
+
+color:#888;
+}
+
+.switch button{
+width:auto;
+
+height:auto;
+
+border:none;
+
+background:none;
+
+color:#111;
+
+font-size:10px;
+
+letter-spacing:1px;
+
+padding:0;
+
+margin-left:5px;
+}
+
+.switch button:hover{
+background:none;
+
+color:#777;
+}
+
+.message{
+margin-top:25px;
+
+text-align:center;
+
+font-size:10px;
+
+letter-spacing:1.5px;
+
+line-height:1.8;
+}
+
+.success{
+color:#111;
+}
+
+.error{
+color:#999;
+}
+
+.back{
+display:block;
+
+margin-top:35px;
+
+text-align:center;
+
+font-size:9px;
+
+letter-spacing:2px;
+
+color:#999;
+}
+
+.back:hover{
+color:#111;
+}
+
+footer{
+border-top:1px solid #eee;
+
+padding:50px;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:flex-start;
+}
+
+.footer-logo{
+font-size:18px;
+
+letter-spacing:5px;
+}
+
+.footer-text{
+font-size:9px;
+
+line-height:1.8;
+
+color:#999;
+
+text-align:right;
+}
+
+@media(max-width:600px){
+
+header{
+padding:0 20px;
+}
+
+nav{
+display:none;
+}
+
+.header-right{
+gap:12px;
+}
+
+.page{
+padding:70px 20px 100px;
+}
+
+h1{
+font-size:32px;
+}
+
+footer{
+padding:35px 20px;
+
+flex-direction:column;
+
+gap:25px;
+}
+
+.footer-text{
+text-align:left;
+}
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<a href="index.html" class="logo">
+CARDÉ
+</a>
+
+
+<nav>
+
+<a href="index.html#collection">
+COLLECTION
+</a>
+
+<a href="index.html#operator-shop">
+OPERATOR SHOP
+</a>
+
+<a href="sell.html">
+SELL
+</a>
+
+<a href="index.html#about">
+ABOUT
+</a>
+
+</nav>
+
+
+<div class="header-right">
+
+<a href="#">
+SEARCH
+</a>
+
+<a href="#">
+♡
+</a>
+
+<a href="login.html">
+LOGIN
+</a>
+
+</div>
+
+</header>
+
+
+
+<main class="page">
+
+
+<div class="title-area">
+
+<div class="eyebrow">
+CARDÉ ACCOUNT
+</div>
+
+<h1 id="pageTitle">
+Login
+</h1>
+
+<div
+class="sub"
+id="pageSubtitle"
+>
+Sign in to your CARDÉ account
+</div>
+
+</div>
+
+
+
+<form
+id="authForm"
+class="form"
+>
+
+
+<div class="field">
+
+<label for="email">
+EMAIL
+</label>
+
+<input
+type="email"
+id="email"
+placeholder="Enter your email"
+autocomplete="email"
+required
+>
+
+</div>
+
+
+
+<div class="field">
+
+<label for="password">
+PASSWORD
+</label>
+
+<input
+type="password"
+id="password"
+placeholder="Enter your password"
+autocomplete="current-password"
+required
+>
+
+</div>
+
+
+
+<div
+id="buttonArea"
+class="button-area"
+>
+
+<button
+type="submit"
+id="submitButton"
+>
+LOGIN
+</button>
+
+</div>
+
+
+</form>
+
+
+
+<div
+class="switch"
+id="switchArea"
+>
+
+Don't have an account?
+
+<button
+type="button"
+id="switchButton"
+>
+SIGN UP
+</button>
+
+</div>
+
+
+
+<div
+id="message"
+class="message"
+></div>
+
+
+
+<a
+href="index.html"
+class="back"
+>
+← BACK TO CARDÉ
+</a>
+
+
+</main>
+
+
+
+<footer>
+
+<div class="footer-logo">
+CARDÉ
+</div>
+
+<div class="footer-text">
+CARDÉ — A CURATED CARD MARKET<br>
+© 2026 CARDÉ. ALL RIGHTS RESERVED.
+</div>
+
+</footer>
+
+
+
+<script>
+
+
+/* =========================
+   SUPABASE
+========================= */
+
+const SUPABASE_URL =
+"https://byjnjciwsdwxuneusgau.supabase.co";
+
+
+const SUPABASE_PUBLISHABLE_KEY =
+"sb_publishable_9-MEV3xRebYJBBSQFAW_xA_sxniWNBl";
+
+
+const supabaseClient =
+window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_PUBLISHABLE_KEY
+);
+
+
+
+/* =========================
+   ELEMENTS
+========================= */
+
+const authForm =
+document.getElementById("authForm");
+
+const emailInput =
+document.getElementById("email");
+
+const passwordInput =
+document.getElementById("password");
+
+const submitButton =
+document.getElementById("submitButton");
+
+const switchButton =
+document.getElementById("switchButton");
+
+const message =
+document.getElementById("message");
+
+const pageTitle =
+document.getElementById("pageTitle");
+
+const pageSubtitle =
+document.getElementById("pageSubtitle");
+
+
+
+/* =========================
+   MODE
+========================= */
+
+let signupMode = false;
+
+
+
+/* =========================
+   MESSAGE
+========================= */
+
+function showMessage(
+text,
+type
+){
+
+message.textContent =
+text;
+
+message.className =
+"message " + type;
+
+}
+
+
+
+/* =========================
+   SWITCH LOGIN / SIGNUP
+========================= */
+
+switchButton.addEventListener(
+"click",
+function(){
+
+signupMode =
+!signupMode;
+
+
+showMessage(
+"",
+""
+);
+
+
+passwordInput.value = "";
+
+
+
+if(signupMode){
+
+pageTitle.textContent =
+"Create Account";
+
+pageSubtitle.textContent =
+"Create your CARDÉ account";
+
+submitButton.textContent =
+"CREATE ACCOUNT";
+
+switchButton.textContent =
+"LOGIN";
+
+document.querySelector(".switch").childNodes[0].textContent =
+"Already have an account? ";
+
+}else{
+
+pageTitle.textContent =
+"Login";
+
+pageSubtitle.textContent =
+"Sign in to your CARDÉ account";
+
+submitButton.textContent =
+"LOGIN";
+
+switchButton.textContent =
+"SIGN UP";
+
+document.querySelector(".switch").childNodes[0].textContent =
+"Don't have an account? ";
+
+}
+
+});
+
+
+
+/* =========================
+   AUTH
+========================= */
+
+authForm.addEventListener(
+"submit",
+async function(event){
+
+event.preventDefault();
+
+
+showMessage(
+"",
+""
+);
+
+
+const email =
+emailInput.value.trim();
+
+const password =
+passwordInput.value;
+
+
+
+if(!email){
+
+showMessage(
+"PLEASE ENTER YOUR EMAIL.",
+"error"
+);
+
+return;
+
+}
+
+
+if(!password){
+
+showMessage(
+"PLEASE ENTER YOUR PASSWORD.",
+"error"
+);
+
+return;
+
+}
+
+
+if(password.length < 6){
+
+showMessage(
+"PASSWORD MUST BE AT LEAST 6 CHARACTERS.",
+"error"
+);
+
+return;
+
+}
+
+
+
+submitButton.disabled =
+true;
+
+
+
+/* =========================
+   SIGN UP
+========================= */
+
+if(signupMode){
+
+submitButton.textContent =
+"CREATING...";
+
+
+const {
+data,
+error
+} =
+await supabaseClient.auth.signUp({
+
+email:
+email,
+
+password:
+password
+
+});
+
+
+if(error){
+
+console.error(error);
+
+
+showMessage(
+error.message,
+"error"
+);
+
+
+submitButton.disabled =
+false;
+
+submitButton.textContent =
+"CREATE ACCOUNT";
+
+return;
+
+}
+
+
+
+/* 회원가입 성공 */
+
+if(data.session){
+
+showMessage(
+"ACCOUNT CREATED ✓",
+"success"
+);
+
+setTimeout(
+function(){
+
+window.location.href =
+"index.html";
+
+},
+1000
+);
+
+}else{
+
+showMessage(
+"ACCOUNT CREATED. PLEASE CHECK YOUR EMAIL.",
+"success"
+);
+
+submitButton.disabled =
+false;
+
+submitButton.textContent =
+"CREATE ACCOUNT";
+
+}
+
+return;
+
+}
+
+
+
+/* =========================
+   LOGIN
+========================= */
+
+submitButton.textContent =
+"LOGGING IN...";
+
+
+const {
+data,
+error
+} =
+await supabaseClient.auth.signInWithPassword({
+
+email:
+email,
+
+password:
+password
+
+});
+
+
+if(error){
+
+console.error(error);
+
+
+showMessage(
+error.message,
+"error"
+);
+
+
+submitButton.disabled =
+false;
+
+submitButton.textContent =
+"LOGIN";
+
+return;
+
+}
+
+
+
+/* LOGIN SUCCESS */
+
+if(data.session){
+
+showMessage(
+"LOGIN SUCCESS ✓",
+"success"
+);
+
+
+setTimeout(
+function(){
+
+window.location.href =
+"index.html";
+
+},
+700
+);
+
+}else{
+
+showMessage(
+"LOGIN FAILED.",
+"error"
+);
+
+submitButton.disabled =
+false;
+
+submitButton.textContent =
+"LOGIN";
+
+}
+
+});
+
+
+
+/* =========================
+   CHECK EXISTING SESSION
+========================= */
+
+async function checkSession(){
+
+const {
+data
+} =
+await supabaseClient.auth.getSession();
+
+
+if(data.session){
+
+window.location.href =
+"index.html";
+
+}
+
+}
+
+
+checkSession();
+
+
+</script>
+
+
+</body>
+
+</html>
