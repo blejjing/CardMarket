@@ -289,7 +289,6 @@ text-align:left;
 
 }
 </style>
-
 </head>
 
 <body>
@@ -344,7 +343,6 @@ LOGIN
 <a href="index.html#collection" class="back">
 ← BACK TO COLLECTION
 </a>
-
 
 <div class="title-area">
 
@@ -418,8 +416,10 @@ CARDÉ — A CURATED CARD MARKET<br>
 const SUPABASE_URL =
 "https://byjnjciwsdwxuneusgau.supabase.co";
 
+
 const SUPABASE_PUBLISHABLE_KEY =
-"sb_publishable_9-MEV3xReYbJBBSQFAW_xA_sxniWNBl";
+"sb_publishable_9-MEV3xRebYJBBSQFAW_xA_sxniWNBl";
+
 
 const supabaseClient =
 window.supabase.createClient(
@@ -440,15 +440,6 @@ const count =
 document.getElementById("count");
 
 
-container.innerHTML = `
-<div class="loading">
-LOADING
-</div>
-`;
-
-count.textContent = "LOADING";
-
-
 try{
 
 const { data, error } =
@@ -463,10 +454,7 @@ await supabaseClient
 
 if(error){
 
-console.error(
-"SUPABASE ERROR:",
-error
-);
+console.error(error);
 
 container.innerHTML = `
 <div class="error">
@@ -476,10 +464,8 @@ UNABLE TO LOAD PRODUCTS
 </h2>
 
 <p>
-Supabase returned an error.
+${error.message}
 </p>
-
-<pre>${error.message || error}</pre>
 
 </div>
 `;
@@ -491,22 +477,13 @@ return;
 }
 
 
-console.log(
-"POKÉMON PRODUCTS:",
-data
-);
-
-
 products = data || [];
 
 renderProducts();
 
 }catch(error){
 
-console.error(
-"LOAD ERROR:",
-error
-);
+console.error(error);
 
 container.innerHTML = `
 <div class="error">
@@ -516,10 +493,8 @@ UNABLE TO LOAD PRODUCTS
 </h2>
 
 <p>
-An unexpected error occurred.
+${error.message}
 </p>
-
-<pre>${error.message || error}</pre>
 
 </div>
 `;
