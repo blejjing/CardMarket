@@ -336,7 +336,7 @@ SEARCH
 ♡
 </a>
 
-<a href="#">
+<a href="login.html">
 LOGIN
 </a>
 
@@ -584,6 +584,10 @@ CARDÉ — A CURATED CARD MARKET<br>
 <script>
 
 
+/* =========================
+   SUPABASE
+========================= */
+
 const SUPABASE_URL =
 "https://byjnjciwsdwxuneusgau.supabase.co";
 
@@ -599,6 +603,10 @@ SUPABASE_PUBLISHABLE_KEY
 );
 
 
+
+/* =========================
+   ELEMENTS
+========================= */
 
 const form =
 document.getElementById("sellForm");
@@ -621,12 +629,61 @@ let imageData = "";
 
 
 
+/* =========================
+   CHECK LOGIN
+========================= */
+
+async function checkLogin(){
+
+const {
+data,
+error
+} =
+await supabaseClient.auth.getUser();
+
+
+if(error){
+
+console.error(
+"Login check error:",
+error
+);
+
+window.location.href =
+"login.html";
+
+return false;
+
+}
+
+
+if(!data.user){
+
+window.location.href =
+"login.html";
+
+return false;
+
+}
+
+
+return true;
+
+}
+
+
+
+/* =========================
+   IMAGE PREVIEW
+========================= */
+
 imageInput.addEventListener(
 "change",
 function(){
 
 const file =
 this.files[0];
+
 
 if(!file){
 
@@ -655,7 +712,7 @@ event.target.result;
 
 imagePreview.innerHTML = `
 <img
-src="${imageData}"
+src="${event.target.result}"
 alt="Card Preview"
 >
 `;
@@ -669,6 +726,10 @@ reader.readAsDataURL(file);
 
 
 
+/* =========================
+   SELL
+========================= */
+
 form.addEventListener(
 "submit",
 async function(event){
@@ -680,6 +741,30 @@ message.textContent = "";
 
 message.className =
 "message";
+
+
+
+/* 로그인 확인 */
+
+const {
+data: userData,
+error: userError
+} =
+await supabaseClient.auth.getUser();
+
+
+if(
+userError ||
+!userData.user
+){
+
+window.location.href =
+"login.html";
+
+return;
+
+}
+
 
 
 const category =
@@ -717,6 +802,8 @@ document
 
 
 
+/* CATEGORY */
+
 if(!category){
 
 message.textContent =
@@ -729,6 +816,9 @@ return;
 
 }
 
+
+
+/* CARD NAME */
 
 if(!cardName){
 
@@ -743,7 +833,13 @@ return;
 }
 
 
-if(!Number.isFinite(price) || price < 0){
+
+/* PRICE */
+
+if(
+!Number.isFinite(price) ||
+price < 0
+){
 
 message.textContent =
 "PLEASE ENTER A VALID PRICE.";
@@ -755,6 +851,9 @@ return;
 
 }
 
+
+
+/* CONDITION */
 
 if(!condition){
 
@@ -781,33 +880,29 @@ submitButton.textContent =
 try{
 
 
-const { error } =
+const {
+error
+} =
 await supabaseClient
 .from("products")
 .insert({
 
 category:
-
 category,
 
 card_name:
-
 cardName,
 
 price:
-
 price,
 
 condition:
-
 condition,
 
 image_url:
-
 imageData,
 
 description:
-
 description
 
 });
@@ -815,7 +910,10 @@ description
 
 if(error){
 
-console.error(error);
+console.error(
+"Listing error:",
+error
+);
 
 throw error;
 
@@ -847,7 +945,8 @@ successText
 form.reset();
 
 
-imageData = "";
+imageData =
+"";
 
 
 imagePreview.innerHTML = `
@@ -885,6 +984,7 @@ errorText
 );
 
 
+
 }finally{
 
 
@@ -900,8 +1000,17 @@ submitButton.textContent =
 });
 
 
+
+/* =========================
+   START
+========================= */
+
+checkLogin();
+
+
 </script>
 
 
 </body>
+</html>
 </html>
