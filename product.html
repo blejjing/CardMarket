@@ -30,11 +30,6 @@
       color: inherit;
     }
 
-
-    /* =========================
-       HEADER
-    ========================= */
-
     header {
       height: 82px;
       padding: 0 50px;
@@ -91,11 +86,6 @@
       opacity: 0.45;
     }
 
-
-    /* =========================
-       PRODUCT
-    ========================= */
-
     .product-page {
       max-width: 1300px;
 
@@ -110,11 +100,6 @@
 
       gap: 80px;
     }
-
-
-    /* =========================
-       IMAGE
-    ========================= */
 
     .product-main-image {
       width: 100%;
@@ -153,11 +138,6 @@
       color: #aaa;
     }
 
-
-    /* =========================
-       INFO
-    ========================= */
-
     .product-info {
       padding-top: 20px;
     }
@@ -189,11 +169,6 @@
 
       margin-bottom: 35px;
     }
-
-
-    /* =========================
-       DETAILS
-    ========================= */
 
     .details {
       border-top: 1px solid #eee;
@@ -229,11 +204,6 @@
       text-align: right;
     }
 
-
-    /* =========================
-       DESCRIPTION
-    ========================= */
-
     .description {
       margin-bottom: 35px;
     }
@@ -254,12 +224,9 @@
       line-height: 1.8;
 
       color: #555;
+
+      white-space: pre-wrap;
     }
-
-
-    /* =========================
-       BUY BUTTON
-    ========================= */
 
     .buy-button {
       width: 100%;
@@ -289,10 +256,25 @@
       transform: translateY(-2px);
     }
 
+    .buy-button:disabled {
+      background: #999;
+      cursor: not-allowed;
+      transform: none;
+    }
 
-    /* =========================
-       BACK
-    ========================= */
+    .login-message {
+      margin-top: 12px;
+
+      font-size: 9px;
+
+      line-height: 1.6;
+
+      color: #999;
+
+      text-align: center;
+
+      letter-spacing: 1px;
+    }
 
     .back-link {
       display: inline-block;
@@ -312,11 +294,6 @@
       color: #111;
     }
 
-
-    /* =========================
-       LOADING
-    ========================= */
-
     .loading {
       min-height: 500px;
 
@@ -332,11 +309,6 @@
 
       color: #999;
     }
-
-
-    /* =========================
-       ERROR
-    ========================= */
 
     .error {
       min-height: 500px;
@@ -368,10 +340,24 @@
       margin-bottom: 25px;
     }
 
+    .error-button {
+      display: inline-flex;
 
-    /* =========================
-       FOOTER
-    ========================= */
+      align-items: center;
+      justify-content: center;
+
+      height: 45px;
+
+      padding: 0 25px;
+
+      background: #111;
+
+      color: #fff;
+
+      font-size: 9px;
+
+      letter-spacing: 2px;
+    }
 
     footer {
       border-top: 1px solid #eee;
@@ -400,11 +386,6 @@
 
       text-align: right;
     }
-
-
-    /* =========================
-       MOBILE
-    ========================= */
 
     @media (max-width: 800px) {
 
@@ -450,17 +431,10 @@
       }
 
     }
-
   </style>
 </head>
 
-
 <body>
-
-
-  <!-- =========================
-       HEADER
-  ========================= -->
 
   <header>
 
@@ -470,7 +444,6 @@
     >
       CARDÉ
     </a>
-
 
     <nav>
 
@@ -492,7 +465,6 @@
 
     </nav>
 
-
     <div class="header-right">
 
       <a href="#">
@@ -503,7 +475,7 @@
         ♡
       </a>
 
-      <a href="#">
+      <a href="login.html" id="loginLink">
         LOGIN
       </a>
 
@@ -511,11 +483,6 @@
 
   </header>
 
-
-
-  <!-- =========================
-       PRODUCT AREA
-  ========================= -->
 
   <main id="productArea">
 
@@ -526,17 +493,11 @@
   </main>
 
 
-
-  <!-- =========================
-       FOOTER
-  ========================= -->
-
   <footer>
 
     <div class="footer-logo">
       CARDÉ
     </div>
-
 
     <div class="footer-text">
 
@@ -549,11 +510,6 @@
   </footer>
 
 
-
-  <!-- =========================
-       SUPABASE
-  ========================= -->
-
   <script>
 
     const SUPABASE_URL =
@@ -561,7 +517,7 @@
 
 
     const SUPABASE_PUBLISHABLE_KEY =
-      "sb_publishable_9-MEV3xReYbJBBSQFAW_xA_sxniWNBl";
+      "sb_publishable_9-MEV3xReYBJBBSQFAW_xA_sxniWNBl";
 
 
     const supabaseClient =
@@ -570,10 +526,6 @@
         SUPABASE_PUBLISHABLE_KEY
       );
 
-
-    /* =========================
-       GET PRODUCT ID
-    ========================= */
 
     const params =
       new URLSearchParams(
@@ -585,11 +537,84 @@
       params.get("id");
 
 
-    /* =========================
-       LOAD PRODUCT
-    ========================= */
+    let currentProduct = null;
 
-    async function loadProduct() {
+
+    let currentUser = null;
+
+
+    async function checkLogin(){
+
+      try{
+
+        const {
+          data,
+          error
+        } =
+          await supabaseClient.auth.getUser();
+
+
+        if(error){
+
+          console.error(error);
+
+          currentUser = null;
+
+          return;
+
+        }
+
+
+        currentUser =
+          data?.user || null;
+
+
+        updateLoginLink();
+
+      }catch(error){
+
+        console.error(error);
+
+        currentUser = null;
+
+      }
+
+    }
+
+
+    function updateLoginLink(){
+
+      const loginLink =
+        document.getElementById("loginLink");
+
+
+      if(!loginLink){
+        return;
+      }
+
+
+      if(currentUser){
+
+        loginLink.textContent =
+          "ACCOUNT";
+
+        loginLink.href =
+          "login.html";
+
+      }else{
+
+        loginLink.textContent =
+          "LOGIN";
+
+        loginLink.href =
+          "login.html";
+
+      }
+
+    }
+
+
+    async function loadProduct(){
 
       const area =
         document.getElementById(
@@ -597,7 +622,7 @@
         );
 
 
-      if (!productId) {
+      if(!productId){
 
         showError(
           "Product Not Found",
@@ -605,51 +630,116 @@
         );
 
         return;
+
       }
 
 
-      const {
-        data,
-        error
-      } =
-        await supabaseClient
-          .from("products")
-          .select(
-            "id, category, card_name, price, condition, image_url, description, created_at"
-          )
-          .eq(
-            "id",
-            productId
-          )
-          .single();
+      try{
+
+        const {
+          data,
+          error
+        } =
+          await supabaseClient
+            .from("products")
+            .select(
+              "id, category, card_name, price, image_url, condition, description, created_at"
+            )
+            .eq(
+              "id",
+              productId
+            )
+            .single();
 
 
-      if (
-        error ||
-        !data
-      ) {
+        if(error || !data){
+
+          console.error(error);
+
+          showError(
+            "Product Not Found",
+            "This product may no longer be available."
+          );
+
+          return;
+
+        }
+
+
+        currentProduct = data;
+
+
+        renderProduct(data);
+
+      }catch(error){
 
         console.error(error);
 
         showError(
-          "Product Not Found",
-          "This product may no longer be available."
+          "Unable To Load Product",
+          error.message
         );
 
-        return;
       }
-
-
-      renderProduct(data);
 
     }
 
 
-    /* =========================
-       RENDER
-    ========================= */
+    function getBackLink(category){
 
-    function renderProduct(product) {
+      if(category === "Pokémon"){
+        return "pokemon.html";
+      }
+
+
+      if(category === "One Piece"){
+        return "onepiece.html";
+      }
+
+
+      if(category === "Weiss Schwarz"){
+        return "weiss.html";
+      }
+
+
+      if(category === "Build Divide"){
+        return "builddivide.html";
+      }
+
+
+      return "index.html#collection";
+
+    }
+
+
+    function getBackText(category){
+
+      if(category === "Pokémon"){
+        return "← BACK TO POKÉMON";
+      }
+
+
+      if(category === "One Piece"){
+        return "← BACK TO ONE PIECE";
+      }
+
+
+      if(category === "Weiss Schwarz"){
+        return "← BACK TO WEISS SCHWARZ";
+      }
+
+
+      if(category === "Build Divide"){
+        return "← BACK TO BUILD DIVIDE";
+      }
+
+
+      return "← BACK TO COLLECTION";
+
+    }
+
+
+    function renderProduct(product){
 
       const area =
         document.getElementById(
@@ -660,22 +750,18 @@
       let imageHTML = "";
 
 
-      if (
-        product.image_url
-      ) {
+      if(product.image_url){
 
         imageHTML = `
 
           <img
             src="${product.image_url}"
-            alt="${product.card_name}"
+            alt="${escapeHTML(product.card_name || "Card")}"
           >
 
         `;
 
-      }
-
-      else {
+      }else{
 
         imageHTML = `
 
@@ -688,18 +774,45 @@
       }
 
 
+      const backLink =
+        getBackLink(product.category);
+
+
+      const backText =
+        getBackText(product.category);
+
+
+      const loggedIn =
+        !!currentUser;
+
+
+      const buttonText =
+        loggedIn
+          ? "BUY NOW"
+          : "LOGIN TO BUY";
+
+
+      const loginMessage =
+        loggedIn
+          ? ""
+          : `
+            <div class="login-message">
+              YOU MUST BE LOGGED IN TO PURCHASE THIS CARD.
+            </div>
+          `;
+
+
       area.innerHTML = `
 
         <section class="product-page">
 
-
           <div>
 
             <a
-              href="pokemon.html"
+              href="${backLink}"
               class="back-link"
             >
-              ← BACK TO POKÉMON
+              ${backText}
             </a>
 
 
@@ -712,20 +825,19 @@
           </div>
 
 
-
           <div class="product-info">
 
 
             <div class="product-category">
 
-              ${product.category || "CARD"}
+              ${escapeHTML(product.category || "CARD")}
 
             </div>
 
 
             <h1 class="product-name">
 
-              ${product.card_name || "Untitled Card"}
+              ${escapeHTML(product.card_name || "Untitled Card")}
 
             </h1>
 
@@ -739,7 +851,6 @@
             </div>
 
 
-
             <div class="details">
 
 
@@ -750,7 +861,7 @@
                 </div>
 
                 <div class="detail-value">
-                  ${product.condition || "Not specified"}
+                  ${escapeHTML(product.condition || "Not specified")}
                 </div>
 
               </div>
@@ -763,7 +874,7 @@
                 </div>
 
                 <div class="detail-value">
-                  ${product.category || "—"}
+                  ${escapeHTML(product.category || "—")}
                 </div>
 
               </div>
@@ -785,7 +896,6 @@
             </div>
 
 
-
             <div class="description">
 
               <div class="description-title">
@@ -795,29 +905,31 @@
 
               <div class="description-text">
 
-                ${
+                ${escapeHTML(
                   product.description ||
                   "No description provided."
-                }
+                )}
 
               </div>
 
             </div>
 
 
-
             <button
               class="buy-button"
+              id="buyButton"
               onclick="buyProduct()"
             >
 
-              BUY NOW
+              ${buttonText}
 
             </button>
 
 
-          </div>
+            ${loginMessage}
 
+
+          </div>
 
         </section>
 
@@ -826,15 +938,21 @@
     }
 
 
-    /* =========================
-       DATE
-    ========================= */
+    function escapeHTML(value){
 
-    function formatDate(
-      date
-    ) {
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 
-      if (!date) {
+    }
+
+
+    function formatDate(date){
+
+      if(!date){
         return "—";
       }
 
@@ -853,27 +971,90 @@
     }
 
 
-    /* =========================
-       BUY
-    ========================= */
+    async function buyProduct(){
 
-    function buyProduct() {
+      if(!currentProduct){
+
+        alert(
+          "PRODUCT INFORMATION IS NOT AVAILABLE."
+        );
+
+        return;
+
+      }
+
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient.auth.getUser();
+
+
+      if(error || !data?.user){
+
+        alert(
+          "PLEASE LOGIN TO PURCHASE THIS CARD."
+        );
+
+
+        window.location.href =
+          "login.html?redirect=" +
+          encodeURIComponent(
+            window.location.href
+          );
+
+
+        return;
+
+      }
+
+
+      currentUser =
+        data.user;
+
+
+      const confirmed =
+        confirm(
+          "BUY THIS CARD FOR ₩" +
+          Number(
+            currentProduct.price || 0
+          ).toLocaleString() +
+          "?"
+        );
+
+
+      if(!confirmed){
+        return;
+      }
+
+
+      /*
+        실제 결제 시스템은 아직 연결되지 않았습니다.
+
+        다음 단계에서:
+        1. orders 테이블 생성
+        2. 주문 생성
+        3. 결제창 연결
+        4. 결제 완료 처리
+        5. 판매 상품 상태 변경
+
+        순서로 연결할 수 있습니다.
+      */
+
 
       alert(
-        "The purchase system will be connected later."
+        "LOGIN CONFIRMED.\n\n" +
+        "PURCHASE SYSTEM IS READY TO BE CONNECTED."
       );
 
     }
 
 
-    /* =========================
-       ERROR
-    ========================= */
-
     function showError(
       title,
       message
-    ) {
+    ){
 
       const area =
         document.getElementById(
@@ -886,16 +1067,16 @@
         <div class="error">
 
           <h2>
-            ${title}
+            ${escapeHTML(title)}
           </h2>
 
           <p>
-            ${message}
+            ${escapeHTML(message)}
           </p>
 
           <a
-            href="pokemon.html"
-            class="button"
+            href="index.html#collection"
+            class="error-button"
           >
             BACK TO SHOP
           </a>
@@ -907,11 +1088,16 @@
     }
 
 
-    /* =========================
-       START
-    ========================= */
+    async function init(){
 
-    loadProduct();
+      await checkLogin();
+
+      await loadProduct();
+
+    }
+
+
+    init();
 
   </script>
 
