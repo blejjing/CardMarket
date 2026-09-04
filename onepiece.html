@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -9,6 +10,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+
 *{
 box-sizing:border-box;
 margin:0;
@@ -279,16 +281,21 @@ text-align:left;
 }
 
 }
+
 </style>
+
 </head>
 
+
 <body>
+
 
 <header>
 
 <a href="index.html" class="logo">
 CARDÉ
 </a>
+
 
 <nav>
 
@@ -310,6 +317,7 @@ ABOUT
 
 </nav>
 
+
 <div class="header-right">
 
 <a href="#">
@@ -329,11 +337,18 @@ LOGIN
 </header>
 
 
+
 <main class="page">
 
-<a href="index.html#collection" class="back">
+
+<a
+href="index.html#collection"
+class="back"
+>
 ← BACK TO COLLECTION
 </a>
+
+
 
 <div class="title-area">
 
@@ -352,11 +367,16 @@ Discover One Piece Cards
 </div>
 
 
+
 <div class="toolbar">
 
-<div class="count" id="count">
+<div
+class="count"
+id="count"
+>
 LOADING
 </div>
+
 
 <select id="sort">
 
@@ -377,6 +397,7 @@ PRICE HIGH
 </div>
 
 
+
 <div id="products">
 
 <div class="loading">
@@ -385,7 +406,9 @@ LOADING
 
 </div>
 
+
 </main>
+
 
 
 <footer>
@@ -402,13 +425,21 @@ CARDÉ — A CURATED CARD MARKET<br>
 </footer>
 
 
+
 <script>
+
+
+/* =========================
+   SUPABASE
+========================= */
 
 const SUPABASE_URL =
 "https://byjnjciwsdwxuneusgau.supabase.co";
 
+
 const SUPABASE_PUBLISHABLE_KEY =
-"sb_publishable_9-MEV3xReYbJBBSQFAW_xA_sxniWNBl";
+"sb_publishable_9-MEV3xRebYJBBSQFAW_xA_sxniWNBl";
+
 
 const supabaseClient =
 window.supabase.createClient(
@@ -416,132 +447,283 @@ SUPABASE_URL,
 SUPABASE_PUBLISHABLE_KEY
 );
 
-let products=[];
+
+
+/* =========================
+   PRODUCTS
+========================= */
+
+let products = [];
+
+
+
+/* =========================
+   LOAD PRODUCTS
+========================= */
 
 async function loadProducts(){
 
-const container=document.getElementById("products");
-const count=document.getElementById("count");
+const container =
+document.getElementById("products");
+
+const count =
+document.getElementById("count");
+
 
 try{
 
-const {data,error}=await supabaseClient
+
+const {
+data,
+error
+} =
+await supabaseClient
 .from("products")
-.select("id, category, card_name, price, condition, image_url, description, created_at")
-.eq("category","One Piece")
-.order("created_at",{ascending:false});
+.select(
+"id, category, card_name, price, condition, image_url, description, created_at"
+)
+.eq(
+"category",
+"One Piece"
+)
+.order(
+"created_at",
+{
+ascending:false
+}
+);
+
+
 
 if(error){
 
-console.error(error);
+console.error(
+"Supabase error:",
+error
+);
 
-container.innerHTML=`
+
+container.innerHTML = `
+
 <div class="error">
-<h2>UNABLE TO LOAD PRODUCTS</h2>
-<p>${error.message}</p>
+
+<h2>
+UNABLE TO LOAD PRODUCTS
+</h2>
+
+<p>
+${error.message}
+</p>
+
 </div>
+
 `;
 
-count.textContent="ERROR";
+
+count.textContent =
+"ERROR";
+
 
 return;
 
 }
 
-products=data||[];
+
+
+products =
+data || [];
+
 
 renderProducts();
 
+
 }catch(error){
 
-console.error(error);
 
-container.innerHTML=`
+console.error(
+"Supabase error:",
+error
+);
+
+
+container.innerHTML = `
+
 <div class="error">
-<h2>UNABLE TO LOAD PRODUCTS</h2>
-<p>${error.message}</p>
+
+<h2>
+UNABLE TO LOAD PRODUCTS
+</h2>
+
+<p>
+${error.message}
+</p>
+
 </div>
+
 `;
 
-count.textContent="ERROR";
+
+count.textContent =
+"ERROR";
+
 
 }
 
 }
+
+
+
+/* =========================
+   RENDER PRODUCTS
+========================= */
 
 function renderProducts(){
 
-const container=document.getElementById("products");
-const count=document.getElementById("count");
+const container =
+document.getElementById("products");
 
-let list=[...products];
+const count =
+document.getElementById("count");
 
-const sort=document.getElementById("sort").value;
 
-if(sort==="low"){
-list.sort((a,b)=>Number(a.price||0)-Number(b.price||0));
+let list =
+[...products];
+
+
+const sort =
+document.getElementById("sort").value;
+
+
+
+/* PRICE LOW */
+
+if(sort === "low"){
+
+list.sort(
+(a,b) =>
+Number(a.price || 0) -
+Number(b.price || 0)
+);
+
 }
 
-if(sort==="high"){
-list.sort((a,b)=>Number(b.price||0)-Number(a.price||0));
+
+
+/* PRICE HIGH */
+
+if(sort === "high"){
+
+list.sort(
+(a,b) =>
+Number(b.price || 0) -
+Number(a.price || 0)
+);
+
 }
 
-count.textContent=`${list.length} PRODUCTS`;
 
-if(list.length===0){
 
-container.innerHTML=`
+/* COUNT */
+
+count.textContent =
+`${list.length} PRODUCTS`;
+
+
+
+/* EMPTY */
+
+if(list.length === 0){
+
+container.innerHTML = `
+
 <div class="empty">
-<h2>NO PRODUCTS YET</h2>
-<p>One Piece cards listed on CARDÉ will appear here.</p>
+
+<h2>
+NO PRODUCTS YET
+</h2>
+
+<p>
+One Piece cards listed on CARDÉ will appear here.
+</p>
+
 </div>
+
 `;
 
 return;
 
 }
 
-container.innerHTML=`
+
+
+/* PRODUCTS */
+
+container.innerHTML = `
 
 <div class="grid">
 
-${list.map(product=>`
+${list.map(product => `
 
 <a
 class="card"
 href="product.html?id=${encodeURIComponent(product.id)}"
 >
 
+
 <div class="image-box">
 
 ${
 product.image_url
+
 ?
+
 `<img
 src="${product.image_url}"
 alt="${product.card_name || "Card"}"
 >`
+
 :
-`<div class="placeholder">CARD IMAGE</div>`
+
+`<div class="placeholder">
+CARD IMAGE
+</div>`
+
 }
 
 </div>
 
+
+
 <div class="info">
 
+
 <div class="name">
-${product.card_name||"Untitled Card"}
+
+${product.card_name || "Untitled Card"}
+
 </div>
+
+
 
 <div class="condition">
-${product.condition||"NOT SPECIFIED"}
+
+${product.condition || "NOT SPECIFIED"}
+
 </div>
+
+
 
 <div class="price">
-₩${Number(product.price||0).toLocaleString()}
-</div>
+
+₩${Number(
+product.price || 0
+).toLocaleString("ko-KR")}
 
 </div>
+
+
+</div>
+
 
 </a>
 
@@ -553,13 +735,31 @@ ${product.condition||"NOT SPECIFIED"}
 
 }
 
+
+
+/* =========================
+   SORT
+========================= */
+
 document
 .getElementById("sort")
-.addEventListener("change",renderProducts);
+.addEventListener(
+"change",
+renderProducts
+);
+
+
+
+/* =========================
+   START
+========================= */
 
 loadProducts();
 
+
 </script>
 
+
 </body>
+
 </html>
