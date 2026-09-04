@@ -1,1116 +1,1148 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>CARDÉ</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      color: #111;
+      background: #fff;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>CARDÉ — A Curated Card Market</title>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<style>
-
-*{
-box-sizing:border-box;
-margin:0;
-padding:0;
-}
-
-body{
-font-family:Arial,Helvetica,sans-serif;
-color:#111;
-background:#fff;
-}
-
-a{
-text-decoration:none;
-color:inherit;
-}
-
-header{
-height:82px;
-padding:0 50px;
-display:flex;
-align-items:center;
-justify-content:space-between;
-border-bottom:1px solid #eee;
-position:sticky;
-top:0;
-z-index:100;
-background:rgba(255,255,255,.96);
-backdrop-filter:blur(10px);
-}
-
-.logo{
-font-size:24px;
-font-weight:500;
-letter-spacing:7px;
-}
-
-nav{
-display:flex;
-gap:38px;
-font-size:10px;
-letter-spacing:2px;
-}
-
-nav a:hover,
-.header-right a:hover{
-opacity:.45;
-}
-
-.header-right{
-display:flex;
-gap:22px;
-font-size:10px;
-letter-spacing:2px;
-}
-
-.hero{
-min-height:620px;
-display:flex;
-align-items:center;
-justify-content:center;
-text-align:center;
-padding:100px 30px;
-border-bottom:1px solid #eee;
-}
-
-.hero-inner{
-max-width:900px;
-}
-
-.hero-eyebrow{
-font-size:9px;
-letter-spacing:4px;
-color:#999;
-margin-bottom:25px;
-}
-
-.hero h1{
-font-size:58px;
-font-weight:400;
-line-height:1.15;
-letter-spacing:-2px;
-}
-
-.hero p{
-margin-top:25px;
-font-size:12px;
-color:#888;
-letter-spacing:.5px;
-}
-
-.hero-button{
-display:inline-block;
-margin-top:40px;
-padding:16px 32px;
-border:1px solid #111;
-font-size:9px;
-letter-spacing:3px;
-transition:.3s;
-}
-
-.hero-button:hover{
-background:#111;
-color:#fff;
-}
-
-.section{
-max-width:1400px;
-margin:auto;
-padding:110px 40px;
-}
-
-.section-header{
-display:flex;
-justify-content:space-between;
-align-items:flex-end;
-margin-bottom:50px;
-}
-
-.section-eyebrow{
-font-size:9px;
-letter-spacing:3px;
-color:#999;
-margin-bottom:16px;
-}
-
-.section-title{
-font-size:36px;
-font-weight:400;
-}
-
-.section-link{
-font-size:9px;
-letter-spacing:2px;
-color:#999;
-}
-
-.collection-grid{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:18px;
-}
-
-.collection-card{
-display:block;
-cursor:pointer;
-}
-
-.collection-image{
-width:100%;
-aspect-ratio:1/1;
-background:#f5f5f5;
-overflow:hidden;
-display:flex;
-align-items:center;
-justify-content:center;
-}
-
-.collection-image img{
-width:100%;
-height:100%;
-object-fit:cover;
-display:block;
-transition:transform .5s ease;
-}
-
-.collection-card:hover .collection-image img{
-transform:scale(1.05);
-}
-
-.collection-placeholder{
-font-size:9px;
-letter-spacing:3px;
-color:#aaa;
-}
-
-.collection-info{
-padding:18px 2px 0;
-}
-
-.collection-name{
-font-size:13px;
-letter-spacing:1px;
-}
-
-.collection-description{
-font-size:9px;
-color:#999;
-margin-top:8px;
-}
-
-.featured{
-max-width:1400px;
-margin:0 auto;
-padding:0 40px 110px;
-}
-
-.featured-image{
-width:100%;
-height:520px;
-background:#f5f5f5;
-overflow:hidden;
-}
-
-.featured-image img{
-width:100%;
-height:100%;
-object-fit:cover;
-display:block;
-transition:transform .6s ease;
-}
-
-.featured-image:hover img{
-transform:scale(1.03);
-}
-
-.featured-placeholder{
-height:100%;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:10px;
-letter-spacing:4px;
-color:#aaa;
-}
-
-.operator-section{
-background:#fafafa;
-border-top:1px solid #eee;
-border-bottom:1px solid #eee;
-}
-
-.operator-inner{
-max-width:1400px;
-margin:auto;
-padding:110px 40px;
-}
-
-.operator-grid{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:18px;
-}
-
-.operator-card{
-background:#fff;
-border:1px solid #eee;
-overflow:hidden;
-transition:transform .4s ease;
-}
-
-.operator-card:hover{
-transform:translateY(-5px);
-}
-
-.operator-image{
-width:100%;
-aspect-ratio:3/4;
-background:#f5f5f5;
-display:flex;
-align-items:center;
-justify-content:center;
-overflow:hidden;
-}
-
-.operator-image img{
-width:100%;
-height:100%;
-object-fit:cover;
-transition:transform .5s ease;
-}
-
-.operator-card:hover img{
-transform:scale(1.05);
-}
-
-.operator-placeholder{
-font-size:9px;
-letter-spacing:3px;
-color:#aaa;
-}
-
-.operator-info{
-padding:18px;
-}
-
-.operator-name{
-font-size:12px;
-}
-
-.operator-price{
-font-size:12px;
-margin-top:10px;
-}
-
-.operator-button{
-display:block;
-margin-top:15px;
-padding:12px;
-border:1px solid #111;
-text-align:center;
-font-size:8px;
-letter-spacing:2px;
-}
-
-.sell-section{
-max-width:1400px;
-margin:auto;
-padding:110px 40px;
-text-align:center;
-}
-
-.sell-eyebrow{
-font-size:9px;
-letter-spacing:3px;
-color:#999;
-margin-bottom:18px;
-}
-
-.sell-title{
-font-size:38px;
-font-weight:400;
-}
-
-.sell-text{
-margin-top:15px;
-font-size:11px;
-color:#888;
-}
-
-.sell-button{
-display:inline-block;
-margin-top:35px;
-padding:16px 35px;
-border:1px solid #111;
-font-size:9px;
-letter-spacing:3px;
-transition:.3s;
-}
-
-.sell-button:hover{
-background:#111;
-color:#fff;
-}
-
-.about{
-border-top:1px solid #eee;
-}
-
-.about-inner{
-max-width:1000px;
-margin:auto;
-padding:100px 40px;
-text-align:center;
-}
-
-.about-eyebrow{
-font-size:9px;
-letter-spacing:3px;
-color:#999;
-margin-bottom:18px;
-}
-
-.about-title{
-font-size:34px;
-font-weight:400;
-}
-
-.about-text{
-margin-top:20px;
-font-size:11px;
-line-height:2;
-color:#888;
-}
-
-footer{
-border-top:1px solid #eee;
-padding:50px;
-display:flex;
-justify-content:space-between;
-}
-
-.footer-logo{
-font-size:18px;
-letter-spacing:5px;
-}
-
-.footer-text{
-font-size:9px;
-line-height:1.8;
-color:#999;
-text-align:right;
-}
-
-@media(max-width:900px){
-
-.collection-grid{
-grid-template-columns:repeat(2,1fr);
-}
-
-.operator-grid{
-grid-template-columns:repeat(2,1fr);
-}
-
-.hero h1{
-font-size:45px;
-}
-
-}
-
-@media(max-width:600px){
-
-header{
-padding:0 20px;
-}
-
-nav{
-display:none;
-}
-
-.header-right{
-gap:12px;
-}
-
-.hero{
-min-height:520px;
-padding:80px 20px;
-}
-
-.hero h1{
-font-size:36px;
-letter-spacing:-1px;
-}
-
-.section{
-padding:80px 20px;
-}
-
-.section-header{
-display:block;
-}
-
-.section-link{
-display:block;
-margin-top:20px;
-}
-
-.collection-grid{
-grid-template-columns:1fr 1fr;
-gap:15px;
-}
-
-.featured{
-padding:0 20px 80px;
-}
-
-.featured-image{
-height:300px;
-}
-
-.operator-inner{
-padding:80px 20px;
-}
-
-.operator-grid{
-grid-template-columns:1fr 1fr;
-gap:12px;
-}
-
-.sell-section{
-padding:80px 20px;
-}
-
-.about-inner{
-padding:80px 20px;
-}
-
-footer{
-padding:35px 20px;
-flex-direction:column;
-gap:25px;
-}
-
-.footer-text{
-text-align:left;
-}
-
-}
-
-</style>
+    /* =========================
+       HEADER
+    ========================= */
 
+    header {
+      height: 82px;
+      padding: 0 50px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      border-bottom: 1px solid #eee;
+
+      position: sticky;
+      top: 0;
+      z-index: 100;
+
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(10px);
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 500;
+      letter-spacing: 7px;
+    }
+
+    nav {
+      display: flex;
+      gap: 38px;
+
+      font-size: 10px;
+      letter-spacing: 2px;
+    }
+
+    nav a,
+    .header-right a {
+      transition: opacity 0.3s ease;
+    }
+
+    nav a:hover,
+    .header-right a:hover {
+      opacity: 0.45;
+    }
+
+    .header-right {
+      display: flex;
+      gap: 22px;
+
+      font-size: 10px;
+      letter-spacing: 2px;
+    }
+
+    /* =========================
+       HERO
+    ========================= */
+
+    .hero {
+      height: 600px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      text-align: center;
+    }
+
+    .hero-inner {
+      max-width: 800px;
+      padding: 30px;
+    }
+
+    .eyebrow {
+      font-size: 10px;
+      letter-spacing: 5px;
+      color: #999;
+
+      margin-bottom: 28px;
+    }
+
+    .hero h1 {
+      font-size: 54px;
+      font-weight: 400;
+
+      line-height: 1.1;
+      letter-spacing: -2px;
+
+      margin-bottom: 25px;
+    }
+
+    .hero p {
+      font-size: 13px;
+      color: #777;
+
+      margin-bottom: 35px;
+    }
+
+    .button {
+      display: inline-flex;
+
+      align-items: center;
+      justify-content: center;
+
+      height: 46px;
+      min-width: 135px;
+
+      background: #111;
+      color: #fff;
+
+      font-size: 10px;
+      letter-spacing: 2px;
+
+      transition:
+        transform 0.3s ease,
+        background 0.3s ease;
+    }
+
+    .button:hover {
+      background: #333;
+      transform: translateY(-2px);
+    }
+
+    /* =========================
+       SECTION HEADER
+    ========================= */
+
+    .section-header {
+      padding: 0 50px;
+      margin-bottom: 25px;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .section-title {
+      font-size: 11px;
+      letter-spacing: 3px;
+    }
+
+    .section-subtitle {
+      font-size: 9px;
+      letter-spacing: 2px;
+      color: #999;
+    }
+
+    /* =========================
+       COLLECTION
+    ========================= */
+
+    .collection {
+      padding-bottom: 100px;
+    }
+
+    .collection-grid {
+      display: grid;
+
+      grid-template-columns: repeat(4, 1fr);
+
+      gap: 5px;
+
+      padding: 0 5px;
+    }
+
+    .collection-card {
+      position: relative;
+
+      height: 370px;
+
+      overflow: hidden;
+
+      background: #f5f5f5;
+
+      transition:
+        transform 0.4s ease,
+        box-shadow 0.4s ease;
+    }
+
+    .collection-card:hover {
+      transform: scale(1.025);
+
+      z-index: 5;
+
+      box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.10);
+    }
+
+    .collection-card img {
+      width: 100%;
+      height: 100%;
+
+      object-fit: cover;
+
+      display: block;
+
+      transition:
+        transform 0.6s ease;
+    }
+
+    .collection-card:hover img {
+      transform: scale(1.04);
+    }
+
+    .collection-placeholder {
+      width: 100%;
+      height: 100%;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background: #f5f5f5;
+
+      color: #aaa;
+
+      font-size: 9px;
+      letter-spacing: 2px;
+    }
+
+    .collection-info {
+      position: absolute;
+
+      left: 22px;
+      bottom: 22px;
+
+      z-index: 3;
+    }
+
+    .collection-name {
+      font-size: 13px;
+      letter-spacing: 1px;
+
+      margin-bottom: 6px;
+    }
+
+    .collection-desc {
+      font-size: 9px;
+      color: #777;
+    }
+
+    /* =========================
+       ⭐ LARGE IMAGE
+       COLLECTION 바로 아래
+    ========================= */
+
+    .large-feature {
+      width: 100%;
+      max-width: 1400px;
+
+      margin: 0 auto 150px;
+
+      padding: 0 40px;
+
+      overflow: hidden;
+    }
+
+    .large-feature-image {
+      width: 100%;
+      height: 560px;
+
+      object-fit: cover;
+
+      display: block;
+
+      background: #f5f5f5;
+
+      transition:
+        transform 0.7s ease;
+    }
+
+    .large-feature:hover .large-feature-image {
+      transform: scale(1.035);
+    }
+
+    .large-feature-placeholder {
+      width: 100%;
+      height: 560px;
+
+      background: #f5f5f5;
+
+      align-items: center;
+      justify-content: center;
+
+      color: #aaa;
+
+      font-size: 10px;
+      letter-spacing: 3px;
+    }
+
+    /* =========================
+       OPERATOR SHOP
+    ========================= */
+
+    .operator-shop {
+      padding-bottom: 150px;
+    }
+
+    .operator-grid {
+      display: grid;
+
+      grid-template-columns: repeat(4, 1fr);
+
+      gap: 5px;
+
+      padding: 0 5px;
+    }
+
+    .operator-card {
+      background: #f6f6f6;
+
+      overflow: hidden;
+
+      transition:
+        transform 0.4s ease,
+        box-shadow 0.4s ease;
+    }
+
+    .operator-card:hover {
+      transform: scale(1.025);
+
+      z-index: 5;
+
+      box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.10);
+    }
+
+    .operator-image {
+      height: 300px;
+
+      background: #eee;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      overflow: hidden;
+    }
+
+    .operator-image img {
+      width: 100%;
+      height: 100%;
+
+      object-fit: cover;
+
+      transition:
+        transform 0.6s ease;
+    }
+
+    .operator-card:hover .operator-image img {
+      transform: scale(1.05);
+    }
+
+    .operator-placeholder {
+      font-size: 9px;
+      letter-spacing: 2px;
+      color: #aaa;
+    }
+
+    .operator-info {
+      padding: 20px;
+    }
+
+    .operator-category {
+      font-size: 8px;
+      letter-spacing: 2px;
+      color: #999;
+
+      margin-bottom: 9px;
+    }
+
+    .operator-name {
+      font-size: 13px;
+
+      margin-bottom: 12px;
+    }
+
+    .operator-price {
+      font-size: 12px;
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+      border-top: 1px solid #eee;
+
+      padding: 50px;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .footer-logo {
+      font-size: 18px;
+      letter-spacing: 5px;
+    }
+
+    .footer-text {
+      font-size: 9px;
+      line-height: 1.8;
+      color: #999;
+
+      text-align: right;
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 800px) {
+
+      header {
+        padding: 0 20px;
+      }
+
+      nav {
+        display: none;
+      }
+
+      .header-right {
+        gap: 12px;
+      }
+
+      .hero {
+        height: 520px;
+      }
+
+      .hero h1 {
+        font-size: 38px;
+      }
+
+      .section-header {
+        padding: 0 20px;
+      }
+
+      .collection-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .collection-card {
+        height: 280px;
+      }
+
+      .large-feature {
+        padding: 0 20px;
+        margin-bottom: 100px;
+      }
+
+      .large-feature-image,
+      .large-feature-placeholder {
+        height: 350px;
+      }
+
+      .operator-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .operator-image {
+        height: 230px;
+      }
+
+      footer {
+        padding: 35px 20px;
+
+        flex-direction: column;
+
+        gap: 25px;
+      }
+
+      .footer-text {
+        text-align: left;
+      }
+    }
+
+  </style>
 </head>
 
 
 <body>
 
 
-<header>
+  <!-- =========================
+       HEADER
+  ========================= -->
 
-<a
-href="index.html"
-class="logo"
->
-CARDÉ
-</a>
+  <header>
 
+    <a href="index.html" class="logo">
+      CARDÉ
+    </a>
 
-<nav>
 
-<a href="#collection">
-COLLECTION
-</a>
+    <nav>
 
-<a href="#operator-shop">
-OPERATOR SHOP
-</a>
+      <a href="#collection">
+        COLLECTION
+      </a>
 
-<a href="sell.html">
-SELL
-</a>
+      <a href="#operator-shop">
+        OPERATOR SHOP
+      </a>
 
-<a href="#about">
-ABOUT
-</a>
+      <a href="sell.html">
+        SELL
+      </a>
 
-</nav>
+      <a href="#about">
+        ABOUT
+      </a>
 
+    </nav>
 
-<div class="header-right">
 
-<a href="#">
-SEARCH
-</a>
+    <div class="header-right">
 
-<a href="#">
-♡
-</a>
+      <a href="#">
+        SEARCH
+      </a>
 
-<a href="#">
-LOGIN
-</a>
+      <a href="#">
+        ♡
+      </a>
 
-</div>
+      <a href="#">
+        LOGIN
+      </a>
 
-</header>
+    </div>
 
+  </header>
 
 
-<section class="hero">
 
-<div class="hero-inner">
+  <!-- =========================
+       HERO
+  ========================= -->
 
-<div class="hero-eyebrow">
-CARDÉ — TRADING CARD MARKET
-</div>
+  <section class="hero">
 
-<h1>
-A Curated Card Market<br>
-for Your Collection
-</h1>
+    <div class="hero-inner">
 
-<p>
-Discover, collect and trade cards from your favorite games.
-</p>
+      <div class="eyebrow">
+        CARDÉ COLLECTION
+      </div>
 
-<a
-href="#collection"
-class="hero-button"
->
-EXPLORE COLLECTION
-</a>
+      <h1>
+        A Curated Card Market
+      </h1>
 
-</div>
+      <p>
+        Discover cards worth collecting.
+      </p>
 
-</section>
+      <a
+        href="#collection"
+        class="button"
+      >
+        EXPLORE
+      </a>
 
+    </div>
 
+  </section>
 
-<section
-class="section"
-id="collection"
->
 
-<div class="section-header">
 
-<div>
+  <!-- =========================
+       COLLECTION
+  ========================= -->
 
-<div class="section-eyebrow">
-COLLECTION
-</div>
+  <section
+    class="collection"
+    id="collection"
+  >
 
-<h2 class="section-title">
-Explore by Game
-</h2>
+    <div class="section-header">
 
-</div>
+      <div class="section-title">
+        COLLECTION
+      </div>
 
-<div class="section-link">
-SELECT A COLLECTION
-</div>
+      <div class="section-subtitle">
+        CARD GAMES
+      </div>
 
-</div>
+    </div>
 
 
+    <div
+      class="collection-grid"
+      id="collectionGrid"
+    >
 
-<div
-class="collection-grid"
-id="collectionGrid"
->
+      <!-- Supabase에서 자동으로 생성 -->
 
-<div class="collection-card">
+    </div>
 
-<div class="collection-image">
+  </section>
 
-<div class="collection-placeholder">
-COLLECTION IMAGE
-</div>
 
-</div>
 
-<div class="collection-info">
+  <!-- =========================
+       ⭐ COLLECTION 바로 아래
+       큰 사진 1장
+  ========================= -->
 
-<div class="collection-name">
-POKÉMON
-</div>
+  <section class="large-feature">
 
-<div class="collection-description">
-Discover Pokémon Cards
-</div>
+    <img
+      src="images/featured.jpg"
+      alt="CARDÉ Featured"
+      class="large-feature-image"
+      onerror="
+        this.style.display='none';
+        this.nextElementSibling.style.display='flex';
+      "
+    >
 
-</div>
+    <div
+      class="large-feature-placeholder"
+      style="display:none;"
+    >
+      FEATURED IMAGE
+    </div>
 
-</div>
+  </section>
 
 
-<div class="collection-card">
 
-<div class="collection-image">
+  <!-- =========================
+       OPERATOR SHOP
+  ========================= -->
 
-<div class="collection-placeholder">
-COLLECTION IMAGE
-</div>
+  <section
+    class="operator-shop"
+    id="operator-shop"
+  >
 
-</div>
+    <div class="section-header">
 
-<div class="collection-info">
+      <div class="section-title">
+        OPERATOR SHOP
+      </div>
 
-<div class="collection-name">
-ONE PIECE
-</div>
+      <div class="section-subtitle">
+        OFFICIAL CARDÉ STORE
+      </div>
 
-<div class="collection-description">
-Discover One Piece Cards
-</div>
+    </div>
 
-</div>
 
-</div>
+    <div class="operator-grid">
 
 
-<div class="collection-card">
+      <!-- 상품 1 -->
 
-<div class="collection-image">
+      <a
+        href="#"
+        class="operator-card"
+      >
 
-<div class="collection-placeholder">
-COLLECTION IMAGE
-</div>
+        <div class="operator-image">
 
-</div>
+          <div class="operator-placeholder">
+            PRODUCT IMAGE
+          </div>
 
-<div class="collection-info">
+        </div>
 
-<div class="collection-name">
-WEISS SCHWARZ
-</div>
 
-<div class="collection-description">
-Discover Weiss Schwarz Cards
-</div>
+        <div class="operator-info">
 
-</div>
+          <div class="operator-category">
+            POKÉMON
+          </div>
 
-</div>
+          <div class="operator-name">
+            Featured Card
+          </div>
 
+          <div class="operator-price">
+            ₩ ——
+          </div>
 
-<div class="collection-card">
+        </div>
 
-<div class="collection-image">
+      </a>
 
-<div class="collection-placeholder">
-COLLECTION IMAGE
-</div>
 
-</div>
 
-<div class="collection-info">
+      <!-- 상품 2 -->
 
-<div class="collection-name">
-BUILD DIVIDE
-</div>
+      <a
+        href="#"
+        class="operator-card"
+      >
 
-<div class="collection-description">
-Discover Build Divide Cards
-</div>
+        <div class="operator-image">
 
-</div>
+          <div class="operator-placeholder">
+            PRODUCT IMAGE
+          </div>
 
-</div>
+        </div>
 
-</div>
 
-</section>
+        <div class="operator-info">
 
+          <div class="operator-category">
+            ONE PIECE
+          </div>
 
+          <div class="operator-name">
+            Featured Card
+          </div>
 
-<section class="featured">
+          <div class="operator-price">
+            ₩ ——
+          </div>
 
-<div
-class="featured-image"
->
+        </div>
 
-<img
-src="images/featured.jpg"
-alt="CARDÉ Featured"
-onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
->
+      </a>
 
-<div
-class="featured-placeholder"
-style="display:none;"
->
-CARDÉ FEATURED
-</div>
 
-</div>
 
-</section>
+      <!-- 상품 3 -->
 
+      <a
+        href="#"
+        class="operator-card"
+      >
 
+        <div class="operator-image">
 
-<section
-class="operator-section"
-id="operator-shop"
->
+          <div class="operator-placeholder">
+            PRODUCT IMAGE
+          </div>
 
-<div class="operator-inner">
+        </div>
 
-<div class="section-header">
 
-<div>
+        <div class="operator-info">
 
-<div class="section-eyebrow">
-CARDÉ OFFICIAL
-</div>
+          <div class="operator-category">
+            WEISS SCHWARZ
+          </div>
 
-<h2 class="section-title">
-Operator Shop
-</h2>
+          <div class="operator-name">
+            Featured Card
+          </div>
 
-</div>
+          <div class="operator-price">
+            ₩ ——
+          </div>
 
-<div class="section-link">
-OFFICIAL PRODUCTS
-</div>
+        </div>
 
-</div>
+      </a>
 
 
 
-<div class="operator-grid">
+      <!-- 상품 4 -->
 
+      <a
+        href="#"
+        class="operator-card"
+      >
 
-<div class="operator-card">
+        <div class="operator-image">
 
-<div class="operator-image">
+          <div class="operator-placeholder">
+            PRODUCT IMAGE
+          </div>
 
-<div class="operator-placeholder">
-OPERATOR PRODUCT
-</div>
+        </div>
 
-</div>
 
-<div class="operator-info">
+        <div class="operator-info">
 
-<div class="operator-name">
-Official CARDÉ Product
-</div>
+          <div class="operator-category">
+            BUILD DIVIDE
+          </div>
 
-<div class="operator-button">
-VIEW PRODUCT
-</div>
+          <div class="operator-name">
+            Featured Card
+          </div>
 
-</div>
+          <div class="operator-price">
+            ₩ ——
+          </div>
 
-</div>
+        </div>
 
+      </a>
 
 
-<div class="operator-card">
+    </div>
 
-<div class="operator-image">
+  </section>
 
-<div class="operator-placeholder">
-OPERATOR PRODUCT
-</div>
 
-</div>
 
-<div class="operator-info">
+  <!-- =========================
+       FOOTER
+  ========================= -->
 
-<div class="operator-name">
-Official CARDÉ Product
-</div>
+  <footer id="about">
 
-<div class="operator-button">
-VIEW PRODUCT
-</div>
+    <div class="footer-logo">
+      CARDÉ
+    </div>
 
-</div>
 
-</div>
+    <div class="footer-text">
 
+      CARDÉ — A CURATED CARD MARKET<br>
 
+      © 2026 CARDÉ. ALL RIGHTS RESERVED.
 
-<div class="operator-card">
+    </div>
 
-<div class="operator-image">
+  </footer>
 
-<div class="operator-placeholder">
-OPERATOR PRODUCT
-</div>
 
-</div>
 
-<div class="operator-info">
+  <!-- =========================
+       SUPABASE
+  ========================= -->
 
-<div class="operator-name">
-Official CARDÉ Product
-</div>
+  <script>
 
-<div class="operator-button">
-VIEW PRODUCT
-</div>
+    const SUPABASE_URL =
+      "https://byjnjciwsdwxuneusgau.supabase.co";
 
-</div>
 
-</div>
+    const SUPABASE_PUBLISHABLE_KEY =
+      "sb_publishable_9-MEV3xReYbJBBSQFAW_xA_sxniWNBl";
 
 
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+      );
 
-<div class="operator-card">
 
-<div class="operator-image">
+    /* =========================
+       GAME LINKS
+    ========================= */
 
-<div class="operator-placeholder">
-OPERATOR PRODUCT
-</div>
+    const gameLinks = {
 
-</div>
+      "POKÉMON":
+        "pokemon.html",
 
-<div class="operator-info">
+      "ONE PIECE":
+        "onepiece.html",
 
-<div class="operator-name">
-Official CARDÉ Product
-</div>
+      "WEISS SCHWARZ":
+        "weiss.html",
 
-<div class="operator-button">
-VIEW PRODUCT
-</div>
+      "BUILD DIVIDE":
+        "builddivide.html"
 
-</div>
+    };
 
-</div>
 
+    /* =========================
+       LOAD COLLECTION
+    ========================= */
 
-</div>
+    async function loadCollection() {
 
-</div>
+      const grid =
+        document.getElementById(
+          "collectionGrid"
+        );
 
-</section>
 
+      const {
+        data,
+        error
+      } =
+        await supabaseClient
+          .from("collection_settings")
+          .select(
+            "id, game_name, description, image_url"
+          )
+          .order(
+            "id",
+            {
+              ascending: true
+            }
+          );
 
 
-<section class="sell-section">
+      if (
+        error ||
+        !data ||
+        data.length === 0
+      ) {
 
-<div class="sell-eyebrow">
-SELL ON CARDÉ
-</div>
+        createFallbackCollection();
 
-<h2 class="sell-title">
-Have a Card to Sell?
-</h2>
+        return;
+      }
 
-<p class="sell-text">
-List your card and let collectors discover it.
-</p>
 
-<a
-href="sell.html"
-class="sell-button"
->
-SELL YOUR CARD
-</a>
+      grid.innerHTML = "";
 
-</section>
 
+      data.forEach(item => {
 
+        const name =
+          item.game_name ||
+          "CARD GAME";
 
-<section
-class="about"
-id="about"
->
 
-<div class="about-inner">
+        const link =
+          gameLinks[name] ||
+          "#";
 
-<div class="about-eyebrow">
-ABOUT CARDÉ
-</div>
 
-<h2 class="about-title">
-A Curated Card Market
-</h2>
+        const card =
+          document.createElement(
+            "a"
+          );
 
-<p class="about-text">
-CARDÉ is a marketplace created for collectors.<br>
-Discover trading cards, list your own collection,<br>
-and explore official products from the CARDÉ Operator Shop.
-</p>
 
-</div>
+        card.className =
+          "collection-card";
 
-</section>
 
+        card.href =
+          link;
 
 
-<footer>
+        /* 사진 */
 
-<div class="footer-logo">
-CARDÉ
-</div>
+        if (item.image_url) {
 
-<div class="footer-text">
-CARDÉ — A CURATED CARD MARKET<br>
-© 2026 CARDÉ. ALL RIGHTS RESERVED.
-</div>
+          const img =
+            document.createElement(
+              "img"
+            );
 
-</footer>
+          img.src =
+            item.image_url;
 
+          img.alt =
+            name;
 
+          card.appendChild(
+            img
+          );
 
-<script>
+        }
 
+        else {
 
-const SUPABASE_URL =
-"https://byjnjciwsdwxuneusgau.supabase.co";
+          const placeholder =
+            document.createElement(
+              "div"
+            );
 
+          placeholder.className =
+            "collection-placeholder";
 
-const SUPABASE_PUBLISHABLE_KEY =
-"sb_publishable_9-MEV3xReYbJBBSQFAW_xA_sxniWNBl";
+          placeholder.textContent =
+            "COLLECTION IMAGE";
 
+          card.appendChild(
+            placeholder
+          );
 
-const supabaseClient =
-window.supabase.createClient(
-SUPABASE_URL,
-SUPABASE_PUBLISHABLE_KEY
-);
+        }
 
 
+        /* 이름 */
 
-const gameLinks = {
+        const info =
+          document.createElement(
+            "div"
+          );
 
-"POKÉMON":
-"pokemon.html",
+        info.className =
+          "collection-info";
 
-"ONE PIECE":
-"onepiece.html",
 
-"WEISS SCHWARZ":
-"weiss.html",
+        info.innerHTML = `
 
-"BUILD DIVIDE":
-"builddivide.html"
+          <div class="collection-name">
+            ${name}
+          </div>
 
-};
+          <div class="collection-desc">
+            ${item.description || ""}
+          </div>
 
+        `;
 
 
-async function loadCollection(){
+        card.appendChild(
+          info
+        );
 
-const grid =
-document.getElementById(
-"collectionGrid"
-);
 
+        grid.appendChild(
+          card
+        );
 
-try{
+      });
 
+    }
 
-const {data,error} =
-await supabaseClient
-.from("collection_settings")
-.select(
-"id, game_name, description, image_url"
-)
-.order(
-"id",
-{
-ascending:true
-}
-);
 
+    /* =========================
+       FALLBACK COLLECTION
+    ========================= */
 
-if(error){
+    function createFallbackCollection() {
 
-console.error(
-"COLLECTION ERROR:",
-error
-);
+      const grid =
+        document.getElementById(
+          "collectionGrid"
+        );
 
-return;
 
-}
+      const games = [
 
+        {
+          name: "POKÉMON",
+          desc: "Discover Pokémon Cards",
+          link: "pokemon.html"
+        },
 
-if(!data || data.length === 0){
-return;
-}
+        {
+          name: "ONE PIECE",
+          desc: "Discover One Piece Cards",
+          link: "onepiece.html"
+        },
 
+        {
+          name: "WEISS SCHWARZ",
+          desc: "Discover Weiss Schwarz Cards",
+          link: "weiss.html"
+        },
 
-grid.innerHTML =
-data.map(item => {
+        {
+          name: "BUILD DIVIDE",
+          desc: "Discover Build Divide Cards",
+          link: "builddivide.html"
+        }
 
-const link =
-gameLinks[item.game_name]
-|| "#";
+      ];
 
 
-return `
+      games.forEach(game => {
 
-<a
-class="collection-card"
-href="${link}"
->
+        const card =
+          document.createElement(
+            "a"
+          );
 
-<div class="collection-image">
 
-${
-item.image_url
+        card.className =
+          "collection-card";
 
-?
 
-`<img
-src="${item.image_url}"
-alt="${item.game_name}"
->`
+        card.href =
+          game.link;
 
-:
 
-`<div class="collection-placeholder">
-COLLECTION IMAGE
-</div>`
+        card.innerHTML = `
 
-}
+          <div class="collection-placeholder">
+            COLLECTION IMAGE
+          </div>
 
-</div>
+          <div class="collection-info">
 
+            <div class="collection-name">
+              ${game.name}
+            </div>
 
-<div class="collection-info">
+            <div class="collection-desc">
+              ${game.desc}
+            </div>
 
-<div class="collection-name">
-${item.game_name}
-</div>
+          </div>
 
-<div class="collection-description">
-${item.description || ""}
-</div>
+        `;
 
-</div>
 
-</a>
+        grid.appendChild(
+          card
+        );
 
-`;
+      });
 
-}).join("");
+    }
 
 
-}catch(error){
+    /* 실행 */
 
-console.error(error);
+    loadCollection();
 
-}
-
-}
-
-
-
-loadCollection();
-
-</script>
-
+  </script>
 
 </body>
+</html>
 </html>
